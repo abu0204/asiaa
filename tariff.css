@@ -1,0 +1,111 @@
+/* ===== Premium Tariff Tables ===== */
+.tariff-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.tariff-table thead.tariff-header th {
+  background: var(--primary, #ffd400);
+  color: #000;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 14px;
+  border: none;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Sub-header (column names) */
+.tariff-table thead tr th {
+  background: #111;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px;
+  text-align: center;
+}
+
+/* Body rows */
+.tariff-table tbody tr {
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.tariff-table tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.tariff-table tbody tr:hover {
+  background: #fff9db;
+  transform: scale(1.01);
+}
+
+/* Cells */
+.tariff-table td {
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  color: #222;
+  border-top: 1px solid #eee;
+}
+
+/* Vehicle highlight rows */
+.tariff-table .vehicle-type {
+  background: #fff6cc;
+  font-weight: 600;
+}
+
+/* Icons */
+.vehicle-icon {
+  color: var(--primary, #ffd400);
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+/* Cars List Table */
+.car-list-table {
+  margin-top: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+}
+
+.car-list-table td {
+  padding: 14px;
+  text-align: left;
+}
+
+.car-list-table strong {
+  color: #000;
+}
+/* ===== Badges ===== */
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+/* Best Value */
+.badge-best {
+  background: #ffd400;
+  color: #000;
+  border: 1px solid #e6c200;
+}
+
+
+/* Optional hover effect */
+.badge-best:hover,
+.badge-premium:hover {
+  opacity: 0.9;
+}

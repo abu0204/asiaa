@@ -1,0 +1,32 @@
+{
+  "name": "asiaa_travel",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "dev": "pm2 start src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.1",
+    "@types/nodemailer": "^6.4.17",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@types/ejs": "^3.1.5",
+    "dotenv": "^16.5.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "mongoose": "^8.13.2",
+    "nodemailer": "^6.10.1",
+    "nodemon": "^3.1.10",
+    "pm2": "^6.0.8"
+  },
+  "type": "module"
+}

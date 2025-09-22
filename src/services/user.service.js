@@ -1,9 +1,10 @@
-import ContactModel from "../models/contact.model.js";
-
+import TripModel from "../models/trip.model.js";
+import DistrictJson from "../config/tamilnadu.json" with {type:"json"}
 class UserServices {
   async homeService() {
     try {
-      return { status: true, title: "Home", pageName: "home" };
+      const data = DistrictJson;
+      return { status: true, title: "Home", pageName: "home", data: data };
     } catch (error) {
       return {
         status: false,
@@ -21,10 +22,10 @@ class UserServices {
       };
     }
   }
- 
+
   async createContactFormService(req_Body) {
     try {
-      const createdData = await ContactModel.create(req_Body);
+      const createdData = await TripModel.create(req_Body);
       return {
         status: true,
         message: "Submitted Successfully",

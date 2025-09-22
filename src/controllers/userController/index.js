@@ -41,10 +41,36 @@ class UserController {
       });
     }
   }
-  
+
   async contactForm(req, res) {
     try {
       const result = await UserServices.createContactFormService(req.body);
+      return successResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
+
+  async getEstimation(req, res) {
+    try {
+      const result = await UserServices.getEstimationService(req.body);
+      return successResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  };
+
+  async bookATrip(req,res){
+     try {
+      const result = await UserServices.bookATrip(req.body);
       return successResponse(req, res, result);
     } catch (error) {
       return errorResponse(req, res, {

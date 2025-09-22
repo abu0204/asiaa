@@ -10,6 +10,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/css/home.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </head>
   <body>
     <%- include('./layouts/header') %>
@@ -34,6 +40,7 @@
                       placeholder="Enter pickup location"
                       required
                     >
+                     <option>Select A pickup location</option>
                       <% for (let i = 0; i < data.length; i++) { %>
                       <option value='<%- JSON.stringify(data[i]) %>''>
                         <%= data[i].district %>
@@ -49,6 +56,7 @@
                       placeholder="Enter drop location"
                       required
                     >
+                    <option>Select A drop location</option>
                       <% for (let i = 0; i < data.length; i++) { %>
                       <option value='<%- JSON.stringify(data[i]) %>''>
                         <%= data[i].district %>
@@ -125,7 +133,7 @@
 
                 <!-- Buttons -->
                 <div class="d-grid gap-2 mb-2">
-                  <button type="button" class="btn btn-warning">
+                  <button type="button" class="btn btn-warning" onclick="checkLocations()">
                     Get Estimate
                   </button>
                   <button type="submit" class="btn btn-warning">

@@ -8,6 +8,8 @@ router.get("/home", userController.home);
 router.get("/tariff", userController.tariff);
 // router.get("/contact", userController.contact);
 
+router.post("/get-estimation",userController.getEstimation);
+router.post("/book-a-trip",userController.bookATrip)
 router.post("/submit-contact-form", userController.contactForm);
 
 export default router;

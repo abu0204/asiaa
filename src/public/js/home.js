@@ -48,18 +48,53 @@ function checkLocations() {
   if (fromLocation && toLocation) {
     if (fromLocation.district !== toLocation.district) {
       axios
-        .post("http://localhost:4000/v1/users/get-estimation", {
+        .post(window.origin + "/v1/users/get-estimation", {
           fromLocation,
           toLocation,
         })
         .then((response) => {
-          console.log("Data:", response.data); // response data
+          console.log("Data:", response.data);
         })
         .catch((error) => {
           console.error("Error:", error);
+          showToast(error.message, "error");
         });
     } else {
-      console.log("⚠️ Same district selected:", fromLocation.district);
+      showToast("⚠️ Same district selected", "error");
     }
   }
+}
+
+function bookATrip() {
+  try {
+    if (fromLocation && toLocation) {
+      if (fromLocation.district !== toLocation.district) {
+        axios
+          .post(window.origin + "/v1/users/book-a-trip", {
+            fromLocation,
+            toLocation,
+          })
+          .then((response) => {
+            console.log("Data:", response.data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            showToast(error.message, "error");
+          });
+      } else {
+        showToast("⚠️ Same district selected", "error");
+      }
+    }
+  } catch (error) {
+    console.error({ bookATrip: error });
+  }
+}
+function showToast(message, toastType) {
+  Toastify({
+    text: message,
+    duration: 2000,
+    gravity: "top", // or "top"
+    position: "right", // left, center, or right
+    backgroundColor: toastType === "success" ? "#28a745" : "#dc3545",
+  }).showToast();
 }

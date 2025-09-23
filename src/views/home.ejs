@@ -29,7 +29,7 @@
               <h5 class="text-warning mb-2">BOOK A CAB NOW</h5>
               <h2 class="mb-4">You can book a cab with our website</h2>
 
-              <form>
+              <form id="book-trip">
                 <!-- Pickup & Drop -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
@@ -69,10 +69,11 @@
                 <!-- Date & Time -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input type="date" class="form-control" required />
+                    <input id="trip-date" type="date" class="form-control" required />
                   </div>
                   <div class="col-md-6">
                     <input
+                    id="trip-time"
                       type="time"
                       class="form-control"
                       value="19:00"
@@ -84,14 +85,14 @@
                 <!-- Travel Type & Vehicle Type -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <select class="form-select" required>
+                    <select id="travel-type" class="form-select" required>
                       <option selected disabled>Travel Type</option>
                       <option>One Way</option>
                       <option>Round Trip</option>
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <select class="form-select" required>
+                    <select id="vehicle-type" class="form-select" required>
                       <option selected disabled>Vehicle Type</option>
                       <option>Sedan</option>
                       <option>Prime Sedan</option>
@@ -105,6 +106,7 @@
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
                     <input
+                    id="name"
                       type="text"
                       class="form-control"
                       placeholder="Enter Name"

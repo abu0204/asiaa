@@ -71,6 +71,8 @@ class UserServices {
   async bookATrip (req_Body){
     try {
       
+      
+
       await TripModel.create(req_Body);
       return {
         status:true,

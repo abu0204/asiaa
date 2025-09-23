@@ -65,30 +65,119 @@ function checkLocations() {
   }
 }
 
-function bookATrip() {
-  try {
-    if (fromLocation && toLocation) {
-      if (fromLocation.district !== toLocation.district) {
-        axios
-          .post(window.origin + "/v1/users/book-a-trip", {
-            fromLocation,
-            toLocation,
-          })
-          .then((response) => {
-            console.log("Data:", response.data);
-          })
-          .catch((error) => {
-            console.error("Error:", error);
-            showToast(error.message, "error");
-          });
-      } else {
-        showToast("⚠️ Same district selected", "error");
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("book-trip")
+    .addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+
+      const pickup = document.getElementById("pickup-district").value.trim();
+      const drop = document.getElementById("drop-district").value.trim();
+      const tripDate = document.getElementById("trip-date").value;
+      const tripTime = document.getElementById("trip-time").value.trim();
+      const travelType = document.getElementById("travel-type").value.trim();
+      const vehicleType = document.getElementById("vehicle-type").value.trim();
+
+      if (name === "") {
+        showToast("Please enter your full name", "error");
+        return;
       }
-    }
-  } catch (error) {
-    console.error({ bookATrip: error });
-  }
+      if (email === "") {
+        showToast("Please enter your email", "error");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        showToast("Please enter a valid email address", "error");
+        return;
+      }
+      if (pickup === "") {
+        showToast("Please choose your pickup location", "error");
+        return;
+      }
+      if (drop === "") {
+        showToast("Please choose your drop location", "error");
+        return;
+      }
+      if (tripDate === "") {
+        showToast("Please shedule your trip date", "error");
+        return;
+      }
+      if (tripTime === "") {
+        showToast("Please shedule your trip time", "error");
+        return;
+      }
+      if (travelType === "") {
+        showToast("Please choose your travel type", "error");
+        return;
+      }
+      if (vehicleType === "") {
+        showToast("Please choose your vehicle type", "error");
+        return;
+      }
+
+      try {
+        const response = await fetch("/v1/users/book-trip", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            pickup,
+            drop,
+            tripDate,
+            tripTime,
+            travelType,
+            vehicleType,
+          }),
+        });
+
+        const data = await response.json();
+        console.log({ data });
+        if (data.status) {
+          showToast(data.message, "success");
+          document.getElementById("contact-form").reset();
+        } else {
+          showToast(data.message, "error");
+        }
+      } catch (err) {
+        console.error("AJAX error:", err);
+        alert("Something went wrong. Please try again later.");
+      }
+    });
+});
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
+
+// function bookATrip() {
+//   try {
+//     if (fromLocation && toLocation) {
+//       if (fromLocation.district !== toLocation.district) {
+//         axios
+//           .post(window.origin + "/v1/users/book-a-trip", {
+//             fromLocation,
+//             toLocation,
+//           })
+//           .then((response) => {
+//             console.log("Data:", response.data);
+//           })
+//           .catch((error) => {
+//             console.error("Error:", error);
+//             showToast(error.message, "error");
+//           });
+//       } else {
+//         showToast("⚠️ Same district selected", "error");
+//       }
+//     }
+//   } catch (error) {
+//     console.error({ bookATrip: error });
+//   }
+// }
 function showToast(message, toastType) {
   Toastify({
     text: message,

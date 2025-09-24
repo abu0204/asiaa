@@ -1,0 +1,53 @@
+{
+  "onewayTrip": {
+    "minimumKilometer": 100,
+    "Sedan": {
+      "vehicleType": "Sedan",
+      "costPerKilometer": 12,
+      "driverBata": 400
+    },
+    "primeSeadan": {
+      "vehicleType": "primeSeadan",
+      "costPerKilometer": 13,
+      "driverBata": 400
+    },
+    "Suv": {
+      "vehicleType": "Suv",
+      "costPerKilometer": 17.1,
+      "driverBata": 400
+    },
+    "primeSuv": {
+      "vehicleType": "primeSuv",
+      "costPerKilometer": 18,
+      "driverBata": 400
+    }
+  },
+  "roundTrip": {
+    "minimumKilometer": 250,
+    "Sedan": {
+      "vehicleType": "Sedan",
+      "costPerKilometer": 11.7,
+      "driverBata": 400
+    },
+    "primeSeadan": {
+      "vehicleType": "primeSeadan",
+      "costPerKilometer": 12,
+      "driverBata": 400
+    },
+    "Suv": {
+      "vehicleType": "Suv",
+      "costPerKilometer": 15.3,
+      "driverBata": 400
+    },
+    "primeSuv": {
+      "vehicleType": "primeSuv",
+      "costPerKilometer": 16.2,
+      "driverBata": 500
+    },
+    "toyotoInnova": {
+      "vehicleType": "toyotoInnova",
+      "costPerKilometer": 17.1,
+      "driverBata": 500
+    }
+  }
+}

@@ -1,5 +1,7 @@
 import TripModel from "../models/trip.model.js";
 import DistrictJson from "../config/tamilnadu.json" with {type:"json"};
+import tripConfig from "../config/trip.config.json" with {type:"json"};
+
 import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
@@ -46,18 +48,31 @@ class UserServices {
 
   async getEstimationService(req_Body){
     try {
-      const {fromLocation,toLocation} = req_Body;
+      const {fromLocation,toLocation,travelType,vehicleType} = req_Body;
+
+      console.log({req_Body});
       const fromData = DistrictJson.find(location=>location.district === fromLocation.district);
       const toData = DistrictJson.find(location=>location.district === toLocation.district);
 
       const result = await axios.get(OSRM_API+`${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
       const totalMeters = result.data.routes[0].distance;
+      
+      const tripMode = tripConfig[travelType];
+      const vehicleDet = tripMode[vehicleType];
+      const costPerKilometr = vehicleDet.costPerKilometer;
+      const driverBata = vehicleDet.driverBata;
+      const vehicle = vehicleType;
       const totalKiloMeter = totalMeters / 1000;
+      const totalCost = totalKiloMeter * costPerKilometr;
       return {
         status:true,
         message:"success",
         data:{
-          km:totalKiloMeter
+          vehicle,
+          driverBata,
+          totalKiloMeter,
+          costPerKilometr,
+          totalCost
         }
       };
     } catch (error) {
@@ -70,10 +85,39 @@ class UserServices {
 
   async bookATrip (req_Body){
     try {
-      
-      
+      console.log({req_Body})
+      const { name,email,mobile,pickup,drop,tripDate,tripTime,travelType,vehicleType} = req_Body;
+      const pickupDistrict = JSON.parse(pickup).district;
+      const dropDistrict = JSON.parse(drop).district;
 
-      await TripModel.create(req_Body);
+      const fromData = DistrictJson.find(location=>location.district === pickupDistrict);
+      const toData = DistrictJson.find(location=>location.district === dropDistrict);
+
+      const result = await axios.get(OSRM_API+`${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
+      const totalMeters = result.data.routes[0].distance;
+
+       const tripMode = tripConfig[travelType];
+      const vehicleDet = tripMode[vehicleType];
+      const costPerKilometr = vehicleDet.costPerKilometer;
+      const driverBata = vehicleDet.driverBata;
+      const totalKiloMeter = totalMeters / 1000;
+      const totalCost = totalKiloMeter * costPerKilometr;
+      const insertObj = {
+        name,
+        email,
+        phoneNumber:mobile,
+        pickup:pickupDistrict,
+        drop : dropDistrict,
+        date:new Date(tripDate),
+        time:tripTime,
+        travelType,
+        vehicleType,
+        driverBata,
+        costPerKilometr,
+        totalKiloMeter,
+        totalCost
+      };
+      await TripModel.create(insertObj);
       return {
         status:true,
         message:"Trip Booked!"

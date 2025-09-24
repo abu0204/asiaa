@@ -11,6 +11,10 @@ const tripSchema = new Schema(
     name: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     email: { type: String, required: true },
+    driverBata: { type: Number, required: true },
+    costPerKilometr: { type: Number, required: true },
+    totalKiloMeter: { type: Number, required: true },
+    totalCost: { type: Number, required: true },
   },
   {
     timestamps: true,

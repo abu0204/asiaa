@@ -1,178 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Travel Day - Tariff Details</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <!-- Icons (Optional) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/css/tariff.css">
- 
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="/css/tariff.css" />
+  </head>
 
-<body>
+  <body>
+    <%- include('./layouts/header') %>
     <div id="header-container"></div>
     <div class="container my-5">
-        <h3 class="text-center mb-4">TRAVEL DAY - TARIFF DETAILS</h3>
+      <h3 class="text-center mb-4">TRAVEL DAY - TARIFF DETAILS</h3>
 
-        <!-- Tab Buttons -->
-        <ul class="nav nav-tabs justify-content-center mb-4 tab-btns">
-            <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#outstation"><b>OUTSTATION</b></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#rental"><b>RENTAL</b></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#airport"><b>AIRPORT</b></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#ttbus"><b>TT & BUS</b></a>
-            </li>
-        </ul>
+      <!-- Tab Buttons -->
+      <ul class="nav nav-tabs justify-content-center mb-4 tab-btns">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="tab" href="#outstation"
+            ><b>OUTSTATION</b></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#rental"
+            ><b>RENTAL</b></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#airport"
+            ><b>AIRPORT</b></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="tab" href="#ttbus"
+            ><b>TT & BUS</b></a
+          >
+        </li>
+      </ul>
 
-        <!-- Tab Content -->
-        <div class="tab-content">
-            <!-- Outstation Tab -->
-            <div class="tab-pane fade show active" id="outstation">
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Outstation Tab -->
+        <div class="tab-pane fade show active" id="outstation">
+          <!-- One Way Tariff Table -->
+          <div class="table-responsive mb-5">
+            <table class="table table-bordered tariff-table">
+              <thead class="tariff-header">
+                <tr>
+                  <th colspan="4">ONE WAY TARIFF (INTER-CITY RIDER)</th>
+                </tr>
+                <tr>
+                  <th>VEHICLE TYPE</th>
+                  <th>BASE FARE</th>
+                  <th>RATE PER (km)</th>
+                  <th>DRIVER BATTA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="vehicle-type">
+                  <td><i class="bi bi-car-front vehicle-icon"></i> SEDAN</td>
+                  <td>
+                    Rs.1820/130 km
+                    <span class="badge badge-best">Best Value</span>
+                  </td>
+                  <td>Rs.14</td>
+                  <td>Rs.400</td>
+                </tr>
+                <tr>
+                  <td><i class="bi bi-car-front"></i> PRIME SEDAN</td>
+                  <td>Rs.1820/130 km</td>
+                  <td>Rs.14</td>
+                  <td>Rs.500</td>
+                </tr>
+                <tr class="vehicle-type">
+                  <td><i class="bi bi-car-front"></i> SUV</td>
+                  <td>Rs.2470/130 km</td>
+                  <td>Rs.19</td>
+                  <td>Rs.600</td>
+                </tr>
+                <tr>
+                  <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
+                  <td>Rs.2600/130 km</td>
+                  <td>Rs.20</td>
+                  <td>Rs.600</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                <!-- One Way Tariff Table -->
-                <div class="table-responsive mb-5">
-                    <table class="table table-bordered tariff-table">
-                        <thead class="tariff-header">
-                            <tr>
-                                <th colspan="4">ONE WAY TARIFF (INTER-CITY RIDER)</th>
-                            </tr>
-                            <tr>
-                                <th>VEHICLE TYPE</th>
-                                <th>BASE FARE</th>
-                                <th>RATE PER (km)</th>
-                                <th>DRIVER BATTA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="vehicle-type">
-                                <td><i class="bi bi-car-front vehicle-icon"></i> SEDAN</td>
-                                <td>Rs.1820/130 km <span class="badge badge-best">Best Value</span></td>
-                                <td>Rs.14</td>
-                                <td>Rs.400</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-car-front"></i> PRIME SEDAN</td>
-                                <td>Rs.1820/130 km</td>
-                                <td>Rs.14</td>
-                                <td>Rs.500</td>
-                            </tr>
-                            <tr class="vehicle-type">
-                                <td><i class="bi bi-car-front"></i> SUV</td>
-                                <td>Rs.2470/130 km</td>
-                                <td>Rs.19</td>
-                                <td>Rs.600</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
-                                <td>Rs.2600/130 km</td>
-                                <td>Rs.20</td>
-                                <td>Rs.600</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+          <!-- Round Trip Tariff Table -->
+          <div class="table-responsive mb-5">
+            <table class="table table-bordered tariff-table">
+              <thead class="tariff-header">
+                <tr>
+                  <th colspan="4">ROUND TRIP TARIFF (INTER-CITY RIDER)</th>
+                </tr>
+                <tr>
+                  <th>VEHICLE TYPE</th>
+                  <th>BASE FARE</th>
+                  <th>RATE PER (km)</th>
+                  <th>DRIVER BATTA</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="vehicle-type">
+                  <td><i class="bi bi-car-front vehicle-icon"></i>SEDAN</td>
+                  <td>Rs.3250/250 km</td>
+                  <td>Rs.13</td>
+                  <td>Rs.400</td>
+                </tr>
+                <tr>
+                  <td><i class="bi bi-car-front"></i> PRIME SEDAN</td>
+                  <td>Rs.3250/250 km</td>
+                  <td>Rs.13</td>
+                  <td>Rs.500</td>
+                </tr>
+                <tr class="vehicle-type">
+                  <td><i class="bi bi-car-front"></i> SUV</td>
+                  <td>Rs.4500/250 km</td>
+                  <td>Rs.18</td>
+                  <td>Rs.600</td>
+                </tr>
+                <tr>
+                  <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
+                  <td>Rs.4500/250 km</td>
+                  <td>Rs.18</td>
+                  <td>Rs.600</td>
+                </tr>
+                <tr>
+                  <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
+                  <td>
+                    Rs.2600/130 km <span class="badge badge-best">Premium</span>
+                  </td>
+                  <td>Rs.20</td>
+                  <td>Rs.600</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-                <!-- Round Trip Tariff Table -->
-                <div class="table-responsive mb-5">
-                    <table class="table table-bordered tariff-table">
-                        <thead class="tariff-header">
-                            <tr>
-                                <th colspan="4">ROUND TRIP TARIFF (INTER-CITY RIDER)</th>
-                            </tr>
-                            <tr>
-                                <th>VEHICLE TYPE</th>
-                                <th>BASE FARE</th>
-                                <th>RATE PER (km)</th>
-                                <th>DRIVER BATTA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="vehicle-type">
-                                <td><i class="bi bi-car-front vehicle-icon"></i>SEDAN</td>
-                                <td>Rs.3250/250 km</td>
-                                <td>Rs.13</td>
-                                <td>Rs.400</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-car-front"></i> PRIME SEDAN</td>
-                                <td>Rs.3250/250 km</td>
-                                <td>Rs.13</td>
-                                <td>Rs.500</td>
-                            </tr>
-                            <tr class="vehicle-type">
-                                <td><i class="bi bi-car-front"></i> SUV</td>
-                                <td>Rs.4500/250 km</td>
-                                <td>Rs.18</td>
-                                <td>Rs.600</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
-                                <td>Rs.4500/250 km</td>
-                                <td>Rs.18</td>
-                                <td>Rs.600</td>
-                            </tr>
-                            <tr>
-                                <td><i class="bi bi-car-front"></i> Toyota INNOVA</td>
-                                <td>Rs.2600/130 km <span class="badge badge-best">Premium</span></td>
-                                <td>Rs.20</td>
-                                <td>Rs.600</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Car Lists -->
-                <div class="table-responsive">
-                    <table class="table table-bordered text-center car-list-table">
-                        <thead class="tariff-header">
-                            <tr>
-                                <th colspan="2">Cars List</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>List of Sedan Cars</strong></td>
-                                <td>Maruthi Suzuki Dzire, Hyundai Xcent, Tata Zest</td>
-                            </tr>
-                            <tr>
-                                <td><strong>List of Prime Sedan Cars</strong></td>
-                                <td>Toyota Etios, Nissan Sunny</td>
-                            </tr>
-                            <tr>
-                                <td><strong>List of SUV Cars</strong></td>
-                                <td>Mahindra Xylo, Mahindra Marazzo, Maruti Ertiga</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Other Tabs (Placeholder content) -->
-            <div class="tab-pane fade" id="rental">
-                <p class="text-center py-4">Rental tariff details coming soon.</p>
-            </div>
-            <div class="tab-pane fade" id="airport">
-                <p class="text-center py-4">Airport tariff details coming soon.</p>
-            </div>
-            <div class="tab-pane fade" id="ttbus">
-                <p class="text-center py-4">TT & Bus tariff details coming soon.</p>
-            </div>
+          <!-- Car Lists -->
+          <div class="table-responsive">
+            <table class="table table-bordered text-center car-list-table">
+              <thead class="tariff-header">
+                <tr>
+                  <th colspan="2">Cars List</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>List of Sedan Cars</strong></td>
+                  <td>Maruthi Suzuki Dzire, Hyundai Xcent, Tata Zest</td>
+                </tr>
+                <tr>
+                  <td><strong>List of Prime Sedan Cars</strong></td>
+                  <td>Toyota Etios, Nissan Sunny</td>
+                </tr>
+                <tr>
+                  <td><strong>List of SUV Cars</strong></td>
+                  <td>Mahindra Xylo, Mahindra Marazzo, Maruti Ertiga</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
+
+        <!-- Other Tabs (Placeholder content) -->
+        <div class="tab-pane fade" id="rental">
+          <p class="text-center py-4">Rental tariff details coming soon.</p>
+        </div>
+        <div class="tab-pane fade" id="airport">
+          <p class="text-center py-4">Airport tariff details coming soon.</p>
+        </div>
+        <div class="tab-pane fade" id="ttbus">
+          <p class="text-center py-4">TT & Bus tariff details coming soon.</p>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/tariff.js" defer></script>
-</body>
-
+  </body>
 </html>

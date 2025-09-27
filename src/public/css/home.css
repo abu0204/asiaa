@@ -88,24 +88,6 @@ body {
   background-color: #e6c200;
 }
 
-/* Cards Section */
-.card {
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 500;
-  padding: 30px 20px;
-  background-color: var(--gray);
-  color: var(--dark);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-}
-
-
-
 /* Responsive Hero Text */
 @media (max-width: 768px) {
   .hero h1 {
@@ -116,10 +98,34 @@ body {
   }
 }
 /* Footer */
-footer {
-  background-color: var(--dark);
-  color: var(--light);
-  text-align: center;
-  padding: 15px;
-  font-size: 14px;
+.footer {
+  border-radius: 12px;
+  background: linear-gradient(135deg, #1a1a1a, #111);
+  padding: 3rem 1.5rem;
+  color: #ddd;
+}
+
+.footer-col {
+  border-radius: 0;        /* remove card look */
+  background-color: transparent; /* remove dark column background */
+  padding: 0;              /* rely on footer padding */
+  transition: none;        /* remove hover transform/shadow */
+}
+
+.footer-link {
+  text-decoration: none;
+  color: #ddd;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #ffd400; /* highlight on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .footer .footer-col {
+    flex: 1 1 100%;
+    margin-bottom: 1.5rem;
+  }
 }

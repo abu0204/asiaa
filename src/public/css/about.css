@@ -1,0 +1,140 @@
+/* ========== General Reset ========== */
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.7;
+  color: #333;
+  background: #fff;
+}
+
+/* Section Headings */
+h2 {
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #ffd400;
+  border-radius: 2px;
+  margin: 0.5rem auto 0;
+}
+
+/* Paragraphs */
+p {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ========== Hero Section ========== */
+.about-hero {
+  min-height: 60vh;
+  background: linear-gradient(rgba(255, 212, 0, 0.75), rgba(0, 0, 0, 0.7)),
+              url("https://via.placeholder.com/1600x800") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+.about-hero p {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  color: #f9f9f9;
+}
+
+/* ========== Image Styling ========== */
+.img-fluid {
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img-fluid:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+}
+
+/* ========== Mission, Vision, Values ========== */
+.bg-light .col-md-4 {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bg-light .col-md-4:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.bg-light i {
+  color: #ffd400;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.bg-light i:hover {
+  transform: scale(1.2);
+  color: #111;
+}
+
+/* ========== Why Choose Us ========== */
+.why-card, .col-md-3 {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  transition: all 0.3s ease;
+}
+
+.why-card:hover, .col-md-3:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+}
+
+.col-md-3 i {
+  color: #ffd400;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.col-md-3:hover i {
+  transform: scale(1.2);
+  color: #111;
+}
+
+/* ========== Team Section ========== */
+.team img {
+  border: 5px solid #ffd400;
+  transition: all 0.3s ease;
+}
+
+.team img:hover {
+  transform: scale(1.08);
+  border-color: #111;
+}
+
+.team h6 {
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.team p {
+  font-size: 0.95rem;
+  color: #666;
+}

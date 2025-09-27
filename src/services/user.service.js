@@ -20,7 +20,29 @@ class UserServices {
   }
   async tariffService() {
     try {
-      return { status: true, title: "careers", pageName: "careers" };
+      return { status: true, title: "tariff", pageName: "tariff" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+
+   async aboutService() {
+    try {
+      return { status: true, title: "about", pageName: "about" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+
+     async contactService() {
+    try {
+      return { status: true, title: "contact", pageName: "contact" };
     } catch (error) {
       return {
         status: false,

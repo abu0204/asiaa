@@ -41,6 +41,31 @@ class UserController {
       });
     }
   }
+  async about(req, res) {
+    try {
+      const result = await UserServices.aboutService(req);
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
+
+    async contact(req, res) {
+    try {
+      const result = await UserServices.contactService(req);
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
 
   async contactForm(req, res) {
     try {
@@ -66,10 +91,10 @@ class UserController {
         code: 500,
       });
     }
-  };
+  }
 
-  async bookATrip(req,res){
-     try {
+  async bookATrip(req, res) {
+    try {
       const result = await UserServices.bookATrip(req.body);
       return successResponse(req, res, result);
     } catch (error) {

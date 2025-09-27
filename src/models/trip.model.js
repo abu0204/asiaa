@@ -6,6 +6,7 @@ const tripSchema = new Schema(
     drop: { type: String, required: true },
     date: { type: Date, required: true },
     time: { type: String, required: true },
+    returnDate: { type: Date, default: null },
     travelType: { type: String, required: true },
     vehicleType: { type: String, required: true },
     name: { type: String, required: true },

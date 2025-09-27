@@ -1,32 +1,14 @@
-// document.addEventListener("DOMContentLoaded", () => {
-//   fetch("header.html")
-//     .then((response) => {
-//       if (!response.ok) throw new Error("Network response was not ok");
-//       return response.text();
-//     })
-//     .then((data) => {
-//       const container = document.getElementById("header-container");
-//       container.innerHTML = data;
+document.getElementById("travel-type").addEventListener("change", function () {
+  const returnTimeContainer = document.getElementById("return-time-container");
 
-//       // ===== Initialize Navbar Toggle AFTER header is loaded =====
-//       const navbarToggler = container.querySelector(".navbar-toggler");
-//       if (navbarToggler) {
-//         const togglerIcon = navbarToggler.querySelector(".toggler-icon");
-//         const navbarCollapse = container.querySelector("#navbarNav");
-
-//         if (navbarCollapse && togglerIcon) {
-//           // Listen for Bootstrap collapse events
-//           navbarCollapse.addEventListener("show.bs.collapse", () => {
-//             togglerIcon.classList.add("active"); // menu opening → X
-//           });
-//           navbarCollapse.addEventListener("hide.bs.collapse", () => {
-//             togglerIcon.classList.remove("active"); // menu closing → ☰
-//           });
-//         }
-//       }
-//     })
-//     .catch((err) => console.error("Error loading header:", err));
-// });
+  if (this.value === "roundTrip") {
+    returnTimeContainer.style.display = "flex"; // show
+    document.getElementById("return-date").setAttribute("required", true);
+  } else {
+    returnTimeContainer.style.display = "none"; // hide
+    document.getElementById("return-date").removeAttribute("required");
+  }
+});
 
 let fromLocation = null;
 let toLocation = null;
@@ -50,6 +32,7 @@ function getEstimation() {
     const pickup = document.getElementById("pickup-district").value.trim();
     const drop = document.getElementById("drop-district").value.trim();
     const tripDate = document.getElementById("trip-date").value;
+    const returnDate = document.getElementById("return-date").value;
     const tripTime = document.getElementById("trip-time").value.trim();
     const travelType = document.getElementById("travel-type").value.trim();
     const vehicleType = document.getElementById("vehicle-type").value.trim();
@@ -86,9 +69,26 @@ function getEstimation() {
       showToast("Please shedule your trip time", "error");
       return;
     }
+    if (tripDate !== "") {
+      const currentDate = new Date();
+      if (new Date(tripDate).getTime() < currentDate.getTime()) {
+        showToast("Pickup date should be greater than current date", "error");
+        return;
+      }
+    }
     if (travelType === "") {
       showToast("Please choose your travel type", "error");
       return;
+    }
+    if (travelType === "roundTrip" && returnDate === "") {
+      showToast("Please choose your return date", "error");
+      return;
+    }
+    if (travelType === "roundTrip" && returnDate !== "") {
+      if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
+        showToast("Return date should be grater than pickup date", "error");
+        return;
+      }
     }
     if (vehicleType === "") {
       showToast("Please choose your vehicle type", "error");
@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const pickup = document.getElementById("pickup-district").value.trim();
       const drop = document.getElementById("drop-district").value.trim();
       const tripDate = document.getElementById("trip-date").value;
+      const returnDate = document.getElementById("return-date").value;
       const tripTime = document.getElementById("trip-time").value.trim();
       const travelType = document.getElementById("travel-type").value.trim();
       const vehicleType = document.getElementById("vehicle-type").value.trim();
@@ -169,10 +170,28 @@ document.addEventListener("DOMContentLoaded", function () {
         showToast("Please shedule your trip time", "error");
         return;
       }
+      if (tripDate !== "") {
+        const currentDate = new Date();
+        if (new Date(tripDate).getTime() < currentDate.getTime()) {
+          showToast("Pickup date should be greater than current date", "error");
+          return;
+        }
+      }
       if (travelType === "") {
         showToast("Please choose your travel type", "error");
         return;
       }
+      if (travelType === "roundTrip" && returnDate === "") {
+        showToast("Please choose your return date", "error");
+        return;
+      }
+      if (travelType === "roundTrip" && returnDate !== "") {
+        if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
+          showToast("Return date should be grater than pickup date", "error");
+          return;
+        }
+      }
+
       if (vehicleType === "") {
         showToast("Please choose your vehicle type", "error");
         return;
@@ -191,6 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pickup,
             drop,
             tripDate,
+            returnDate,
             tripTime,
             travelType,
             vehicleType,
@@ -217,7 +237,7 @@ function isValidEmail(email) {
 function showToast(message, toastType) {
   Toastify({
     text: message,
-    duration: 2000,
+    duration: toastType === "success" ? 2000 : 4000,
     gravity: "top", // or "top"
     position: "right", // left, center, or right
     backgroundColor: toastType === "success" ? "#28a745" : "#dc3545",

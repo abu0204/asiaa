@@ -90,11 +90,15 @@ class UserServices {
         status:true,
         message:"success",
         data:{
+          pickup:fromData.district,
+          drop:toData.district,
           vehicle,
           driverBata,
           totalKiloMeter,
           costPerKilometr,
-          totalCost
+          totalCost,
+          travelType,
+          vehicleType
         }
       };
     } catch (error) {

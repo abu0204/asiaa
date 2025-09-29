@@ -105,7 +105,27 @@ function getEstimation() {
             vehicleType,
           })
           .then((response) => {
-            console.log("Data:", response.data);
+            const { status, data } = response.data;
+            if (status) {
+              const {
+                pickup,
+                drop,
+                costPerKilometr,
+                driverBata,
+                totalCost,
+                totalKiloMeter,
+                vehicle,
+                travelType,
+                vehicleType,
+              } = data;
+              document.getElementById("cartype-value").innerHTML = vehicle;
+              document.getElementById("traveltype-value").innerHTML =
+                travelType;
+                document.getElementById("distance-value").innerHTML = totalKiloMeter;
+                document.getElementById("pickup-value").innerHTML = pickup;
+                document.getElementById("drop-value").innerHTML = drop;
+                document.getElementById("fare-value").innerHTML = totalCost;
+            }
           })
           .catch((error) => {
             console.error("Error:", error);

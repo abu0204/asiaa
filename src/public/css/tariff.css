@@ -109,3 +109,29 @@
 .badge-premium:hover {
   opacity: 0.9;
 }
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    background-position: -500px 0;
+  }
+  100% {
+    background-position: 500px 0;
+  }
+}
+
+.tab-pane p {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffd400; /* Base yellow */
+  background: linear-gradient(
+    90deg,
+    #ffd400 20%,
+    #ffffff 50%,
+    #ffd400 80%
+  );
+  background-size: 500px 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+  text-align: center;
+}

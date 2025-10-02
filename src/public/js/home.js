@@ -282,3 +282,37 @@ function showToast(message, toastType) {
     backgroundColor: toastType === "success" ? "#28a745" : "#dc3545",
   }).showToast();
 }
+document.addEventListener("DOMContentLoaded", function () {
+  const counters = document.querySelectorAll(".stat-number");
+  const speed = 50; // Lower = faster
+
+  const animateCounters = () => {
+    counters.forEach(counter => {
+      const target = +counter.getAttribute("data-target");
+      const suffix = counter.innerText.includes("%") ? "%" : counter.innerText.includes("+") ? "+" : "";
+      let count = 0;
+
+      const updateCount = () => {
+        const increment = Math.ceil(target / speed);
+        if (count < target) {
+          count += increment;
+          counter.innerText = count + suffix;
+          requestAnimationFrame(updateCount);
+        } else {
+          counter.innerText = target + suffix;
+        }
+      };
+      updateCount();
+    });
+  };
+
+  // Trigger animation when section is visible
+  const observer = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      animateCounters();
+      observer.disconnect(); // run only once
+    }
+  }, { threshold: 0.5 });
+
+  observer.observe(document.querySelector(".stats-section"));
+});

@@ -1,8 +1,8 @@
 :root {
-  --primary: #ffd400; /* Yellow accent */
-  --dark: #0b0b0b;    /* Black text */
-  --light: #ffffff;   /* White background */
-  --gray: #f5f5f5;    /* Light gray for cards */
+  --primary: #ffd400; 
+  --dark: #0b0b0b;    
+  --light: #ffffff;   
+  --gray: #f5f5f5;    
 }
 
 /* Body */
@@ -11,24 +11,26 @@ body {
   background-color: var(--light);
   color: var(--dark);
   margin: 0;
+  overflow-x: hidden;
 }
 
 /* Hero Section */
 .hero {
-  height: 100vh;
+  min-height: 100vh; /* fix mobile vh issue */
   background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
   text-align: center;
   color: var(--light);
+  padding: 60px 15px;
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0,0,0,0.5);
+  z-index: 0;
 }
 
 .hero h1 {
@@ -55,17 +57,16 @@ body {
 .booking-section h5 {
   color: var(--primary);
   font-weight: 600;
-  margin-bottom: 10px;
 }
 
 .booking-section h2 {
   font-weight: 700;
   margin-bottom: 20px;
+  font-size: 1.6rem;
 }
 
 .booking-section .form-control,
 .booking-section .form-select {
-  min-width: 150px;
   border-radius: 6px;
   border: 1px solid #ccc;
 }
@@ -88,48 +89,7 @@ body {
   background-color: #e6c200;
 }
 
-/* Responsive Hero Text */
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 36px;
-  }
-  .hero p {
-    font-size: 16px;
-  }
-}
-/* Footer */
-.footer {
-  border-radius: 12px;
-  background: linear-gradient(135deg, #1a1a1a, #111);
-  padding: 3rem 1.5rem;
-  color: #ddd;
-}
-
-.footer-col {
-  border-radius: 0;        /* remove card look */
-  background-color: transparent; /* remove dark column background */
-  padding: 0;              /* rely on footer padding */
-  transition: none;        /* remove hover transform/shadow */
-}
-
-.footer-link {
-  text-decoration: none;
-  color: #ddd;
-  transition: color 0.3s;
-}
-
-.footer-link:hover {
-  color: #ffd400; /* highlight on hover */
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .footer .footer-col {
-    flex: 1 1 100%;
-    margin-bottom: 1.5rem;
-  }
-}
-/* Estimate Results Container */
+/* Estimate Results */
 #estimate-results {
   background-color: #fff;        
   border-radius: 12px;           
@@ -146,9 +106,8 @@ body {
   box-shadow: 0 12px 30px rgba(0,0,0,0.2);
 }
 
-/* Heading */
 #estimate-results h5 {
-  color: #ffd400; 
+  color: var(--primary); 
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
@@ -156,7 +115,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Individual estimate values */
 #estimate-output p {
   font-size: 1rem;
   color: #111;      
@@ -173,33 +131,55 @@ body {
   background-color: #fff3d6;
 }
 
-/* Icon spacing */
 #estimate-output i {
   font-size: 1.2rem;
   margin-right: 10px;
 }
 
-/* Highlight the key info */
 #estimate-output p strong {
   color: #ffb800;  
 }
 
-/* Responsive adjustments */
+/* ===================== Responsive ===================== */
+
+/* Tablets */
 @media (max-width: 992px) {
+  .hero {
+    padding: 40px 20px;
+    text-align: center;
+  }
+  .booking-section {
+    margin-bottom: 20px;
+  }
   #estimate-results {
     margin-top: 20px;
   }
 }
 
+/* Mobiles */
 @media (max-width: 576px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+  .hero p {
+    font-size: 15px;
+  }
+  .booking-section h2 {
+    font-size: 1.4rem;
+  }
   #estimate-output p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     flex-direction: column;
     align-items: flex-start;
   }
-
   #estimate-output i {
     margin-bottom: 4px;
   }
+  .footer {
+    text-align: center;
+  }
+  .footer .footer-col {
+    flex: 1 1 100%;
+    margin-bottom: 1.5rem;
+  }
 }
-

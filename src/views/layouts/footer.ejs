@@ -1,0 +1,166 @@
+<footer class="footer bg-white p-3 shadow-lg animate-footer">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between gap-2">
+      
+      <!-- About Section -->
+      <div class="footer-col p-2" style="flex: 1 1 30%">
+        <h5>About Asiaa Travel</h5>
+        <p>
+          Asiaa Travel provides reliable car booking services across Tamil
+          Nadu. Book one-way or round trips with ease and comfort.
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col p-2" style="flex: 1 1 30%">
+        <h5>Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a href="/" class="footer-link">Home</a></li>
+          <li><a href="/services" class="footer-link">Tariff</a></li>
+          <li><a href="/about" class="footer-link">About Us</a></li>
+          <li><a href="/contact" class="footer-link">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-col p-2" style="flex: 1 1 30%">
+        <h5>Contact Us</h5>
+        <p>Email: 
+          <a href="mailto:info@asiaatravel.com" class="footer-link">info@asiaatravel.com</a>
+        </p>
+        <p>Phone: 
+          <a href="tel:+919876543210" class="footer-link">+91 98765 43210</a>
+        </p>
+        <div class="social-links">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-2" />
+
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 Asiaa Travel. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* --- Footer Styling --- */
+  .footer {
+    border-top: 3px solid #ffd400;
+    border-radius: 10px 10px 0 0;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeUp 1s ease forwards;
+  }
+
+  .footer h5 {
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #ffd400;
+    font-size: 1rem;
+  }
+
+  .footer p {
+    color: #555;
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  /* --- Links with underline animation --- */
+  .footer-link {
+    color: #000;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 0;
+    font-size: 0.9rem;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .footer-link::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    left: 0;
+    bottom: -3px;
+    background: #ffd400;
+    transition: width 0.3s ease;
+  }
+
+  .footer-link:hover::after {
+    width: 100%;
+  }
+
+  /* --- Social Links Bounce Animation --- */
+  .footer .social-links a {
+    font-size: 1.1rem;
+    color: #000;
+    margin-right: 10px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    border: 1px solid #ddd;
+    padding: 6px 8px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer .social-links a:hover {
+    color: #fff;
+    background: #ffd400;
+    transform: translateY(-4px) scale(1.1);
+    border-color: #ffd400;
+  }
+
+  .footer hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 10px 0;
+  }
+
+  .footer p.mb-0 {
+    color: #777;
+    font-size: 0.8rem;
+  }
+
+  /* --- Fade Up Animation --- */
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .footer .d-flex {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer .footer-col {
+      flex: 1 1 100%;
+      margin-bottom: 10px;
+    }
+    .footer .social-links {
+      margin-top: 10px;
+    }
+  }
+</style>
+
+<!-- Bootstrap Icons -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+/>

@@ -6,6 +6,25 @@ import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 const { OSRM_API } = process.env;
+
+function calculateDays(startDate, endDate) {
+  console.log("startDate, endDate",startDate, endDate)
+    let start = new Date(startDate);
+    let end = new Date(endDate);
+    let timeDifference = end - start;
+    let daysDifference = timeDifference / (1000 * 3600 * 24);
+    return daysDifference;
+};
+function convertTo12HourFormat(time24) {
+  let [hours, minutes] = time24.split(":").map(Number);
+
+  let period = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+
+  return `${hours}:${minutes.toString().padStart(2, "0")} ${period}`;
+};
+
+
 class UserServices {
   async homeService() {
     try {
@@ -70,9 +89,8 @@ class UserServices {
 
   async getEstimationService(req_Body){
     try {
-      const {fromLocation,toLocation,travelType,vehicleType} = req_Body;
-
-      console.log({req_Body});
+      const {fromLocation,toLocation,travelType,vehicleType,tripDate,returnDate,tripTime} = req_Body;
+      console.log({tripTime})
       const fromData = DistrictJson.find(location=>location.district === fromLocation.district);
       const toData = DistrictJson.find(location=>location.district === toLocation.district);
 
@@ -94,11 +112,13 @@ class UserServices {
           drop:toData.district,
           vehicle,
           driverBata,
-          totalKiloMeter,
+          totalKiloMeter:parseInt(totalKiloMeter),
           costPerKilometr,
           totalCost,
           travelType,
-          vehicleType
+          vehicleType,
+          durationDays : travelType === "onewayTrip" ? 1 : calculateDays(tripDate,returnDate) ,
+          dateAndTime : `${tripDate} , ${convertTo12HourFormat(tripTime)}`
         }
       };
     } catch (error) {

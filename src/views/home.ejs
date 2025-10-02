@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asiaa Travel</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/home.css" />
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Asiaa Travel</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/home.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
 
-  <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-</head>
-
-<body>
-  <%- include('./layouts/header') %>
+  <body>
+    <%- include('./layouts/header') %>
     <div id="header-container"></div>
     <!-- Hero Section -->
     <section class="hero d-flex align-items-center text-dark position-relative">
@@ -33,23 +41,33 @@
                 <!-- Pickup & Drop -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <select id="pickup-district" name="pickup-district" class="form-control" required>
+                    <select
+                      id="pickup-district"
+                      name="pickup-district"
+                      class="form-control"
+                      required
+                    >
                       <option value="">Select A pickup location</option>
                       <% for (let i=0; i < data.length; i++) { %>
-                        <option value='<%- JSON.stringify(data[i]) %>'>
-                          <%= data[i].district %>
-                        </option>
-                        <% } %>
+                      <option value='<%- JSON.stringify(data[i]) %>'>
+                        <%= data[i].district %>
+                      </option>
+                      <% } %>
                     </select>
                   </div>
                   <div class="col-md-6">
-                    <select id="drop-district" name="drop-district" class="form-control" required>
+                    <select
+                      id="drop-district"
+                      name="drop-district"
+                      class="form-control"
+                      required
+                    >
                       <option value="">Select A drop location</option>
                       <% for (let i=0; i < data.length; i++) { %>
-                        <option value='<%- JSON.stringify(data[i]) %>'>
-                          <%= data[i].district %>
-                        </option>
-                        <% } %>
+                      <option value='<%- JSON.stringify(data[i]) %>'>
+                        <%= data[i].district %>
+                      </option>
+                      <% } %>
                     </select>
                   </div>
                 </div>
@@ -57,10 +75,21 @@
                 <!-- Date & Time -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input id="trip-date" type="date" class="form-control" required />
+                    <input
+                      id="trip-date"
+                      type="date"
+                      class="form-control"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <input id="trip-time" type="time" class="form-control" value="19:00" required />
+                    <input
+                      id="trip-time"
+                      type="time"
+                      class="form-control"
+                      value="19:00"
+                      required
+                    />
                   </div>
                 </div>
 
@@ -84,7 +113,11 @@
                   </div>
                 </div>
 
-                <div class="row mb-3" id="return-time-container" style="display: none">
+                <div
+                  class="row mb-3"
+                  id="return-time-container"
+                  style="display: none"
+                >
                   <div class="col-md-12">
                     <input id="return-date" type="date" class="form-control" />
                   </div>
@@ -93,21 +126,40 @@
                 <!-- Name & Mobile -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input id="name" type="text" class="form-control" placeholder="Enter Name" />
+                    <input
+                      id="name"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Name"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <input id="mobile" type="tel" class="form-control" placeholder="Your Mobile No." />
+                    <input
+                      id="mobile"
+                      type="tel"
+                      class="form-control"
+                      placeholder="Your Mobile No."
+                    />
                   </div>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
-                  <input id="email" type="email" class="form-control" placeholder="Your Email" />
+                  <input
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-grid gap-2 mb-2">
-                  <button type="button" class="btn btn-warning" onclick="getEstimation()">
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    onclick="getEstimation()"
+                  >
                     Get Estimate
                   </button>
                   <button type="submit" class="btn btn-warning">
@@ -120,34 +172,77 @@
 
           <!-- Estimate Results Column -->
           <div class="col-lg-4">
-            <div id="estimate-results"
-              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center">
+            <div
+              id="estimate-results"
+              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center"
+            >
               <h5 class="text-warning mb-3">ESTIMATE RESULT</h5>
               <div id="estimate-output" class="fs-5 text-dark">
-                <!-- Default values with icons -->
-                <p id="pickup-value"><i class="bi bi-car-front-fill me-2 text-warning"></i><strong>Pickup:</strong> –
+                <p>
+                  <strong>Pick up Location:</strong>
+                  <span id="pickup-value">–</span>
                 </p>
-                <p id="drop-value"><i class="bi bi-geo-alt-fill me-2 text-warning"></i><strong>Drop:</strong></p>
-                <p id="distance-value"><i class="bi bi-signpost-split me-2 text-warning"></i><strong>Distance:</strong>
-                  0 km</p>
-                <p id="time-value"><i class="bi bi-clock-history me-2 text-warning"></i><strong>Duration:</strong> 0 hrs
+
+                <p>
+                  <strong>Drop Location:</strong>
+                  <span id="drop-value">–</span>
                 </p>
-                <p id="traveltype-value"><i class="bi bi-arrow-repeat me-2 text-warning"></i><strong>Travel
-                    Type:</strong> –</p>
-                <p id="cartype-value"><i class="bi bi-truck-front-fill me-2 text-warning"></i><strong>Car Type:</strong>
-                  –</p>
-                <p id="fare-value"><i class="bi bi-currency-rupee me-2 text-warning"></i><strong>Estimated
-                    Fare:</strong> ₹0</p>
+
+                <p>
+                  <strong>Travel Date & Time:</strong>
+                  <span id="date-time-value">–</span>
+                </p>
+
+                <p>
+                  <strong>Travel Type:</strong>
+                  <span id="traveltype-value">–</span>
+                </p>
+
+                <p>
+                  <strong>Car Type:</strong>
+                  <span id="cartype-value">–</span>
+                </p>
+
+                <p>
+                  <strong>Total No of days :</strong>
+                  <span id="days-value">0</span>
+                </p>
+
+                <p>
+                  <strong>Total km:</strong>
+                  <span id="distance-value">0 km</span>
+                </p>
+
+                <p>
+                  <strong>km per cost:</strong>
+                  <span id="km-per-value">0 km</span>
+                </p>
+
+                <p>
+                  <strong>Driver Batta :</strong>
+                  <span id="driver-batta-value">0</span>
+                </p>
+
+                <p>
+                  <strong>Estimated Fare:</strong>
+                  <span id="fare-value">₹0</span>
+                </p>
+
+                <p>
+                  <strong>Total:</strong>
+                  <span id="total-value">₹0</span>
+                </p>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
 
       <!-- Hero Overlay -->
-      <div class="hero-overlay position-absolute inset-0" style="background-color: rgba(0, 0, 0, 0.5)"></div>
+      <div
+        class="hero-overlay position-absolute inset-0"
+        style="background-color: rgba(0, 0, 0, 0.5)"
+      ></div>
     </section>
 
     <!-- Footer -->
@@ -171,13 +266,19 @@
                 <a href="/" class="text-light text-decoration-none">Home</a>
               </li>
               <li>
-                <a href="/services" class="text-light text-decoration-none">Tariff</a>
+                <a href="/services" class="text-light text-decoration-none"
+                  >Tariff</a
+                >
               </li>
               <li>
-                <a href="/about" class="text-light text-decoration-none">About Us</a>
+                <a href="/about" class="text-light text-decoration-none"
+                  >About Us</a
+                >
               </li>
               <li>
-                <a href="/contact" class="text-light text-decoration-none">Contact Us</a>
+                <a href="/contact" class="text-light text-decoration-none"
+                  >Contact Us</a
+                >
               </li>
             </ul>
           </div>
@@ -187,16 +288,24 @@
             <h5>Contact Us</h5>
             <p>
               Email:
-              <a href="mailto:info@asiaatravel.com" class="text-light">info@asiaatravel.com</a>
+              <a href="mailto:info@asiaatravel.com" class="text-light"
+                >info@asiaatravel.com</a
+              >
             </p>
             <p>
               Phone:
               <a href="tel:+919876543210" class="text-light">+91 98765 43210</a>
             </p>
             <div>
-              <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
-              <a href="#" class="text-light me-2"><i class="bi bi-twitter"></i></a>
-              <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
+              <a href="#" class="text-light me-2"
+                ><i class="bi bi-facebook"></i
+              ></a>
+              <a href="#" class="text-light me-2"
+                ><i class="bi bi-twitter"></i
+              ></a>
+              <a href="#" class="text-light me-2"
+                ><i class="bi bi-instagram"></i
+              ></a>
               <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
@@ -214,6 +323,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/js/home.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
-
+  </body>
 </html>

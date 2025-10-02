@@ -103,6 +103,9 @@ function getEstimation() {
             toLocation,
             travelType,
             vehicleType,
+            tripTime,
+            tripDate,
+            returnDate,
           })
           .then((response) => {
             const { status, data } = response.data;
@@ -116,15 +119,31 @@ function getEstimation() {
                 totalKiloMeter,
                 vehicle,
                 travelType,
-                vehicleType,
+                durationDays,
+                dateAndTime,
               } = data;
-              document.getElementById("cartype-value").innerHTML = vehicle;
+              document.getElementById("pickup-value").innerHTML = pickup;
+              document.getElementById("drop-value").innerHTML = drop;
+              document.getElementById("date-time-value").innerHTML =
+                dateAndTime;
               document.getElementById("traveltype-value").innerHTML =
                 travelType;
-                document.getElementById("distance-value").innerHTML = totalKiloMeter;
-                document.getElementById("pickup-value").innerHTML = pickup;
-                document.getElementById("drop-value").innerHTML = drop;
-                document.getElementById("fare-value").innerHTML = totalCost;
+              document.getElementById("cartype-value").innerHTML = vehicle;
+
+              document.getElementById(
+                "days-value"
+              ).innerHTML = `${durationDays} Days`;
+              document.getElementById("distance-value").innerHTML =
+                totalKiloMeter;
+              document.getElementById("km-per-value").innerHTML =
+                costPerKilometr;
+              document.getElementById("driver-batta-value").innerHTML =
+                driverBata;
+              document.getElementById("fare-value").innerHTML =
+                parseInt(totalCost);
+              document.getElementById("total-value").innerHTML = parseInt(
+                totalCost + driverBata
+              );
             }
           })
           .catch((error) => {

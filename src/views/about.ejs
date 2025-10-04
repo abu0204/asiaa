@@ -1,139 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asiaa Travel</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/css/about.css" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asiaa Travel - About Us</title>
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- AOS CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="about.css" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
+</head>
+<body>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
-    <!-- AOS CSS -->
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Header Include -->
+  <%- include('./layouts/header') %>
 
-  </head>
-  <body>
-    <%- include('./layouts/header') %>
-  <!-- Who We Are -->
   <!-- Hero Section -->
-<section class="about-hero d-flex align-items-center text-center text-white" data-aos="fade-down">
+  <section class="about-hero d-flex align-items-center text-center text-white" data-aos="fade-down">
+    <div class="container">
+      <h1 class="display-4 fw-bold">About Asiaa Travel</h1>
+      <p class="lead">Your Trusted Travel Partner in Tamil Nadu</p>
+    </div>
+  </section>
+
+  <!-- Who We Are -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-md-6" data-aos="fade-right">
+          <img src="/assets/Gemini_Generated_Image_y0wrv8y0wrv8y0wr.png" alt="About Us" class="img-fluid rounded-3 shadow">
+        </div>
+        <div class="col-md-6" data-aos="fade-left">
+          <h2 class="fw-bold mb-3">Who We Are</h2>
+          <p>Asiaa Travel is a leading car rental and travel service provider in Tamil Nadu, delivering comfort, safety, and reliability to travelers across the region.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission, Vision, Values -->
+  <section class="bg-light py-5">
+    <div class="container text-center">
+      <div class="row g-4">
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+          <i class="bi bi-bullseye fs-1 text-warning"></i>
+          <h4 class="mt-3">Our Mission</h4>
+          <p>To provide affordable, reliable, and comfortable travel services for all our clients.</p>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+          <i class="bi bi-eye fs-1 text-warning"></i>
+          <h4 class="mt-3">Our Vision</h4>
+          <p>To be the most trusted travel partner for individuals and businesses in Tamil Nadu.</p>
+        </div>
+        <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+          <i class="bi bi-heart fs-1 text-warning"></i>
+          <h4 class="mt-3">Our Values</h4>
+          <p>Trust, safety, punctuality, and customer satisfaction are at the heart of everything we do.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="py-5">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-5" data-aos="fade-up">Why Choose Asiaa Travel?</h2>
+      <div class="row g-4">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+          <i class="bi bi-car-front fs-1 text-warning"></i>
+          <h5 class="mt-2">Wide Fleet</h5>
+          <p>Choose from a variety of cars suited to every journey.</p>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+          <i class="bi bi-clock-history fs-1 text-warning"></i>
+          <h5 class="mt-2">On-Time Service</h5>
+          <p>Punctuality is our promise to every client.</p>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+          <i class="bi bi-currency-rupee fs-1 text-warning"></i>
+          <h5 class="mt-2">Affordable Tariffs</h5>
+          <p>Transparent pricing with no hidden charges.</p>
+        </div>
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+          <i class="bi bi-shield-check fs-1 text-warning"></i>
+          <h5 class="mt-2">Safe Travel</h5>
+          <p>Experienced drivers ensuring your safety at all times.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+ <section class="ceo-section-floating py-5">
   <div class="container">
-    <h1 class="display-4 fw-bold">About Asiaa Travel</h1>
-    <p class="lead">Your Trusted Travel Partner in Tamil Nadu</p>
-  </div>
-</section>
+    <div class="row align-items-center">
 
-<!-- Who We Are -->
-<section class="py-5">
-  <div class="container">
-    <div class="row align-items-center g-4">
-      <div class="col-md-6" data-aos="fade-right">
-        <img src="/assets/Gemini_Generated_Image_y0wrv8y0wrv8y0wr.png" alt="About Us" class="img-fluid rounded-3 shadow">
+      <!-- CEO Image -->
+      <div class="col-lg-4 text-center text-lg-start" data-aos="fade-right" data-aos-duration="1000">
+        <div class="ceo-img-wrapper-floating">
+          <img src="/assets/ceo.jpg" alt="CEO" class="ceo-img-floating rounded-circle shadow">
+        </div>
       </div>
-      <div class="col-md-6" data-aos="fade-left">
-        <h2 class="fw-bold mb-3">Who We Are</h2>
-        <p>Asiaa Travel is a leading car rental and travel service provider in Tamil Nadu...</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Mission, Vision, Values -->
-<section class="bg-light py-5">
-  <div class="container text-center">
-    <div class="row g-4">
-      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
-        <i class="bi bi-bullseye fs-1 text-warning"></i>
-        <h4 class="mt-3">Our Mission</h4>
-        <p>To provide affordable, reliable, and comfortable travel services...</p>
+      <!-- CEO Quote Card -->
+      <div class="col-lg-8" data-aos="fade-left" data-aos-duration="1000">
+        <div class="ceo-quote-card p-4 shadow-lg rounded-4">
+          <h5 class="fw-bold mb-1">Arun Kumar</h5>
+          <p class="text-warning fw-semibold mb-3">Founder & CEO</p>
+          <blockquote class="ceo-quote-floating">
+            "At Asiaa Travel, our mission is to make every journey memorable, safe, and comfortable. We aim to redefine travel experiences across Tamil Nadu."
+          </blockquote>
+        </div>
       </div>
-      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
-        <i class="bi bi-eye fs-1 text-warning"></i>
-        <h4 class="mt-3">Our Vision</h4>
-        <p>To be the most trusted travel partner...</p>
-      </div>
-      <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
-        <i class="bi bi-heart fs-1 text-warning"></i>
-        <h4 class="mt-3">Our Values</h4>
-        <p>We stand for trust, safety, punctuality...</p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- Why Choose Us -->
-<section class="py-5">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-5" data-aos="fade-up">Why Choose Asiaa Travel?</h2>
-    <div class="row g-4">
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-        <i class="bi bi-car-front fs-1 text-warning"></i>
-        <h5 class="mt-2">Wide Fleet</h5>
-        <p>Choose from a variety of cars...</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-        <i class="bi bi-clock-history fs-1 text-warning"></i>
-        <h5 class="mt-2">On-Time Service</h5>
-        <p>Punctuality is our promise...</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-        <i class="bi bi-currency-rupee fs-1 text-warning"></i>
-        <h5 class="mt-2">Affordable Tariffs</h5>
-        <p>Transparent pricing...</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-        <i class="bi bi-shield-check fs-1 text-warning"></i>
-        <h5 class="mt-2">Safe Travel</h5>
-        <p>Experienced drivers ensuring safety...</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Team Section -->
-<section class="bg-light py-5">
-  <div class="container text-center">
-    <h2 class="fw-bold mb-5" data-aos="fade-up">Meet Our Team</h2>
-    <div class="row g-4">
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
-         
-        <h6 class="mt-3">Arun Kumar</h6>
-        <p class="text-muted">Founder & CEO</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
-         
-        <h6 class="mt-3">Priya R</h6>
-        <p class="text-muted">Operations Head</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
-         
-        <h6 class="mt-3">Suresh B</h6>
-        <p class="text-muted">Fleet Manager</p>
-      </div>
-      <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
-         
-        <h6 class="mt-3">Meena S</h6>
-        <p class="text-muted">Customer Support</p>
-      </div>
     </div>
   </div>
 </section>
 
 
-    <!-- Footer -->
-    <%- include('./layouts/footer') %>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <script src="/js/common.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </body>
+
+
+
+  <!-- Footer Include -->
+  <%- include('./layouts/footer') %>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true, duration: 800 });
+  </script>
+</body>
 </html>

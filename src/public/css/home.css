@@ -25,6 +25,7 @@ body {
   color: var(--light);
   padding: 60px 15px;
   padding-top: 120px; /* spacing from top */
+  margin-top: 2.5rem;
 }
 
 .hero-overlay {
@@ -233,6 +234,9 @@ body {
   color: #ffd400;
 }
 
+.btn-warning{
+  background-color: var(--primary);
+}
 /* ===================== Responsive ===================== */
 /* Tablets */
 @media (max-width: 992px) {

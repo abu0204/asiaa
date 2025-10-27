@@ -31,7 +31,7 @@
           <!-- Form Column -->
           <div class="col-lg-8">
             <div class="booking-section bg-white p-4 rounded shadow">
-              <h5 class="text-warning mb-2">BOOK A CAR NOW</h5>
+              <h5 class=" mb-2">BOOK A CAR NOW</h5>
               <h2 class="mb-4">You can book a car with our website</h2>
 
               <form id="book-trip">
@@ -60,16 +60,20 @@
                 </div>
 
                 <!-- Date & Time -->
-                <div class="row mb-3">
-                  <div class="col-md-6 mb-2 mb-md-0">
-  <input id="trip-date" type="date" class="form-control" required />
-  <label for="trip-date" class="date-placeholder">Select Trip Date</label>
+                <div class="row mb-3 position-relative">
+  <!-- Date Input -->
+  <div class="col-md-6 mb-3 mb-md-0 position-relative">
+    <input id="trip-date" type="date" class="form-control gold-input" required />
+    <label for="trip-date" class="floating-label">Select Pickup Date</label>
+  </div>
+
+  <!-- Time Input -->
+  <div class="col-md-6 position-relative">
+    <input id="trip-time" type="time" class="form-control gold-input" required />
+    <label for="trip-time" class="floating-label">Select Pickup Time</label>
+  </div>
 </div>
 
-                  <div class="col-md-6">
-                    <input id="trip-time" type="time" class="form-control" value="19:00" required />
-                  </div>
-                </div>
 
                 <!-- Travel Type & Vehicle Type -->
                 <div class="row mb-3">
@@ -136,7 +140,7 @@
           <div class="col-lg-4">
             <div id="estimate-results"
               class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center">
-              <h5 class="text-warning mb-3">ESTIMATE RESULT</h5>
+              <h5 class=" mb-3">ESTIMATE RESULT</h5>
               <div id="estimate-output" class="fs-5 text-dark">
                 <p>
                   <strong>Pick up Location:</strong>
@@ -276,7 +280,7 @@
             <h4>Karnataka</h4>
           </div>
           <div class="state-card glow-delay-5">
-          <img src="/assets/pondi.jpeg" alt="Pondicherry">
+            <img src="/assets/pondi.jpeg" alt="Pondicherry">
             <h4>Pondicherry</h4>
           </div>
         </div>

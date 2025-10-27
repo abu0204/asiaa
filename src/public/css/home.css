@@ -53,24 +53,71 @@ body {
   position: relative;
 }
 
-/* Placeholder label styling */
-.date-placeholder {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  color: #6c757d;
-  pointer-events: none;
-  transition: all 0.2s ease;
+/* Wrapper */
+.position-relative {
+  position: relative;
 }
 
-/* When user selects a date */
-input[type="date"]:valid + .date-placeholder,
-input[type="date"]:focus + .date-placeholder {
-  top: 5px;
-  font-size: 12px;
-  color: #ffc107; /* highlight color */
+/* Input field styling */
+.gold-input {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 16px;
+  border: 1px solid rgba(255, 212, 0, 0.4);
+  border-radius: 10px;
+  background: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  appearance: none;
 }
+
+/* Focus + active glow */
+.gold-input:focus {
+  border-color: #ffd400;
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.4);
+  outline: none;
+}
+
+/* Floating placeholder label */
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: black;
+  background: #fff;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+/* When focused or valid, float label up */
+.gold-input:focus + .floating-label,
+.gold-input:valid + .floating-label {
+  top: -8px;
+  left: 14px;
+  font-size: 13px;
+  color: #ffd400;
+  font-weight: 600;
+}
+
+/* MOBILE TWEAKS */
+@media (max-width: 576px) {
+  .gold-input {
+    font-size: 15px;
+    padding: 12px 12px;
+  }
+  .floating-label {
+    font-size: 14px;
+  }
+  .gold-input:focus + .floating-label,
+  .gold-input:valid + .floating-label {
+    font-size: 12px;
+    top: -6px;
+  }
+}
+
 
 .booking-section {
   background-color: var(--light);
@@ -81,7 +128,7 @@ input[type="date"]:focus + .date-placeholder {
 }
 
 .booking-section h5 {
-  color: var(--primary);
+  color: #ffd400;
   font-weight: 600;
 }
 
@@ -183,7 +230,7 @@ input[type="date"]:focus + .date-placeholder {
 }
 
 #estimate-output p strong {
-  color: #ffb800;
+  color: #ffd400;
 }
 
 /* ===================== Responsive ===================== */
@@ -470,7 +517,6 @@ input[type="date"]:focus + .date-placeholder {
   width: 100%;
   height: 120px;
   object-fit: cover;
-  
   transition: all 0.4s ease;
 }
 

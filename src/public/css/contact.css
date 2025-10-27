@@ -1,0 +1,122 @@
+/* ========== ASIAA TRAVEL CONTACT SECTION ========== */
+:root {
+  --primary-gold: #ffd400;
+  --dark: #0b0b0b;
+  --gray: #f8f9fa;
+  --text-muted: #6c757d;
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Section Base */
+.contact-section {
+  background: var(--gray);
+  position: relative;
+  overflow: hidden;
+  margin-top: 4rem;
+}
+
+.contact-section h2 {
+  color: var(--dark);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.contact-section p {
+  color: var(--text-muted);
+  font-size: 15px;
+}
+
+/* Contact Cards */
+.contact-section .bg-white {
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.contact-section .bg-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(255, 212, 0, 0.2);
+}
+
+/* Contact Info Box */
+.contact-section h5 {
+  color: var(--dark);
+  font-weight: 600;
+}
+
+.footer-link {
+  color: var(--dark);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--primary-gold);
+}
+
+/* Icons */
+.contact-section i {
+  color: var(--primary-gold);
+  margin-right: 6px;
+}
+
+/* Input fields */
+.contact-section .form-control {
+  border: 1px solid rgba(255, 212, 0, 0.4);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.05),
+              inset -2px -2px 6px rgba(255, 255, 255, 0.9);
+}
+
+.contact-section .form-control:focus {
+  border-color: var(--primary-gold);
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.3);
+  outline: none;
+}
+
+/* Textarea resize fix */
+.contact-section textarea.form-control {
+  resize: none;
+}
+
+/* Button */
+.contact-section .btn-warning {
+  background: var(--primary-gold);
+  border: none;
+  font-weight: 600;
+  border-radius: 8px;
+  color: var(--dark);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(255, 212, 0, 0.3);
+}
+
+.contact-section .btn-warning:hover {
+  background: #f6c800;
+  box-shadow: 0 0 15px rgba(255, 212, 0, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .contact-section .col-lg-4,
+  .contact-section .col-lg-8 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .contact-section h2 {
+    font-size: 24px;
+  }
+
+  .contact-section p {
+    font-size: 14px;
+  }
+
+  .contact-section .btn-warning {
+    width: 100%;
+  }
+}

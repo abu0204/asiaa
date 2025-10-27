@@ -44,9 +44,34 @@ body {
   font-size: 18px;
   color: var(--light);
   margin-bottom: 30px;
+  color: black;
 }
 
 /* ===================== Booking Section ===================== */
+/* Container position */
+.col-md-6 {
+  position: relative;
+}
+
+/* Placeholder label styling */
+.date-placeholder {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #6c757d;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* When user selects a date */
+input[type="date"]:valid + .date-placeholder,
+input[type="date"]:focus + .date-placeholder {
+  top: 5px;
+  font-size: 12px;
+  color: #ffc107; /* highlight color */
+}
+
 .booking-section {
   background-color: var(--light);
   padding: 30px;
@@ -89,6 +114,26 @@ body {
 .booking-section .btn-warning:hover {
   background-color: #e6c200;
 }
+/* ===== Disclaimer Box Style ===== */
+.disclaimer-box {
+  background: #fff9e6; /* soft yellow tint */
+  border: 1px solid #ffe58f;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
+
+.disclaimer-box:hover {
+  background: #fff7d9;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.disclaimer-text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
 
 /* ===================== Estimate Results ===================== */
 #estimate-results {

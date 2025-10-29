@@ -7,27 +7,18 @@
   <title>Asiaa Travel</title>
 
   <!-- Bootstrap CSS -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/home.css" />
 
   <!-- Toastify -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-  />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
   <!-- Favicon & Icons -->
-  <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-  />
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 
 
@@ -41,7 +32,7 @@
         <div class="row justify-content-center">
           <!-- Form Column -->
           <div class="col-lg-8">
-            <div class="booking-section bg-white p-4 rounded shadow">
+            <div id="booking-section" class="booking-section bg-white p-4 rounded shadow">
               <h5 class=" mb-2">BOOK A CAR NOW</h5>
               <h2 class="mb-4">You can book a car with our website</h2>
 
@@ -72,18 +63,18 @@
 
                 <!-- Date & Time -->
                 <div class="row mb-3 position-relative">
-  <!-- Date Input -->
-  <div class="col-md-6 mb-3 mb-md-0 position-relative">
-    <input id="trip-date" type="date" class="form-control gold-input" required />
-    <label for="trip-date" class="floating-label">Select Pickup Date</label>
-  </div>
+                  <!-- Date Input -->
+                  <div class="col-md-6 mb-3 mb-md-0 position-relative">
+                    <input id="trip-date" type="date" class="form-control gold-input" required />
+                    <label for="trip-date" class="floating-label">Select Pickup Date</label>
+                  </div>
 
-  <!-- Time Input -->
-  <div class="col-md-6 position-relative">
-    <input id="trip-time" type="time" class="form-control gold-input" required />
-    <label for="trip-time" class="floating-label">Select Pickup Time</label>
-  </div>
-</div>
+                  <!-- Time Input -->
+                  <div class="col-md-6 position-relative">
+                    <input id="trip-time" type="time" class="form-control gold-input" required />
+                    <label for="trip-time" class="floating-label">Select Pickup Time</label>
+                  </div>
+                </div>
 
 
                 <!-- Travel Type & Vehicle Type -->
@@ -106,11 +97,13 @@
                   </div>
                 </div>
 
-                <div class="row mb-3" id="return-time-container" style="display: none">
-                  <div class="col-md-12">
-                    <input id="return-date" type="date" class="form-control" />
+                <div class="row mb-3" id="return-time-container" style="display: none; position: relative;">
+                  <div class="col-md-12 position-relative">
+                    <input id="return-date" type="date" class="gold-input" required />
+                    <label for="return-date" class="floating-label">Select Return Date</label>
                   </div>
                 </div>
+
 
                 <!-- Name & Mobile -->
                 <div class="row mb-3">
@@ -140,7 +133,8 @@
                   <i class="bi bi-info-circle-fill me-2 text-warning fs-5"></i>
                   <p class="mb-0 disclaimer-text">
                     <strong>Note:</strong>
-                    Toll charges-permit charges-waiting charges-hills charges-luggage charges ( if any ) are extra
+                    Toll charges, permit charges, waiting charges, hills charges, luggage charges <br> (if any) are
+                    extra
                   </p>
                 </div>
               </div>
@@ -226,7 +220,7 @@
           <!-- Active Drivers -->
           <div class="col-md-4 col-4">
             <div class="stat-box">
-              <h2 class="stat-number" data-target="2500">0</h2>
+              <h2 class="stat-number" data-target="3000">1000</h2>
               <p class="stat-label">Active Drivers</p>
             </div>
           </div>
@@ -234,7 +228,7 @@
           <!-- Happy Clients -->
           <div class="col-md-4 col-4">
             <div class="stat-box">
-              <h2 class="stat-number" data-target="90">0</h2>
+              <h2 class="stat-number" data-target="800">0</h2>
               <p class="stat-label">Happy Clients</p>
             </div>
           </div>
@@ -242,7 +236,7 @@
           <!-- Years Experience -->
           <div class="col-md-4 col-4">
             <div class="stat-box">
-              <h2 class="stat-number" data-target="15">0</h2>
+              <h2 class="stat-number" data-target="7">0</h2>
               <p class="stat-label">Years Experience</p>
             </div>
           </div>
@@ -263,7 +257,7 @@
           Trichy, Salem, and beyond. Experience comfortable and reliable rides
           anywhere in Tamil Nadu, 24/7.
         </p>
-        <a href="#booking" class="btn-book">Book Your Ride</a>
+        <a href="#booking-section" class="btn-book">Book Your Ride</a>
       </div>
     </section>
     <section id="service-states" class="service-states-section py-5">
@@ -299,7 +293,7 @@
     </section>
 
 
-   <a href="https://wa.me/919514878005" class="float whatsapp" target="_blank">
+    <a href="https://wa.me/919514878005" class="float whatsapp" target="_blank">
       <i class="fa-brands fa-whatsapp"></i>
     </a>
 

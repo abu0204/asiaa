@@ -48,6 +48,7 @@ body {
   color: black;
 }
 
+
 /* ===================== Booking Section ===================== */
 /* Container position */
 .col-md-6 {
@@ -120,6 +121,76 @@ body {
   }
 }
 
+.gold-input {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 16px;
+  
+  border-radius: 10px;
+  background: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus glow */
+.gold-input:focus {
+  border-color: #ffd400;
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.4);
+  outline: none;
+}
+
+/* Floating placeholder label */
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: #000;
+  background: #fff;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+/* Float up on focus or when value exists */
+.gold-input:focus + .floating-label,
+.gold-input:valid + .floating-label {
+  top: -8px;
+  left: 14px;
+  font-size: 13px;
+  color: #ffd400;
+  font-weight: 600;
+}
+
+/* Date icon fix for Chrome/Safari */
+.gold-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(80%) sepia(60%) saturate(200%) hue-rotate(15deg);
+  opacity: 0.7;
+}
+
+/* MOBILE TWEAKS */
+@media (max-width: 576px) {
+  .gold-input {
+    font-size: 15px;
+    padding: 8px 12px;
+  }
+  .floating-label {
+    font-size: 16px;
+    color: #000000db;
+  }
+  .gold-input:focus + .floating-label,
+  .gold-input:valid + .floating-label {
+    font-size: 12px;
+    top: -6px;
+  }
+}
+
 
 .booking-section {
   background-color: var(--light);
@@ -179,9 +250,10 @@ body {
 }
 
 .disclaimer-text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   line-height: 1.6;
 }
+
 
 
 /* ===================== Estimate Results ===================== */

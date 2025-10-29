@@ -110,7 +110,8 @@ body {
     padding: 12px 12px;
   }
   .floating-label {
-    font-size: 14px;
+            font-size: 16px;
+        color: #000000db;
   }
   .gold-input:focus + .floating-label,
   .gold-input:valid + .floating-label {

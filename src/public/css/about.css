@@ -1,60 +1,41 @@
-.ceo-section {
-  background-color: #ffffff;
-  padding: 80px 0;
+/* ===================== Floating Icons ===================== */
+/* Floating Icons Base */
+.float {
+  text-decoration: none;
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  right: 20px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 26px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease-in-out;
 }
 
-.ceo-img-wrapper img {
-  max-height: 400px;
-  width: auto;
-  border-radius: 16px;
-  object-fit: cover;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
+.float:hover {
+  transform: scale(1.1);
 }
 
-.ceo-img-wrapper img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+/* WhatsApp (Bottom) */
+.whatsapp {
+  bottom: 20px;
+  background: #ffd400; /* Yellow */
+  color: #fff;
 }
 
-.ceo-content {
-  padding-left: 10px;
+/* Call (Above WhatsApp) */
+.call {
+  bottom: 85px; /* Positioned above WhatsApp */
+  background: #fff;
+  color: #ffd400;
+  border: 2px solid #ffd400;
 }
-
-.ceo-name {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #111;
-}
-
-.ceo-title {
-  color: #666;
-  font-weight: 500;
-}
-
-.ceo-quote {
-  font-size: 1.1rem;
-  color: #333;
-  line-height: 1.7;
-  font-style: italic;
-}
-
-.ceo-signature img {
-  opacity: 0.8;
-  transition: opacity 0.3s ease;
-}
-
-.ceo-signature img:hover {
-  opacity: 1;
-}
-
-/* Responsive */
-@media (max-width: 992px) {
-  .ceo-content {
-    text-align: center;
-    padding-left: 0;
-  }
-
-  .ceo-img-wrapper img {
-    max-height: 300px;
-  }
+.call:hover {
+  background: #ffd400;
+  color: #fff;
 }

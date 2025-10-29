@@ -169,3 +169,44 @@
     font-size: 14px;
   }
 }
+/* ===================== Floating Icons ===================== */
+/* Floating Icons Base */
+.float {
+  text-decoration: none;
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  right: 20px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 26px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease-in-out;
+}
+
+.float:hover {
+  transform: scale(1.1);
+}
+
+/* WhatsApp (Bottom) */
+.whatsapp {
+  bottom: 20px;
+  background: #ffd400; /* Yellow */
+  color: #fff;
+}
+
+/* Call (Above WhatsApp) */
+.call {
+  bottom: 85px; /* Positioned above WhatsApp */
+  background: #fff;
+  color: #ffd400;
+  border: 2px solid #ffd400;
+}
+.call:hover {
+  background: #ffd400;
+  color: #fff;
+}

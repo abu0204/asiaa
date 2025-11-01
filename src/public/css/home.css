@@ -1,11 +1,11 @@
 :root {
-  --primary: #ffd400; 
-  --dark: #0b0b0b;    
-  --light: #ffffff;   
-  --gray: #f5f5f5;    
+  --primary: #ffd400;
+  --dark: #0b0b0b;
+  --light: #ffffff;
+  --gray: #f5f5f5;
 }
 
-/* Body */
+/* ===================== Body ===================== */
 body {
   font-family: 'Inter', sans-serif;
   background-color: var(--light);
@@ -14,17 +14,18 @@ body {
   overflow-x: hidden;
 }
 
-/* Hero Section */
+/* ===================== Hero Section ===================== */
 .hero {
   min-height: 100vh; /* fix mobile vh issue */
-  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover no-repeat;
+  background: url('/assets/bg.jpeg') center/cover no-repeat;
   position: relative;
   display: flex;
   align-items: center;
   text-align: center;
   color: var(--light);
   padding: 60px 15px;
-  padding-top: 120px;  /* spacing from top */
+  padding-top: 120px; /* spacing from top */
+  margin-top: 2.5rem;
 }
 
 .hero-overlay {
@@ -44,9 +45,153 @@ body {
   font-size: 18px;
   color: var(--light);
   margin-bottom: 30px;
+  color: black;
 }
 
-/* Booking Section */
+
+/* ===================== Booking Section ===================== */
+/* Container position */
+.col-md-6 {
+  position: relative;
+}
+
+/* Wrapper */
+.position-relative {
+  position: relative;
+}
+
+/* Input field styling */
+.gold-input {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 16px;
+  border: 1px solid rgba(255, 212, 0, 0.4);
+  border-radius: 10px;
+  background: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  appearance: none;
+}
+
+/* Focus + active glow */
+.gold-input:focus {
+  border-color: #ffd400;
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.4);
+  outline: none;
+}
+
+/* Floating placeholder label */
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: black;
+  background: #fff;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+}
+
+/* When focused or valid, float label up */
+.gold-input:focus + .floating-label,
+.gold-input:valid + .floating-label {
+  top: -8px;
+  left: 14px;
+  font-size: 13px;
+  color: #ffd400;
+  font-weight: 600;
+}
+
+/* MOBILE TWEAKS */
+@media (max-width: 576px) {
+  .gold-input {
+    font-size: 15px;
+    padding: 12px 12px;
+  }
+  .floating-label {
+            font-size: 16px;
+        color: #000000db;
+  }
+  .gold-input:focus + .floating-label,
+  .gold-input:valid + .floating-label {
+    font-size: 12px;
+    top: -6px;
+  }
+}
+
+.gold-input {
+  width: 100%;
+  padding: 14px 15px;
+  font-size: 16px;
+  
+  border-radius: 10px;
+  background: #fff;
+  color: #333;
+  transition: all 0.3s ease;
+  appearance: none;
+  position: relative;
+  z-index: 1;
+}
+
+/* Focus glow */
+.gold-input:focus {
+  border-color: #ffd400;
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.4);
+  outline: none;
+}
+
+/* Floating placeholder label */
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 15px;
+  color: #000;
+  background: #fff;
+  padding: 0 6px;
+  pointer-events: none;
+  transition: all 0.25s ease;
+  z-index: 2;
+}
+
+/* Float up on focus or when value exists */
+.gold-input:focus + .floating-label,
+.gold-input:valid + .floating-label {
+  top: -8px;
+  left: 14px;
+  font-size: 13px;
+  color: #ffd400;
+  font-weight: 600;
+}
+
+/* Date icon fix for Chrome/Safari */
+.gold-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(80%) sepia(60%) saturate(200%) hue-rotate(15deg);
+  opacity: 0.7;
+}
+
+/* MOBILE TWEAKS */
+@media (max-width: 576px) {
+  .gold-input {
+    font-size: 15px;
+    padding: 8px 12px;
+  }
+  .floating-label {
+    font-size: 16px;
+    color: #000000db;
+  }
+  .gold-input:focus + .floating-label,
+  .gold-input:valid + .floating-label {
+    font-size: 12px;
+    top: -6px;
+  }
+}
+
+
 .booking-section {
   background-color: var(--light);
   padding: 30px;
@@ -56,7 +201,7 @@ body {
 }
 
 .booking-section h5 {
-  color: var(--primary);
+  color: #ffd400;
   font-weight: 600;
 }
 
@@ -89,13 +234,34 @@ body {
 .booking-section .btn-warning:hover {
   background-color: #e6c200;
 }
+/* ===== Disclaimer Box Style ===== */
+.disclaimer-box {
+  background: #fff9e6; /* soft yellow tint */
+  border: 1px solid #ffe58f;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+}
 
-/* Estimate Results */
+.disclaimer-box:hover {
+  background: #fff7d9;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+}
+
+.disclaimer-text {
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+
+
+/* ===================== Estimate Results ===================== */
 #estimate-results {
-  background-color: #fff;        
-  border-radius: 12px;           
+  background-color: #fff;
+  border-radius: 12px;
   padding: 25px 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15); 
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +274,7 @@ body {
 }
 
 #estimate-results h5 {
-  color: var(--primary); 
+  color: var(--primary);
   font-weight: 700;
   margin-bottom: 20px;
   text-align: center;
@@ -118,7 +284,7 @@ body {
 
 #estimate-output p {
   font-size: 15px;
-  color: #111;      
+  color: #111;
   margin: 1px 0;
   display: flex;
   align-items: center;
@@ -138,11 +304,13 @@ body {
 }
 
 #estimate-output p strong {
-  color: #ffb800;  
+  color: #ffd400;
 }
 
+.btn-warning{
+  background-color: var(--primary);
+}
 /* ===================== Responsive ===================== */
-
 /* Tablets */
 @media (max-width: 992px) {
   .hero {
@@ -184,9 +352,11 @@ body {
     margin-bottom: 1.5rem;
   }
 }
+
+/* ===================== Stats Section ===================== */
 .stats-section {
-  background: linear-gradient(135deg, #0b0b0b, #1a1a1a);
-  padding: 40px 15px;   /* reduced from 80px 20px */
+  background: black;
+  padding: 40px 15px; /* reduced from 80px 20px */
   position: relative;
   overflow: hidden;
 }
@@ -195,14 +365,14 @@ body {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(8px);
   border-radius: 20px;
-  padding: 25px 18px;   /* reduced from 40px 25px */
+  padding: 25px 18px; /* reduced from 40px 25px */
   margin: 8px;
   box-shadow: 0 6px 15px rgba(0,0,0,0.35), inset 0 2px 6px rgba(255,255,255,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-number {
-  font-size: 2.5rem;   /* reduced from 3.2rem */
+  font-size: 2.5rem; /* reduced from 3.2rem */
   font-weight: 900;
   background: linear-gradient(90deg, #ffd400, #ffae00);
   -webkit-background-clip: text;
@@ -212,11 +382,12 @@ body {
 
 .stat-label {
   font-size: 1rem;
-  margin-top: 8px;   /* reduced from 12px */
+  margin-top: 8px; /* reduced from 12px */
   color: #ddd;
   opacity: 0.85;
   letter-spacing: 0.5px;
 }
+
 /* Force 3 per row on small screens */
 @media (max-width: 768px) {
   .stats-section .col-4 {
@@ -224,20 +395,265 @@ body {
     max-width: 33.33%;
     padding: 5px; /* tighter spacing */
   }
-
   .stat-box {
     padding: 20px 12px; /* smaller padding */
   }
-
   .stat-number {
-    font-size: 1.8rem; /* slightly smaller */
+    font-size: 1.6rem; /* slightly smaller */
   }
-
   .stat-label {
     font-size: 0.65rem;
   }
 }
 
+/* ===================== Tamil Nadu Coverage Section ===================== */
+.coverage-section {
+  position: relative;
+  height: 100vh;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* Map image container */
+.map-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.tamilnadu-map {
+  width: 90%;
+  max-width: 600px;
+  opacity: 0.2;
+  transform: scale(1);
+  animation: mapZoom 10s ease-in-out infinite alternate;
+  filter: drop-shadow(0 0 25px rgba(255, 212, 0, 0.5));
+}
+
+/* Overlayed text */
+.coverage-section .content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  text-align: center;
+  padding: 20px;
+  animation: fadeUp 2s ease forwards;
+}
+
+.coverage-section h2 {
+  font-size: 3rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+.coverage-section h2 span {
+  color: #ffd400;
+  text-shadow: 0 0 20px rgba(255, 212, 0, 0.8);
+}
+
+.coverage-section p {
+  font-size: 1.1rem;
+  color: #eee;
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.btn-book {
+  background: #ffd400;
+  color: #000;
+  padding: 12px 35px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255, 212, 0, 0.4);
+}
+
+.btn-book:hover {
+  background: #000;
+  color: #ffd400;
+  box-shadow: 0 0 25px rgba(255, 212, 0, 0.8);
+  transform: translateY(-4px);
+}
+
+/* ===================== Animations ===================== */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mapZoom {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .coverage-section h2 {
+    font-size: 24px;
+  }
+  .coverage-section p {
+    font-size: 1rem;
+  }
+  .tamilnadu-map {
+    width: 100%;
+    opacity: 0.15;
+  }
+}
+
+/* ===================== Service States Section ===================== */
+.service-states-section {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.service-states-section .section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffd400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeDown 1s ease forwards;
+}
+
+.service-states-section .section-subtitle {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin-bottom: 40px;
+  animation: fadeUp 1s ease forwards;
+}
+
+/* ===== Service States Section ===== */
+.service-states-section {
+  background: #000;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+.service-states-section .section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #ffd400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeDown 1s ease forwards;
+}
+
+.service-states-section .section-subtitle {
+  font-size: 1.1rem;
+  color: #ddd;
+  margin-bottom: 40px;
+  animation: fadeUp 1s ease forwards;
+}
+
+/* Grid Layout */
+.states-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+}
+
+/* State Card */
+.state-card {
+  background: #111;
+  border: 2px solid transparent;
+  border-radius: 15px;
+  padding: 20px;
+  width: 180px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 212, 0, 0.15);
+  opacity: 0.7;
+}
+
+.state-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  transition: all 0.4s ease;
+}
+
+.state-card h4 {
+  margin-top: 15px;
+  font-size: 1rem;
+  color: #ffd400;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* Automatic Glow Animation */
+@keyframes glowLoop {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 212, 0, 0.15);
+    border-color: transparent;
+    opacity: 0.7;
+    transform: scale(1);
+    filter: grayscale(100%) brightness(0.8);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 212, 0, 0.7);
+    border-color: #ffd400;
+    opacity: 1;
+    transform: scale(1.1);
+    filter: none;
+  }
+}
+
+/* Sequential Glow Timings */
+.glow-delay-1 { animation: glowLoop 10s infinite; animation-delay: 0s; }
+.glow-delay-2 { animation: glowLoop 10s infinite; animation-delay: 2s; }
+.glow-delay-3 { animation: glowLoop 10s infinite; animation-delay: 4s; }
+.glow-delay-4 { animation: glowLoop 10s infinite; animation-delay: 6s; }
+.glow-delay-5 { animation: glowLoop 10s infinite; animation-delay: 8s; }
+
+/* Title Animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .states-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .state-card {
+    width: 70%;
+  }
+}
+
+
+/* ===================== Floating Icons ===================== */
 /* Floating Icons Base */
 .float {
   text-decoration: none;
@@ -255,7 +671,10 @@ body {
   box-shadow: 0 5px 15px rgba(0,0,0,0.25);
   transition: transform 0.2s ease-in-out;
 }
-.float:hover { transform: scale(1.1); }
+
+.float:hover {
+  transform: scale(1.1);
+}
 
 /* WhatsApp (Bottom) */
 .whatsapp {
@@ -270,4 +689,8 @@ body {
   background: #fff;
   color: #ffd400;
   border: 2px solid #ffd400;
+}
+.call:hover {
+  background: #ffd400;
+  color: #fff;
 }

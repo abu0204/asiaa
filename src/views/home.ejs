@@ -5,33 +5,35 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asiaa Travel</title>
+
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="/css/home.css" />
 
+  <!-- Toastify -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 </head>
 
-<link rel="icon" type="image/png" href="/src/public/assets/icon.png" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-</head>
 
 <body>
   <%- include('./layouts/header') %>
 
-    
+
     <!-- Hero Section -->
     <section class="hero d-flex align-items-center text-dark position-relative">
       <div class="container position-relative z-1">
         <div class="row justify-content-center">
           <!-- Form Column -->
           <div class="col-lg-8">
-            <div class="booking-section bg-white p-4 rounded shadow">
-              <h5 class="text-warning mb-2">BOOK A CAR NOW</h5>
+            <div id="booking-section" class="booking-section bg-white p-4 rounded shadow">
+              <h5 class=" mb-2">BOOK A CAR NOW</h5>
               <h2 class="mb-4">You can book a car with our website</h2>
 
               <form id="book-trip">
@@ -60,14 +62,20 @@
                 </div>
 
                 <!-- Date & Time -->
-                <div class="row mb-3">
-                  <div class="col-md-6 mb-2 mb-md-0">
-                    <input id="trip-date" type="date" class="form-control" required />
+                <div class="row mb-3 position-relative">
+                  <!-- Date Input -->
+                  <div class="col-md-6 mb-3 mb-md-0 position-relative">
+                    <input id="trip-date" type="date" class="form-control gold-input" required />
+                    <label for="trip-date" class="floating-label">Select Pickup Date</label>
                   </div>
-                  <div class="col-md-6">
-                    <input id="trip-time" type="time" class="form-control" value="19:00" required />
+
+                  <!-- Time Input -->
+                  <div class="col-md-6 position-relative">
+                    <input id="trip-time" type="time" class="form-control gold-input" required />
+                    <label for="trip-time" class="floating-label">Select Pickup Time</label>
                   </div>
                 </div>
+
 
                 <!-- Travel Type & Vehicle Type -->
                 <div class="row mb-3">
@@ -89,11 +97,13 @@
                   </div>
                 </div>
 
-                <div class="row mb-3" id="return-time-container" style="display: none">
-                  <div class="col-md-12">
-                    <input id="return-date" type="date" class="form-control" />
+                <div class="row mb-3" id="return-time-container" style="display: none; position: relative;">
+                  <div class="col-md-12 position-relative">
+                    <input id="return-date" type="date" class="gold-input" required />
+                    <label for="return-date" class="floating-label">Select Return Date</label>
                   </div>
                 </div>
+
 
                 <!-- Name & Mobile -->
                 <div class="row mb-3">
@@ -115,11 +125,19 @@
                   <button type="button" class="btn btn-warning" onclick="getEstimation()">
                     Get Estimate
                   </button>
-                  <button type="submit" class="btn btn-warning">
-                    Book Now
-                  </button>
+
                 </div>
               </form>
+              <div class="disclaimer-box mt-4 text-dark">
+                <div class="d-flex align-items-start">
+                  <i class="bi bi-info-circle-fill me-2 text-warning fs-5"></i>
+                  <p class="mb-0 disclaimer-text">
+                    <strong>Note:</strong>
+                    Toll charges, permit charges, waiting charges, hills charges, luggage charges <br> (if any) are
+                    extra
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -127,7 +145,7 @@
           <div class="col-lg-4">
             <div id="estimate-results"
               class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center">
-              <h5 class="text-warning mb-3">ESTIMATE RESULT</h5>
+              <h5 class=" mb-3">ESTIMATE RESULT</h5>
               <div id="estimate-output" class="fs-5 text-dark">
                 <p>
                   <strong>Pick up Location:</strong>
@@ -182,7 +200,10 @@
                 <p>
                   <strong>Total:</strong>
                   <span id="total-value">₹0</span>
-                </p>
+                </p><br>
+                <button type="submit" class="btn btn-warning">
+                  Book Now
+                </button>
               </div>
             </div>
           </div>
@@ -193,48 +214,95 @@
       <div class="hero-overlay position-absolute inset-0" style="background-color: rgba(0, 0, 0, 0.5)"></div>
     </section>
 
-   <section class="stats-section">
-  <div class="container">
-    <div class="row text-center">
-      <!-- Active Drivers -->
-      <div class="col-md-4 col-4">
-        <div class="stat-box">
-          <h2 class="stat-number" data-target="460">0</h2>
-          <p class="stat-label">Active Drivers</p>
+    <section class="stats-section">
+      <div class="container">
+        <div class="row text-center">
+          <!-- Active Drivers -->
+          <div class="col-md-4 col-4">
+            <div class="stat-box">
+              <h2 class="stat-number" data-target="3000">1000</h2>
+              <p class="stat-label">Active Drivers</p>
+            </div>
+          </div>
+
+          <!-- Happy Clients -->
+          <div class="col-md-4 col-4">
+            <div class="stat-box">
+              <h2 class="stat-number" data-target="800">0</h2>
+              <p class="stat-label">Happy Clients</p>
+            </div>
+          </div>
+
+          <!-- Years Experience -->
+          <div class="col-md-4 col-4">
+            <div class="stat-box">
+              <h2 class="stat-number" data-target="7">0</h2>
+              <p class="stat-label">Years Experience</p>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <!-- Happy Clients -->
-      <div class="col-md-4 col-4">
-        <div class="stat-box">
-          <h2 class="stat-number" data-target="90">0</h2>
-          <p class="stat-label">Happy Clients</p>
-        </div>
+    <!-- Tamil Nadu Coverage Section -->
+    <section id="coverage" class="coverage-section">
+      <div class="map-container">
+        <img src="assets/logo.png" alt="Tamil Nadu Map" class="tamilnadu-map" />
       </div>
 
-      <!-- Years Experience -->
-      <div class="col-md-4 col-4">
-        <div class="stat-box">
-          <h2 class="stat-number" data-target="15">0</h2>
-          <p class="stat-label">Years Experience</p>
+      <div class="content">
+        <h2>All Over <span>Tamil Nadu</span> Taxi Available</h2>
+        <p>
+          Our taxis operate in every district — Chennai, Madurai, Coimbatore,
+          Trichy, Salem, and beyond. Experience comfortable and reliable rides
+          anywhere in Tamil Nadu, 24/7.
+        </p>
+        <a href="#booking-section" class="btn-book">Book Your Ride</a>
+      </div>
+    </section>
+    <section id="service-states" class="service-states-section py-5">
+      <div class="container text-center">
+        <h2 class="section-title mb-4">We Cover South India</h2>
+        <p class="section-subtitle mb-5">
+          Reliable Taxi Services Across Tamil Nadu, Kerala, Karnataka, Andhra Pradesh & Pondicherry
+        </p>
+
+        <div class="states-grid">
+          <div class="state-card glow-delay-1">
+            <img src="/assets/tn.jpeg" alt="Tamil Nadu">
+            <h4>Tamil Nadu</h4>
+          </div>
+          <div class="state-card glow-delay-2">
+            <img src="/assets/kerala.jpeg" alt="Kerala">
+            <h4>Kerala</h4>
+          </div>
+          <div class="state-card glow-delay-3">
+            <img src="/assets/ap.jpeg" alt="Andhra Pradesh">
+            <h4>Andhra Pradesh</h4>
+          </div>
+          <div class="state-card glow-delay-4">
+            <img src="/assets/karnataka.jpeg" alt="Karnataka">
+            <h4>Karnataka</h4>
+          </div>
+          <div class="state-card glow-delay-5">
+            <img src="/assets/pondi.jpeg" alt="Pondicherry">
+            <h4>Pondicherry</h4>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<!-- Floating Action Icons (Vertical) -->
-<a href="https://wa.me/911234567890" class="float whatsapp" target="_blank">
- <i class="fa-brands fa-whatsapp"></i>
-</a>
 
-<a href="tel:+911234567890" class="float call">
-  <i class="fas fa-phone-alt"></i>
-</a>
+    <a href="https://wa.me/919514878005" class="float whatsapp" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
-<!-- FontAwesome -->
-<link rel="stylesheet" 
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <a href="tel:+919514578005" class="float call">
+      <i class="fas fa-phone-alt"></i>
+    </a>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 
     <!-- Footer -->

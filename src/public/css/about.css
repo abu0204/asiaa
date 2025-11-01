@@ -1,69 +1,41 @@
-.ceo-section-floating {
-  width: 100%;
-  background: #0b0b0b; /* solid dark background */
+/* ===================== Floating Icons ===================== */
+/* Floating Icons Base */
+.float {
+  text-decoration: none;
+  position: fixed;
+  width: 55px;
+  height: 55px;
+  right: 20px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 26px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease-in-out;
+}
+
+.float:hover {
+  transform: scale(1.1);
+}
+
+/* WhatsApp (Bottom) */
+.whatsapp {
+  bottom: 20px;
+  background: #ffd400; /* Yellow */
   color: #fff;
-  padding: 80px 20px;
 }
 
-.ceo-img-wrapper-floating {
-  display: inline-block;
-  border: 5px solid #ffd400;
-  border-radius: 50%;
-  padding: 5px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.ceo-img-wrapper-floating:hover {
-  transform: scale(1.05);
-  box-shadow: 0 14px 35px rgba(0,0,0,0.6);
-}
-
-.ceo-img-floating {
-  width: 170px;  /* updated size */
-  height: 170px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* Quote Card */
-.ceo-quote-card {
-  background: #1a1a1a;  /* floating card dark background */
-  border-left: 5px solid #ffd400;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  padding: 30px 25px;
-  position: relative;
-  z-index: 1;
-}
-
-.ceo-quote-floating {
-  font-style: italic;
-  font-size: 1rem;
-  color: #f5f5f5;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.ceo-section-floating h5 {
-  font-size: 1.5rem;
-  margin-bottom: 5px;
-}
-
-.ceo-section-floating p {
+/* Call (Above WhatsApp) */
+.call {
+  bottom: 85px; /* Positioned above WhatsApp */
+  background: #fff;
   color: #ffd400;
-  font-weight: 600;
-  margin-bottom: 10px;
+  border: 2px solid #ffd400;
 }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .ceo-img-floating {
-    width: 130px;
-    height: 130px;
-  }
-  .ceo-quote-card {
-    margin-top: 20px;
-    border-left: 5px solid #ffd400;
-    text-align: center;
-  }
+.call:hover {
+  background: #ffd400;
+  color: #fff;
 }

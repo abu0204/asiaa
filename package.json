@@ -19,15 +19,18 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@turf/turf": "^7.2.0",
     "@types/ejs": "^3.1.5",
     "axios": "^1.12.2",
     "dotenv": "^16.6.1",
     "ejs": "^3.1.10",
     "express": "^5.1.0",
+    "fs": "^0.0.1-security",
     "mongoose": "^8.13.2",
     "nodemailer": "^6.10.1",
     "nodemon": "^3.1.10",
-    "pm2": "^6.0.8"
+    "pm2": "^6.0.8",
+    "turf": "^3.0.14"
   },
   "type": "module"
 }

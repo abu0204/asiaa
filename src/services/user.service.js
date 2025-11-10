@@ -90,7 +90,6 @@ class UserServices {
   async getEstimationService(req_Body){
     try {
       const {fromLocation,toLocation,travelType,vehicleType,tripDate,returnDate,tripTime} = req_Body;
-      console.log({tripTime})
       const fromData = DistrictJson.find(location=>location.district === fromLocation.district);
       const toData = DistrictJson.find(location=>location.district === toLocation.district);
 

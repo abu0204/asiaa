@@ -1,30 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asiaa Travel</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Asiaa Travel</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/home.css" />
 
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="/css/home.css" />
+    <!-- Toastify -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <!-- Toastify -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <!-- Favicon & Icons -->
+    <link rel="icon" type="image/png" href="/assets/logo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+  </head>
 
-  <!-- Favicon & Icons -->
-  <link rel="icon" type="image/png" href="/assets/logo.png" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-</head>
-
-
-<body>
-  <%- include('./layouts/header') %>
-
+  <body>
+    <%- include('./layouts/header') %>
 
     <!-- Hero Section -->
     <section class="hero d-flex align-items-center text-dark position-relative">
@@ -32,32 +38,57 @@
         <div class="row justify-content-center">
           <!-- Form Column -->
           <div class="col-lg-8">
-            <div id="booking-section" class="booking-section bg-white p-4 rounded shadow">
-              <h5 class=" mb-2">BOOK A CAR NOW</h5>
+            <div
+              id="booking-section"
+              class="booking-section bg-white p-4 rounded shadow"
+            >
+              <h5 class="mb-2">BOOK A CAR NOW</h5>
               <h2 class="mb-4">You can book a car with our website</h2>
 
               <form id="book-trip">
                 <!-- Pickup & Drop -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <select id="pickup-district" name="pickup-district" class="form-control" required>
+                    <input
+                      class="form-control"
+                      id="pickup"
+                      type="text"
+                      placeholder="Enter pickup location"
+                    />
+                    <!-- <select
+                      id="pickup-district"
+                      name="pickup-district"
+                      class="form-control"
+                      required
+                    >
                       <option value="">Select A pickup location</option>
                       <% for (let i=0; i < data.length; i++) { %>
-                        <option value='<%- JSON.stringify(data[i]) %>'>
-                          <%= data[i].district %>
-                        </option>
-                        <% } %>
-                    </select>
+                      <option value="<%- JSON.stringify(data[i]) %>">
+                        <%= data[i].district %>
+                      </option>
+                      <% } %>
+                    </select> -->
                   </div>
                   <div class="col-md-6">
-                    <select id="drop-district" name="drop-district" class="form-control" required>
+                    <input
+                      id="drop"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter drop location"
+                    />
+                    <!-- <select
+                      id="drop-district"
+                      name="drop-district"
+                      class="form-control"
+                      required
+                    >
                       <option value="">Select A drop location</option>
                       <% for (let i=0; i < data.length; i++) { %>
-                        <option value='<%- JSON.stringify(data[i]) %>'>
-                          <%= data[i].district %>
-                        </option>
-                        <% } %>
-                    </select>
+                      <option value="<%- JSON.stringify(data[i]) %>">
+                        <%= data[i].district %>
+                      </option>
+                      <% } %>
+                    </select> -->
                   </div>
                 </div>
 
@@ -65,17 +96,30 @@
                 <div class="row mb-3 position-relative">
                   <!-- Date Input -->
                   <div class="col-md-6 mb-3 mb-md-0 position-relative">
-                    <input id="trip-date" type="date" class="form-control gold-input" required />
-                    <label for="trip-date" class="floating-label">Select Pickup Date</label>
+                    <input
+                      id="trip-date"
+                      type="date"
+                      class="form-control gold-input"
+                      required
+                    />
+                    <label for="trip-date" class="floating-label"
+                      >Select Pickup Date</label
+                    >
                   </div>
 
                   <!-- Time Input -->
                   <div class="col-md-6 position-relative">
-                    <input id="trip-time" type="time" class="form-control gold-input" required />
-                    <label for="trip-time" class="floating-label">Select Pickup Time</label>
+                    <input
+                      id="trip-time"
+                      type="time"
+                      class="form-control gold-input"
+                      required
+                    />
+                    <label for="trip-time" class="floating-label"
+                      >Select Pickup Time</label
+                    >
                   </div>
                 </div>
-
 
                 <!-- Travel Type & Vehicle Type -->
                 <div class="row mb-3">
@@ -97,35 +141,63 @@
                   </div>
                 </div>
 
-                <div class="row mb-3" id="return-time-container" style="display: none; position: relative;">
+                <div
+                  class="row mb-3"
+                  id="return-time-container"
+                  style="display: none; position: relative"
+                >
                   <div class="col-md-12 position-relative">
-                    <input id="return-date" type="date" class="gold-input" required />
-                    <label for="return-date" class="floating-label">Select Return Date</label>
+                    <input
+                      id="return-date"
+                      type="date"
+                      class="gold-input"
+                      required
+                    />
+                    <label for="return-date" class="floating-label"
+                      >Select Return Date</label
+                    >
                   </div>
                 </div>
-
 
                 <!-- Name & Mobile -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input id="name" type="text" class="form-control" placeholder="Enter Name" />
+                    <input
+                      id="name"
+                      type="text"
+                      class="form-control"
+                      placeholder="Enter Name"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <input id="mobile" type="tel" class="form-control" placeholder="Your Mobile No." />
+                    <input
+                      id="mobile"
+                      type="tel"
+                      class="form-control"
+                      placeholder="Your Mobile No."
+                    />
                   </div>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
-                  <input id="email" type="email" class="form-control" placeholder="Your Email" />
+                  <input
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    placeholder="Your Email"
+                  />
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-grid gap-2 mb-2">
-                  <button type="button" class="btn btn-warning" onclick="getEstimation()">
+                  <button
+                    type="button"
+                    class="btn btn-warning"
+                    onclick="getEstimationService()"
+                  >
                     Get Estimate
                   </button>
-
                 </div>
               </form>
               <div class="disclaimer-box mt-4 text-dark">
@@ -133,8 +205,9 @@
                   <i class="bi bi-info-circle-fill me-2 text-warning fs-5"></i>
                   <p class="mb-0 disclaimer-text">
                     <strong>Note:</strong>
-                    Toll charges, permit charges, waiting charges, hills charges, luggage charges <br> (if any) are
-                    extra
+                    Toll charges, permit charges, waiting charges, hills
+                    charges, luggage charges <br />
+                    (if any) are extra
                   </p>
                 </div>
               </div>
@@ -143,9 +216,11 @@
 
           <!-- Estimate Results Column -->
           <div class="col-lg-4">
-            <div id="estimate-results"
-              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center">
-              <h5 class=" mb-3">ESTIMATE RESULT</h5>
+            <div
+              id="estimate-results"
+              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center"
+            >
+              <h5 class="mb-3">ESTIMATE RESULT</h5>
               <div id="estimate-output" class="fs-5 text-dark">
                 <p>
                   <strong>Pick up Location:</strong>
@@ -200,10 +275,9 @@
                 <p>
                   <strong>Total:</strong>
                   <span id="total-value">₹0</span>
-                </p><br>
-                <button type="submit" class="btn btn-warning">
-                  Book Now
-                </button>
+                </p>
+                <br />
+                <button type="submit" class="btn btn-warning">Book Now</button>
               </div>
             </div>
           </div>
@@ -211,7 +285,10 @@
       </div>
 
       <!-- Hero Overlay -->
-      <div class="hero-overlay position-absolute inset-0" style="background-color: rgba(0, 0, 0, 0.5)"></div>
+      <div
+        class="hero-overlay position-absolute inset-0"
+        style="background-color: rgba(0, 0, 0, 0.5)"
+      ></div>
     </section>
 
     <section class="stats-section">
@@ -264,34 +341,34 @@
       <div class="container text-center">
         <h2 class="section-title mb-4">We Cover South India</h2>
         <p class="section-subtitle mb-5">
-          Reliable Taxi Services Across Tamil Nadu, Kerala, Karnataka, Andhra Pradesh & Pondicherry
+          Reliable Taxi Services Across Tamil Nadu, Kerala, Karnataka, Andhra
+          Pradesh & Pondicherry
         </p>
 
         <div class="states-grid">
           <div class="state-card glow-delay-1">
-            <img src="/assets/tn.jpeg" alt="Tamil Nadu">
+            <img src="/assets/tn.jpeg" alt="Tamil Nadu" />
             <h4>Tamil Nadu</h4>
           </div>
           <div class="state-card glow-delay-2">
-            <img src="/assets/kerala.jpeg" alt="Kerala">
+            <img src="/assets/kerala.jpeg" alt="Kerala" />
             <h4>Kerala</h4>
           </div>
           <div class="state-card glow-delay-3">
-            <img src="/assets/ap.jpeg" alt="Andhra Pradesh">
+            <img src="/assets/ap.jpeg" alt="Andhra Pradesh" />
             <h4>Andhra Pradesh</h4>
           </div>
           <div class="state-card glow-delay-4">
-            <img src="/assets/karnataka.jpeg" alt="Karnataka">
+            <img src="/assets/karnataka.jpeg" alt="Karnataka" />
             <h4>Karnataka</h4>
           </div>
           <div class="state-card glow-delay-5">
-            <img src="/assets/pondi.jpeg" alt="Pondicherry">
+            <img src="/assets/pondi.jpeg" alt="Pondicherry" />
             <h4>Pondicherry</h4>
           </div>
         </div>
       </div>
     </section>
-
 
     <a href="https://wa.me/919514878005" class="float whatsapp" target="_blank">
       <i class="fa-brands fa-whatsapp"></i>
@@ -301,17 +378,25 @@
       <i class="fas fa-phone-alt"></i>
     </a>
 
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- ✅ GOOGLE API SCRIPT MUST BE LAST -->
+    <script src="/js/google.js"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7v3IzJx3Vq1BocLZBdd5hi1YVSL0svkI&libraries=places&callback=initAutocomplete"
+      async
+      defer
+    ></script>
 
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+    />
 
     <!-- Footer -->
     <%- include('./layouts/footer') %>
 
-      <!-- Bootstrap JS -->
+    <!-- Bootstrap JS -->
 
-      <script src="/js/home.js" defer></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</body>
-
+    <script src="/js/home.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  </body>
 </html>

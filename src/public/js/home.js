@@ -287,9 +287,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const speed = 50; // Lower = faster
 
   const animateCounters = () => {
-    counters.forEach(counter => {
+    counters.forEach((counter) => {
       const target = +counter.getAttribute("data-target");
-      const suffix = counter.innerText.includes("%") ? "%" : counter.innerText.includes("+") ? "+" : "";
+      const suffix = counter.innerText.includes("%")
+        ? "%"
+        : counter.innerText.includes("+")
+        ? "+"
+        : "";
       let count = 0;
 
       const updateCount = () => {
@@ -307,12 +311,15 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Trigger animation when section is visible
-  const observer = new IntersectionObserver(entries => {
-    if (entries[0].isIntersecting) {
-      animateCounters();
-      observer.disconnect(); // run only once
-    }
-  }, { threshold: 0.5 });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        observer.disconnect(); // run only once
+      }
+    },
+    { threshold: 0.5 }
+  );
 
   observer.observe(document.querySelector(".stats-section"));
 });

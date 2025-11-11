@@ -41,18 +41,10 @@ function getEstimation() {
       showToast("Please enter your full name", "error");
       return;
     }
-    // if (email === "") {
-    //   showToast("Please enter your email", "error");
-    //   return;
-    // }
     if (mobile === "") {
       showToast("Please enter your mobile number", "error");
       return;
     }
-    // if (!isValidEmail(email)) {
-    //   showToast("Please enter a valid email address", "error");
-    //   return;
-    // }
     if (pickup === "") {
       showToast("Please choose your pickup location", "error");
       return;

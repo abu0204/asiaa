@@ -1,6 +1,6 @@
 import TripModel from "../models/trip.model.js";
-import DistrictJson from "../config/tamilnadu.json" with {type:"json"};
-import tripConfig from "../config/trip.config.json" with {type:"json"};
+import DistrictJson from "../config/tamilnadu.json" with {type: "json"};
+import tripConfig from "../config/trip.config.json" with {type: "json"};
 
 import axios from "axios";
 import dotenv from "dotenv";
@@ -8,12 +8,12 @@ dotenv.config();
 const { OSRM_API } = process.env;
 
 function calculateDays(startDate, endDate) {
-  console.log("startDate, endDate",startDate, endDate)
-    let start = new Date(startDate);
-    let end = new Date(endDate);
-    let timeDifference = end - start;
-    let daysDifference = timeDifference / (1000 * 3600 * 24);
-    return daysDifference;
+  console.log("startDate, endDate", startDate, endDate)
+  let start = new Date(startDate);
+  let end = new Date(endDate);
+  let timeDifference = end - start;
+  let daysDifference = timeDifference / (1000 * 3600 * 24);
+  return daysDifference;
 };
 function convertTo12HourFormat(time24) {
   let [hours, minutes] = time24.split(":").map(Number);
@@ -48,7 +48,7 @@ class UserServices {
     }
   }
 
-   async aboutService() {
+  async aboutService() {
     try {
       return { status: true, title: "about", pageName: "about" };
     } catch (error) {
@@ -59,7 +59,7 @@ class UserServices {
     }
   }
 
-     async contactService() {
+  async contactService() {
     try {
       return { status: true, title: "contact", pageName: "contact" };
     } catch (error) {
@@ -87,15 +87,15 @@ class UserServices {
     }
   };
 
-  async getEstimationService(req_Body){
+  async getEstimationService(req_Body) {
     try {
-      const {fromLocation,toLocation,travelType,vehicleType,tripDate,returnDate,tripTime} = req_Body;
-      const fromData = DistrictJson.find(location=>location.district === fromLocation.district);
-      const toData = DistrictJson.find(location=>location.district === toLocation.district);
+      const { fromLocation, toLocation, travelType, vehicleType, tripDate, returnDate, tripTime } = req_Body;
+      const fromData = DistrictJson.find(location => location.district === fromLocation.district);
+      const toData = DistrictJson.find(location => location.district === toLocation.district);
 
-      const result = await axios.get(OSRM_API+`${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
+      const result = await axios.get(OSRM_API + `${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
       const totalMeters = result.data.routes[0].distance;
-      
+
       const tripMode = tripConfig[travelType];
       const vehicleDet = tripMode[vehicleType];
       const costPerKilometr = vehicleDet.costPerKilometer;
@@ -104,71 +104,71 @@ class UserServices {
       const totalKiloMeter = totalMeters / 1000;
       const totalCost = totalKiloMeter * costPerKilometr;
       return {
-        status:true,
-        message:"success",
-        data:{
-          pickup:fromData.district,
-          drop:toData.district,
+        status: true,
+        message: "success",
+        data: {
+          pickup: fromData.district,
+          drop: toData.district,
           vehicle,
           driverBata,
-          totalKiloMeter:parseInt(totalKiloMeter),
+          totalKiloMeter: parseInt(totalKiloMeter),
           costPerKilometr,
           totalCost,
           travelType,
           vehicleType,
-          durationDays : travelType === "onewayTrip" ? 1 : calculateDays(tripDate,returnDate) ,
-          dateAndTime : `${tripDate} , ${convertTo12HourFormat(tripTime)}`
+          durationDays: travelType === "onewayTrip" ? 1 : calculateDays(tripDate, returnDate),
+          dateAndTime: `${tripDate} , ${convertTo12HourFormat(tripTime)}`
         }
       };
     } catch (error) {
-       return {
+      return {
         status: false,
         message: error.message ? error.message : "Internal Server Error!",
       };
     };
   };
 
-  async bookATrip (req_Body){
+  async bookATrip(req_Body) {
     try {
-      console.log({req_Body})
-      const { name,email,mobile,pickup,drop,tripDate,tripTime,travelType,vehicleType} = req_Body;
-      const pickupDistrict = JSON.parse(pickup).district;
-      const dropDistrict = JSON.parse(drop).district;
+      console.log({ req_Body });
+      // const { name, email, mobile, pickup, drop, tripDate, tripTime, travelType, vehicleType } = req_Body;
+      // const pickupDistrict = JSON.parse(pickup).district;
+      // const dropDistrict = JSON.parse(drop).district;
 
-      const fromData = DistrictJson.find(location=>location.district === pickupDistrict);
-      const toData = DistrictJson.find(location=>location.district === dropDistrict);
+      // const fromData = DistrictJson.find(location => location.district === pickupDistrict);
+      // const toData = DistrictJson.find(location => location.district === dropDistrict);
 
-      const result = await axios.get(OSRM_API+`${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
-      const totalMeters = result.data.routes[0].distance;
+      // const result = await axios.get(OSRM_API + `${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
+      // const totalMeters = result.data.routes[0].distance;
 
-       const tripMode = tripConfig[travelType];
-      const vehicleDet = tripMode[vehicleType];
-      const costPerKilometr = vehicleDet.costPerKilometer;
-      const driverBata = vehicleDet.driverBata;
-      const totalKiloMeter = totalMeters / 1000;
-      const totalCost = totalKiloMeter * costPerKilometr;
-      const insertObj = {
-        name,
-        email,
-        phoneNumber:mobile,
-        pickup:pickupDistrict,
-        drop : dropDistrict,
-        date:new Date(tripDate),
-        time:tripTime,
-        travelType,
-        vehicleType,
-        driverBata,
-        costPerKilometr,
-        totalKiloMeter,
-        totalCost
-      };
-      await TripModel.create(insertObj);
+      // const tripMode = tripConfig[travelType];
+      // const vehicleDet = tripMode[vehicleType];
+      // const costPerKilometr = vehicleDet.costPerKilometer;
+      // const driverBata = vehicleDet.driverBata;
+      // const totalKiloMeter = totalMeters / 1000;
+      // const totalCost = totalKiloMeter * costPerKilometr;
+      // const insertObj = {
+      //   name,
+      //   email,
+      //   phoneNumber: mobile,
+      //   pickup: pickupDistrict,
+      //   drop: dropDistrict,
+      //   date: new Date(tripDate),
+      //   time: tripTime,
+      //   travelType,
+      //   vehicleType,
+      //   driverBata,
+      //   costPerKilometr,
+      //   totalKiloMeter,
+      //   totalCost
+      // };
+      await TripModel.create(req_Body);
       return {
-        status:true,
-        message:"Trip Booked!"
+        status: true,
+        message: "Trip Booked!"
       }
     } catch (error) {
-      console.error({bookATrip:error});
+      console.error({ bookATrip: error });
       return {
         status: false,
         message: error.message ? error.message : "Internal Server Error!",

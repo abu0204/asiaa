@@ -112,6 +112,67 @@ function calculateDistance(pickup, drop) {
 }
 
 function getEstimationService() {
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const mobile = document.getElementById("mobile").value.trim();
+  const pickup = document.getElementById("pickup").value.trim();
+  const drop = document.getElementById("drop").value.trim();
+  const tripDate = document.getElementById("trip-date").value;
+  const returnDate = document.getElementById("return-date").value;
+  const tripTime = document.getElementById("trip-time").value.trim();
+  const travelType = document.getElementById("travel-type").value.trim();
+  const vehicleType = document.getElementById("vehicle-type").value.trim();
+
+  if (pickup === "") {
+    showToast("Please choose your pickup location", "error");
+    return;
+  }
+  if (drop === "") {
+    showToast("Please choose your drop location", "error");
+    return;
+  }
+  if (tripDate === "") {
+    showToast("Please shedule your trip date", "error");
+    return;
+  }
+  if (tripTime === "") {
+    showToast("Please shedule your trip time", "error");
+    return;
+  }
+  if (tripDate !== "") {
+    const currentDate = new Date();
+    if (new Date(tripDate).getTime() < currentDate.getTime()) {
+      showToast("Pickup date should be greater than current date", "error");
+      return;
+    }
+  }
+  if (travelType === "") {
+    showToast("Please choose your travel type", "error");
+    return;
+  }
+  if (travelType === "roundTrip" && returnDate === "") {
+    showToast("Please choose your return date", "error");
+    return;
+  }
+  if (travelType === "roundTrip" && returnDate !== "") {
+    if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
+      showToast("Return date should be grater than pickup date", "error");
+      return;
+    }
+  }
+  if (vehicleType === "") {
+    showToast("Please choose your vehicle type", "error");
+    return;
+  }
+  if (name === "") {
+    showToast("Please enter your full name", "error");
+    return;
+  }
+  if (mobile === "") {
+    showToast("Please enter your mobile number", "error");
+    return;
+  }
+
   if (!pickupPlace || !dropPlace) {
     alert("Please select valid pickup and drop locations.");
     return;
@@ -119,11 +180,6 @@ function getEstimationService() {
 
   const fromLocation = pickupPlace.formatted_address;
   const toLocation = dropPlace.formatted_address;
-  const travelType = document.getElementById("travel-type").value;
-  const vehicleType = document.getElementById("vehicle-type").value;
-  const tripDate = document.getElementById("trip-date").value;
-  const returnDate = document.getElementById("return-date").value;
-  const tripTime = document.getElementById("trip-time").value;
 
   const tripMode = tripConfig[travelType];
   const vehicleDet = tripMode[vehicleType];
@@ -169,6 +225,16 @@ function displayEstimation(response) {
   document.getElementById("total-value").innerHTML = parseInt(
     data.totalCost + data.driverBata
   );
+}
+
+function showToast(message, toastType) {
+  Toastify({
+    text: message,
+    duration: toastType === "success" ? 2000 : 4000,
+    gravity: "top", // or "top"
+    position: "right", // left, center, or right
+    backgroundColor: toastType === "success" ? "#28a745" : "#dc3545",
+  }).showToast();
 }
 
 function calculateDays(start, end) {

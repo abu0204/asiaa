@@ -119,6 +119,7 @@ function getEstimationService() {
   const drop = document.getElementById("drop").value.trim();
   const tripDate = document.getElementById("trip-date").value;
   const returnDate = document.getElementById("return-date").value;
+  const returnTime = document.getElementById("return-time").value;
   const tripTime = document.getElementById("trip-time").value.trim();
   const travelType = document.getElementById("travel-type").value.trim();
   const vehicleType = document.getElementById("vehicle-type").value.trim();
@@ -154,11 +155,15 @@ function getEstimationService() {
     showToast("Please choose your return date", "error");
     return;
   }
-  if (travelType === "roundTrip" && returnDate !== "") {
-    if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
-      showToast("Return date should be grater than pickup date", "error");
-      return;
-    }
+  // if (travelType === "roundTrip" && returnDate !== "") {
+  //   if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
+  //     showToast("Return date should be grater than pickup date", "error");
+  //     return;
+  //   }
+  // }
+  if (travelType === "roundTrip" && returnTime === "") {
+    showToast("Please choose your return time", "error");
+    return;
   }
   if (vehicleType === "") {
     showToast("Please choose your vehicle type", "error");
@@ -212,18 +217,49 @@ function displayEstimation(response) {
   const { status, data } = response;
   if (!status) return;
 
+  const tripDate = document.getElementById("trip-date").value;
+  const returnDate = document.getElementById("return-date").value;
+  const returnTime = document.getElementById("return-time").value.trim();
+  const travelType = document.getElementById("travel-type").value.trim();
+
+  const totalDays = calculateDays(tripDate, returnDate);
+  if (returnDate) {
+    const travelDateTime = document.querySelector(
+      "#estimate-output p:nth-child(3)"
+    );
+
+    let returnDateSection = document.getElementById("return-date-and-time");
+    if (returnDateSection) {
+      document.getElementById("return-date-time-value").textContent =
+        returnDate;
+    } else {
+      travelDateTime.insertAdjacentHTML(
+        "afterend",
+        `<p id="return-date-and-time">
+        <strong>Return Date & Time:</strong>
+        <span id="return-date-time-value">${returnDate}, ${convertTo12HourFormat(
+          returnTime
+        )}</span>
+      </p>`
+      );
+    }
+  }
+  const isPositive = totalDays - 3;
+  const waitingCharges = isPositive ? isPositive * 250 : 0;
   document.getElementById("pickup-value").innerHTML = data.pickup;
   document.getElementById("drop-value").innerHTML = data.drop;
   document.getElementById("date-time-value").innerHTML = data.dateAndTime;
   document.getElementById("traveltype-value").innerHTML = data.travelType;
   document.getElementById("cartype-value").innerHTML = data.vehicle;
   document.getElementById("days-value").innerHTML = `${data.durationDays} Days`;
-  document.getElementById("distance-value").innerHTML = data.totalKiloMeter;
+  document.getElementById("distance-value").innerHTML =
+    travelType === "roundTrip" ? data.totalKiloMeter * 2 : data.totalKiloMeter;
   document.getElementById("km-per-value").innerHTML = data.costPerKilometr;
-  document.getElementById("driver-batta-value").innerHTML = data.driverBata;
+  document.getElementById("driver-batta-value").innerHTML =
+    data.durationDays * data.driverBata;
   document.getElementById("fare-value").innerHTML = parseInt(data.totalCost);
   document.getElementById("total-value").innerHTML = parseInt(
-    data.totalCost + data.driverBata
+    data.totalCost + data.driverBata + waitingCharges
   );
 }
 

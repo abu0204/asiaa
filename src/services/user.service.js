@@ -1,4 +1,5 @@
 import TripModel from "../models/trip.model.js";
+import ContactForm from "../models/contact.schema.js"
 import DistrictJson from "../config/tamilnadu.json" with {type: "json"};
 import tripConfig from "../config/trip.config.json" with {type: "json"};
 
@@ -74,7 +75,11 @@ class UserServices {
 
   async createContactFormService(req_Body) {
     try {
-      const createdData = await TripModel.create(req_Body);
+       const { name, email, phone, subject, message } = req_Body;
+    if (!name || !email || !message || !phone || !subject) {
+      return res.status(400).json({ msg: "Missing required fields" });
+    }
+      const createdData = await ContactForm.create(req_Body);
       return {
         status: true,
         message: "Submitted Successfully",

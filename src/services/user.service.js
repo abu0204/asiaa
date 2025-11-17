@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import sendMailer from "../helpers/mail.helper.js";
 dotenv.config();
 import { bookingMailHtml } from "../helpers/bookingMailHtml.js"
+import { validateDates } from "../helpers/date.helper.js";
 const { OSRM_API } = process.env;
 
 function calculateDays(startDate, endDate) {
@@ -131,44 +132,66 @@ class UserServices {
 
   async bookATrip(req_Body) {
     try {
-      console.log({ req_Body });
 
-       const requiredFields = [
-      "name",
-      "email",
-      "mobile",
-      "pickup",
-      "drop",
-      "dateTime",
-      "travelType",
-      "vehicleType",
-      "days",
-      "distanceVal",
-      "kilometerPerVal",
-      "driverBata",
-      "fareVal",
-      "totalVal",
-    ];
 
-    for (const field of requiredFields) {
-      const value = req_Body[field];
 
-      if (
-        value === undefined ||
-        value === null ||
-        value.trim() === "" ||
-        value.trim() === "-" ||
-        value.trim() === "–" || 
-        value.trim() === "0" ||
-        value.trim() === "0 km" ||
-        value.trim() === "₹0"
-      ) {
-        return {
-          status: false,
-          message: `Invalid or missing field: ${field}`,
-        };
+      const requiredFields = [
+        "name",
+        "email",
+        "mobile",
+        "pickup",
+        "drop",
+        "dateTime",
+        "travelType",
+        "vehicleType",
+        "days",
+        "distanceVal",
+        "kilometerPerVal",
+        "driverBata",
+        "fareVal",
+        "totalVal",
+      ];
+
+      for (const field of requiredFields) {
+        const value = req_Body[field];
+
+        if (
+          value === undefined ||
+          value === null ||
+          value.trim() === "" ||
+          value.trim() === "-" ||
+          value.trim() === "–" ||
+          value.trim() === "0" ||
+          value.trim() === "0 km" ||
+          value.trim() === "₹0"
+        ) {
+          return {
+            status: false,
+            message: `Invalid or missing field: ${field}`,
+          };
+        }
+      };
+      if (req_Body.travelType === "roundTrip") {
+        if (
+          !req_Body.returnDateTime ||
+          req_Body.returnDateTime.trim() === "" ||
+          req_Body.returnDateTime.trim() === "-" ||
+          req_Body.returnDateTime.trim() === "–"
+        ) {
+          return {
+            status: false,
+            message: "Return date and time is required for round trip",
+          };
+        }
+
+        const result = validateDates(req_Body.dateTime, req_Body.returnDateTime);
+
+        if (!result.valid) {
+          console.log(result.message);
+        } else {
+          console.log("Validation success!");
+        }
       }
-    }
       await sendMailer({ to: req_Body.email, subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
       await TripModel.create(req_Body);
       return {

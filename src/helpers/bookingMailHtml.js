@@ -1,7 +1,11 @@
+const logo = "https://asiaa-travel.com/assets/logo.png";
+
 export const bookingMailHtml = (data) => {
   return `
   <div style="max-width:600px;margin:auto;padding:20px;background:#f8f8f8;font-family:Arial;border-radius:8px;">
-    <h2 style="text-align:center;color:#333;">🚖 Your Trip is Confirmed</h2>
+    <h2 style="text-align:center;color:#333;">
+    <img src=${logo} alt="taxi" width="20" height="20" style="vertical-align:middle;" />
+     Your Trip is Confirmed</h2>
     <p style="font-size:16px;color:#555;">Hi <strong>${data.name}</strong>,</p>
     <p style="font-size:15px;color:#555;">
       Thank you for choosing our service. Below are your booking details:
@@ -11,72 +15,109 @@ export const bookingMailHtml = (data) => {
       <tbody>
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Name</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.name}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.name
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Email</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.email}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.email
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Mobile</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.mobile}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.mobile
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Pickup Location</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.pickup}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.pickup
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Drop Location</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.drop}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.drop
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Travel Date & Time</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.dateTime}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.dateTime
+          }</td>
         </tr>
-
+         ${
+           data.travelType === "roundTrip"
+             ? `
+        <tr>
+           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Travel Return Date & Time</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${data.returnDateTime}</td>
+        </tr>
+        `
+             : ""
+         }
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Travel Type</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.travelType}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.travelType
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Vehicle Type</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.vehicleType}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.vehicleType
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Days</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.days}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.days
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Distance</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.distanceVal}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.distanceVal
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">KM Rate</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.kilometerPerVal}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.kilometerPerVal
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Driver Bata</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.driverBata}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.driverBata
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;border-bottom:1px solid #eee;font-weight:bold;">Fare</td>
-          <td style="padding:10px;border-bottom:1px solid #eee;">${data.fareVal}</td>
+          <td style="padding:10px;border-bottom:1px solid #eee;">${
+            data.fareVal
+          }</td>
         </tr>
 
         <tr>
           <td style="padding:10px;font-weight:bold;">Total Amount</td>
-          <td style="padding:10px;font-weight:bold;color:#28a745;">${data.totalVal}</td>
+          <td style="padding:10px;font-weight:bold;color:#28a745;">${
+            data.totalVal
+          }</td>
         </tr>
       </tbody>
     </table>

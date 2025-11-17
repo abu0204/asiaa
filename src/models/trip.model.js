@@ -8,6 +8,7 @@ const BookingSchema = new mongoose.Schema(
     pickup: { type: String },
     drop: { type: String },
     dateTime: { type: String },
+    returnDateTime: { type: String },
     travelType: { type: String },
     vehicleType: { type: String },
     days: { type: String },

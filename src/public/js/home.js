@@ -11,7 +11,11 @@ document.getElementById("travel-type").addEventListener("change", function () {
     document.getElementById("return-time").removeAttribute("required");
   }
 });
-
+document.addEventListener("DOMContentLoaded", () => {
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("trip-date").setAttribute("min", today);
+  document.getElementById("return-date").setAttribute("min", today);
+});
 const bookTrip = async () => {
   try {
     const name = document.getElementById("name").value.trim();
@@ -20,6 +24,8 @@ const bookTrip = async () => {
     const pickup = document.getElementById("pickup-value").innerText;
     const drop = document.getElementById("drop-value").innerText;
     const dateTime = document.getElementById("date-time-value").innerText;
+    const returnDateTime =
+      document.getElementById("return-date-time-value")?.innerText || "";
     const travelType = document.getElementById("traveltype-value").innerText;
     const vehicleType = document.getElementById("cartype-value").innerText;
     const days = document.getElementById("days-value").innerText;
@@ -62,6 +68,7 @@ const bookTrip = async () => {
           pickup,
           drop,
           dateTime,
+          returnDateTime,
           travelType,
           vehicleType,
           days,

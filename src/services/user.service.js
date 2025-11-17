@@ -4,11 +4,12 @@ import tripConfig from "../config/trip.config.json" with {type: "json"};
 
 import axios from "axios";
 import dotenv from "dotenv";
+import sendMailer from "../helpers/mail.helper.js";
 dotenv.config();
+import { bookingMailHtml } from "../helpers/bookingMailHtml.js"
 const { OSRM_API } = process.env;
 
 function calculateDays(startDate, endDate) {
-  console.log("startDate, endDate", startDate, endDate)
   let start = new Date(startDate);
   let end = new Date(endDate);
   let timeDifference = end - start;
@@ -131,37 +132,44 @@ class UserServices {
   async bookATrip(req_Body) {
     try {
       console.log({ req_Body });
-      // const { name, email, mobile, pickup, drop, tripDate, tripTime, travelType, vehicleType } = req_Body;
-      // const pickupDistrict = JSON.parse(pickup).district;
-      // const dropDistrict = JSON.parse(drop).district;
 
-      // const fromData = DistrictJson.find(location => location.district === pickupDistrict);
-      // const toData = DistrictJson.find(location => location.district === dropDistrict);
+       const requiredFields = [
+      "name",
+      "email",
+      "mobile",
+      "pickup",
+      "drop",
+      "dateTime",
+      "travelType",
+      "vehicleType",
+      "days",
+      "distanceVal",
+      "kilometerPerVal",
+      "driverBata",
+      "fareVal",
+      "totalVal",
+    ];
 
-      // const result = await axios.get(OSRM_API + `${fromData.lon},${fromData.lat};${toData.lon},${toData.lat}?overview=false`);
-      // const totalMeters = result.data.routes[0].distance;
+    for (const field of requiredFields) {
+      const value = req_Body[field];
 
-      // const tripMode = tripConfig[travelType];
-      // const vehicleDet = tripMode[vehicleType];
-      // const costPerKilometr = vehicleDet.costPerKilometer;
-      // const driverBata = vehicleDet.driverBata;
-      // const totalKiloMeter = totalMeters / 1000;
-      // const totalCost = totalKiloMeter * costPerKilometr;
-      // const insertObj = {
-      //   name,
-      //   email,
-      //   phoneNumber: mobile,
-      //   pickup: pickupDistrict,
-      //   drop: dropDistrict,
-      //   date: new Date(tripDate),
-      //   time: tripTime,
-      //   travelType,
-      //   vehicleType,
-      //   driverBata,
-      //   costPerKilometr,
-      //   totalKiloMeter,
-      //   totalCost
-      // };
+      if (
+        value === undefined ||
+        value === null ||
+        value.trim() === "" ||
+        value.trim() === "-" ||
+        value.trim() === "–" || 
+        value.trim() === "0" ||
+        value.trim() === "0 km" ||
+        value.trim() === "₹0"
+      ) {
+        return {
+          status: false,
+          message: `Invalid or missing field: ${field}`,
+        };
+      }
+    }
+      await sendMailer({ to: req_Body.email, subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
       await TripModel.create(req_Body);
       return {
         status: true,

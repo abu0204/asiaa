@@ -1,27 +1,24 @@
-import mongoose, { Document, Schema } from "mongoose";
+import mongoose from "mongoose";
 
-const tripSchema = new Schema(
+const BookingSchema = new mongoose.Schema(
   {
-    pickup: { type: String, required: true },
-    drop: { type: String, required: true },
-    date: { type: Date, required: true },
-    time: { type: String, required: true },
-    returnDate: { type: Date, default: null },
-    travelType: { type: String, required: true },
-    vehicleType: { type: String, required: true },
-    name: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
-    email: { type: String, required: true },
-    driverBata: { type: Number, required: true },
-    costPerKilometr: { type: Number, required: true },
-    totalKiloMeter: { type: Number, required: true },
-    totalCost: { type: Number, required: true },
+    name: { type: String },
+    email: { type: String },
+    mobile: { type: String },
+    pickup: { type: String },
+    drop: { type: String },
+    dateTime: { type: String },
+    travelType: { type: String },
+    vehicleType: { type: String },
+    days: { type: String },
+    distanceVal: { type: String },
+    kilometerPerVal: { type: String },
+    driverBata: { type: String },
+    fareVal: { type: String },
+    totalVal: { type: String },
   },
-  {
-    timestamps: true,
-    collection: "TripDetails",
-  }
+  { timestamps: true, collection: "TripDetails" }
 );
 
-const TripModel = mongoose.model("TripDetails", tripSchema);
+const TripModel = mongoose.model("TripDetails", BookingSchema);
 export default TripModel;

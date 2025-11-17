@@ -12,115 +12,151 @@ document.getElementById("travel-type").addEventListener("change", function () {
   }
 });
 
+const bookTrip = async () => {
+  try {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const pickup = document.getElementById("pickup-value").innerText;
+    const drop = document.getElementById("drop-value").innerText;
+    const dateTime = document.getElementById("date-time-value").innerText;
+    const travelType = document.getElementById("traveltype-value").innerText;
+    const vehicleType = document.getElementById("cartype-value").innerText;
+    const days = document.getElementById("days-value").innerText;
+    const distanceVal = document.getElementById("distance-value").innerText;
+    const kilometerPerVal = document.getElementById("km-per-value").innerText;
+    const driverBata = document.getElementById("driver-batta-value").innerText;
+    const fareVal = document.getElementById("fare-value").innerText;
+    const totalVal = document.getElementById("total-value").innerText;
+
+    if (
+      !name ||
+      !email ||
+      !mobile ||
+      !pickup ||
+      !drop ||
+      !dateTime ||
+      !travelType ||
+      !vehicleType ||
+      !days ||
+      !distanceVal ||
+      !kilometerPerVal ||
+      !driverBata ||
+      !fareVal ||
+      !totalVal
+    ) {
+      showToast("Get your Estimation to Continue!", "error");
+      return;
+    }
+
+    try {
+      const response = await fetch("/v1/users/book-trip", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          mobile,
+          pickup,
+          drop,
+          dateTime,
+          travelType,
+          vehicleType,
+          days,
+          distanceVal,
+          kilometerPerVal,
+          driverBata,
+          fareVal,
+          totalVal,
+        }),
+      });
+
+      const data = await response.json();
+      if (data.status) {
+        showToast(data.message, "success");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        showToast(data.message, "error");
+      }
+    } catch (err) {
+      console.error("AJAX error:", err);
+      alert("Something went wrong. Please try again later.");
+    }
+  } catch (error) {
+    console.error({ bookTrip: error });
+  }
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("book-trip")
     .addEventListener("submit", async function (e) {
       e.preventDefault();
 
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const mobile = document.getElementById("mobile").value.trim();
-      const pickup = document.getElementById("pickup-district").value.trim();
-      const drop = document.getElementById("drop-district").value.trim();
-      const tripDate = document.getElementById("trip-date").value;
-      const returnDate = document.getElementById("return-date").value;
-      const tripTime = document.getElementById("trip-time").value.trim();
-      const travelType = document.getElementById("travel-type").value.trim();
-      const vehicleType = document.getElementById("vehicle-type").value.trim();
-
-      if (name === "") {
-        showToast("Please enter your full name", "error");
-        return;
-      }
-      if (email === "") {
-        showToast("Please enter your email", "error");
-        return;
-      }
-      if (!isValidEmail(email)) {
-        showToast("Please enter a valid email address", "error");
-        return;
-      }
-      if (mobile === "") {
-        showToast("Please enter your mobile number", "error");
-        return;
-      }
-      if (pickup === "") {
-        showToast("Please choose your pickup location", "error");
-        return;
-      }
-      if (drop === "") {
-        showToast("Please choose your drop location", "error");
-        return;
-      }
-      if (tripDate === "") {
-        showToast("Please shedule your trip date", "error");
-        return;
-      }
-      if (tripTime === "") {
-        showToast("Please shedule your trip time", "error");
-        return;
-      }
-      if (tripDate !== "") {
-        const currentDate = new Date();
-        if (new Date(tripDate).getTime() < currentDate.getTime()) {
-          showToast("Pickup date should be greater than current date", "error");
-          return;
-        }
-      }
-      if (travelType === "") {
-        showToast("Please choose your travel type", "error");
-        return;
-      }
-      if (travelType === "roundTrip" && returnDate === "") {
-        showToast("Please choose your return date", "error");
-        return;
-      }
-      if (travelType === "roundTrip" && returnDate !== "") {
-        if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
-          showToast("Return date should be grater than pickup date", "error");
-          return;
-        }
-      }
-
-      if (vehicleType === "") {
-        showToast("Please choose your vehicle type", "error");
-        return;
-      }
-
-      try {
-        const response = await fetch("/v1/users/book-trip", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name,
-            email,
-            mobile,
-            pickup,
-            drop,
-            tripDate,
-            returnDate,
-            tripTime,
-            travelType,
-            vehicleType,
-          }),
-        });
-
-        const data = await response.json();
-        if (data.status) {
-          showToast(data.message, "success");
-          document.getElementById("book-trip").reset();
-        } else {
-          showToast(data.message, "error");
-        }
-      } catch (err) {
-        console.error("AJAX error:", err);
-        alert("Something went wrong. Please try again later.");
-      }
+      // if (name === "") {
+      //   showToast("Please enter your full name", "error");
+      //   return;
+      // }
+      // if (email === "") {
+      //   showToast("Please enter your email", "error");
+      //   return;
+      // }
+      // if (!isValidEmail(email)) {
+      //   showToast("Please enter a valid email address", "error");
+      //   return;
+      // }
+      // if (mobile === "") {
+      //   showToast("Please enter your mobile number", "error");
+      //   return;
+      // }
+      // if (pickup === "") {
+      //   showToast("Please choose your pickup location", "error");
+      //   return;
+      // }
+      // if (drop === "") {
+      //   showToast("Please choose your drop location", "error");
+      //   return;
+      // }
+      // if (tripDate === "") {
+      //   showToast("Please shedule your trip date", "error");
+      //   return;
+      // }
+      // if (tripTime === "") {
+      //   showToast("Please shedule your trip time", "error");
+      //   return;
+      // }
+      // if (tripDate !== "") {
+      //   const currentDate = new Date();
+      //   if (new Date(tripDate).getTime() < currentDate.getTime()) {
+      //     showToast("Pickup date should be greater than current date", "error");
+      //     return;
+      //   }
+      // }
+      // if (travelType === "") {
+      //   showToast("Please choose your travel type", "error");
+      //   return;
+      // }
+      // if (travelType === "roundTrip" && returnDate === "") {
+      //   showToast("Please choose your return date", "error");
+      //   return;
+      // }
+      // if (travelType === "roundTrip" && returnDate !== "") {
+      //   if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
+      //     showToast("Return date should be grater than pickup date", "error");
+      //     return;
+      //   }
+      // }
+      // if (vehicleType === "") {
+      //   showToast("Please choose your vehicle type", "error");
+      //   return;
+      // };
     });
 });
+
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }

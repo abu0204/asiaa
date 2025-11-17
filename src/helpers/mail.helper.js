@@ -3,18 +3,17 @@ import nodemailer from "nodemailer";
 const sendMailer = async ({ to, subject, html }) => {
   try {
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      host: "smtpout.secureserver.net",
+      port: 465,
+      secure: true, // SSL
       auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
+        user: process.env.SMTP_USER, // full email: info@yourdomain.com
+        pass: process.env.SMTP_PASS, // email password
       },
     });
 
-    // Send email
     await transporter.sendMail({
-      from: `"Black Cat Mailer" <${process.env.SMTP_USER}>`,
+      from: `"Asiaa Travel" <${process.env.SMTP_USER}>`,
       to,
       subject,
       html,

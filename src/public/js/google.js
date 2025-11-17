@@ -155,12 +155,6 @@ function getEstimationService() {
     showToast("Please choose your return date", "error");
     return;
   }
-  // if (travelType === "roundTrip" && returnDate !== "") {
-  //   if (new Date(tripDate).getTime() > new Date(returnDate).getTime()) {
-  //     showToast("Return date should be grater than pickup date", "error");
-  //     return;
-  //   }
-  // }
   if (travelType === "roundTrip" && returnTime === "") {
     showToast("Please choose your return time", "error");
     return;
@@ -190,26 +184,32 @@ function getEstimationService() {
   const vehicleDet = tripMode[vehicleType];
   const { costPerKilometer, driverBata } = vehicleDet;
   const minKm = tripMode.minimumKilometer;
-  const totalKmFinal = Math.max(totalKiloMeter, minKm);
-  const totalCost = totalKmFinal * costPerKilometer;
-
+  const totalKmFinal =
+    travelType === "onewayTrip"
+      ? Math.max(totalKiloMeter, minKm)
+      : Math.max(totalKiloMeter, minKm) * 2;
+  const totalCost = parseInt(totalKmFinal) * costPerKilometer;
+  const totalDays = calculateDays(tripDate, returnDate);
+  const durationDays = travelType === "onewayTrip" ? 1 : totalDays;
+  const isPositive = totalDays - 3;
+  const waitingCharges = isPositive > 0 ? isPositive * 250 : 0;
   const tripDetails = {
     status: true,
     data: {
       pickup: fromLocation,
       drop: toLocation,
       vehicle: vehicleType,
-      driverBata,
+      driverBata: driverBata * durationDays,
       totalKiloMeter: parseInt(totalKmFinal),
       costPerKilometr: costPerKilometer,
       totalCost,
       travelType,
-      durationDays:
-        travelType === "onewayTrip" ? 1 : calculateDays(tripDate, returnDate),
+      durationDays,
+      waitingCharges,
       dateAndTime: `${tripDate}, ${convertTo12HourFormat(tripTime)}`,
+      actTotalCost: parseInt(totalCost + driverBata + waitingCharges),
     },
   };
-
   displayEstimation(tripDetails);
 }
 
@@ -217,12 +217,9 @@ function displayEstimation(response) {
   const { status, data } = response;
   if (!status) return;
 
-  const tripDate = document.getElementById("trip-date").value;
   const returnDate = document.getElementById("return-date").value;
   const returnTime = document.getElementById("return-time").value.trim();
-  const travelType = document.getElementById("travel-type").value.trim();
 
-  const totalDays = calculateDays(tripDate, returnDate);
   if (returnDate) {
     const travelDateTime = document.querySelector(
       "#estimate-output p:nth-child(3)"
@@ -244,23 +241,18 @@ function displayEstimation(response) {
       );
     }
   }
-  const isPositive = totalDays - 3;
-  const waitingCharges = isPositive ? isPositive * 250 : 0;
+
   document.getElementById("pickup-value").innerHTML = data.pickup;
   document.getElementById("drop-value").innerHTML = data.drop;
   document.getElementById("date-time-value").innerHTML = data.dateAndTime;
   document.getElementById("traveltype-value").innerHTML = data.travelType;
   document.getElementById("cartype-value").innerHTML = data.vehicle;
   document.getElementById("days-value").innerHTML = `${data.durationDays} Days`;
-  document.getElementById("distance-value").innerHTML =
-    travelType === "roundTrip" ? data.totalKiloMeter * 2 : data.totalKiloMeter;
+  document.getElementById("distance-value").innerHTML = data.totalKiloMeter;
   document.getElementById("km-per-value").innerHTML = data.costPerKilometr;
-  document.getElementById("driver-batta-value").innerHTML =
-    data.durationDays * data.driverBata;
+  document.getElementById("driver-batta-value").innerHTML = data.driverBata;
   document.getElementById("fare-value").innerHTML = parseInt(data.totalCost);
-  document.getElementById("total-value").innerHTML = parseInt(
-    data.totalCost + data.driverBata + waitingCharges
-  );
+  document.getElementById("total-value").innerHTML = data.actTotalCost;
 }
 
 function showToast(message, toastType) {

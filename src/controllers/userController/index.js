@@ -54,7 +54,7 @@ class UserController {
     }
   }
 
-    async contact(req, res) {
+  async contact(req, res) {
     try {
       const result = await UserServices.contactService(req);
       return renderResponse(req, res, result);

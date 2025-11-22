@@ -142,7 +142,7 @@ class UserServices {
 
       const requiredFields = [
         "name",
-        "email",
+        // "email",
         "mobile",
         "pickup",
         "drop",

@@ -37,7 +37,6 @@ const bookTrip = async () => {
 
     if (
       !name ||
-      !email ||
       !mobile ||
       !pickup ||
       !drop ||

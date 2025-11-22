@@ -184,15 +184,20 @@ function getEstimationService() {
   const vehicleDet = tripMode[vehicleType];
   const { costPerKilometer, driverBata } = vehicleDet;
   const minKm = tripMode.minimumKilometer;
-  const totalKmFinal =
-    travelType === "onewayTrip"
-      ? Math.max(totalKiloMeter, minKm)
-      : Math.max(totalKiloMeter, minKm) * 2;
-  const totalCost = parseInt(totalKmFinal) * costPerKilometer;
+
   const totalDays = calculateDays(tripDate, returnDate);
   const durationDays = travelType === "onewayTrip" ? 1 : totalDays;
   const isPositive = totalDays - 3;
   const waitingCharges = isPositive > 0 ? isPositive * 250 : 0;
+  const isTwoWayInOneDay = travelType !== "onewayTrip" && totalDays == 1;
+  const totalKmFinal =
+    travelType === "onewayTrip"
+      ? Math.max(totalKiloMeter, minKm)
+      : isTwoWayInOneDay
+      ? Math.max(totalKiloMeter, minKm)
+      : Math.max(totalKiloMeter, minKm) * 2;
+  const totalCost = parseInt(totalKmFinal) * costPerKilometer;
+  console.log({ totalKmFinal });
   const tripDetails = {
     status: true,
     data: {

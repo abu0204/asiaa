@@ -149,8 +149,11 @@ function getEstimationService() {
     return;
   }
   if (tripDate !== "") {
-    const currentDate = new Date();
-    if (new Date(tripDate).getTime() < currentDate.getTime()) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = new Date(tripDate);
+    selectedDate.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
       showToast("Pickup date should be greater than current date", "error");
       return;
     }
@@ -203,13 +206,14 @@ function getEstimationService() {
       ? Math.max(totalKiloMeter, minKm)
       : 250 * totalDays;
   const totalCost = parseInt(totalKmFinal) * costPerKilometer;
+  const driverBataVal = driverBata * durationDays;
   const tripDetails = {
     status: true,
     data: {
       pickup: fromLocation,
       drop: toLocation,
       vehicle: vehicleType,
-      driverBata: driverBata * durationDays,
+      driverBata: driverBataVal,
       totalKiloMeter: parseInt(totalKmFinal),
       costPerKilometr: costPerKilometer,
       totalCost,
@@ -217,7 +221,7 @@ function getEstimationService() {
       durationDays,
       // waitingCharges,
       dateAndTime: `${tripDate}, ${convertTo12HourFormat(tripTime)}`,
-      actTotalCost: parseInt(totalCost + driverBata),
+      actTotalCost: parseInt(totalCost + driverBataVal),
     },
   };
   displayEstimation(tripDetails);
@@ -282,7 +286,7 @@ function showToast(message, toastType) {
 function calculateDays(start, end) {
   if (!start || !end) return 1;
   const diffTime = new Date(end) - new Date(start);
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 }
 
 function convertTo12HourFormat(time) {

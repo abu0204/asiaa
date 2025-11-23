@@ -7,7 +7,7 @@
 
 /* ===================== Body ===================== */
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   background-color: var(--light);
   color: var(--dark);
   margin: 0;
@@ -17,7 +17,7 @@ body {
 /* ===================== Hero Section ===================== */
 .hero {
   min-height: 100vh; /* fix mobile vh issue */
-  background: url('/assets/bg.jpeg') center/cover no-repeat;
+  background: url("/assets/bg.jpeg") center/cover no-repeat;
   position: relative;
   display: flex;
   align-items: center;
@@ -31,7 +31,7 @@ body {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 0;
 }
 
@@ -47,7 +47,6 @@ body {
   margin-bottom: 30px;
   color: black;
 }
-
 
 /* ===================== Booking Section ===================== */
 /* Container position */
@@ -111,8 +110,8 @@ body {
     padding: 12px 12px;
   }
   .floating-label {
-            font-size: 16px;
-        color: #000000db;
+    font-size: 16px;
+    color: #000000db;
   }
   .gold-input:focus + .floating-label,
   .gold-input:valid + .floating-label {
@@ -125,7 +124,7 @@ body {
   width: 100%;
   padding: 14px 15px;
   font-size: 16px;
-  
+
   border-radius: 10px;
   background: #fff;
   color: #333;
@@ -191,12 +190,11 @@ body {
   }
 }
 
-
 .booking-section {
   background-color: var(--light);
   padding: 30px;
   border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   color: var(--dark);
 }
 
@@ -240,13 +238,13 @@ body {
   border: 1px solid #ffe58f;
   border-radius: 10px;
   padding: 1rem 1.2rem;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: all 0.3s ease;
 }
 
 .disclaimer-box:hover {
   background: #fff7d9;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 .disclaimer-text {
@@ -254,14 +252,12 @@ body {
   line-height: 1.6;
 }
 
-
-
 /* ===================== Estimate Results ===================== */
 #estimate-results {
   background-color: #fff;
   border-radius: 12px;
   padding: 25px 20px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -270,7 +266,7 @@ body {
 
 #estimate-results:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
 #estimate-results h5 {
@@ -307,7 +303,7 @@ body {
   color: #ffd400;
 }
 
-.btn-warning{
+.btn-warning {
   background-color: var(--primary);
 }
 /* ===================== Responsive ===================== */
@@ -367,7 +363,8 @@ body {
   border-radius: 20px;
   padding: 25px 18px; /* reduced from 40px 25px */
   margin: 8px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.35), inset 0 2px 6px rgba(255,255,255,0.05);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35),
+    inset 0 2px 6px rgba(255, 255, 255, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -476,6 +473,7 @@ body {
   text-decoration: none;
   transition: all 0.3s ease;
   box-shadow: 0 0 20px rgba(255, 212, 0, 0.4);
+  padding: 10px 40px 10px 40px;
 }
 
 .btn-book:hover {
@@ -607,7 +605,8 @@ body {
 
 /* Automatic Glow Animation */
 @keyframes glowLoop {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 10px rgba(255, 212, 0, 0.15);
     border-color: transparent;
     opacity: 0.7;
@@ -624,21 +623,48 @@ body {
 }
 
 /* Sequential Glow Timings */
-.glow-delay-1 { animation: glowLoop 10s infinite; animation-delay: 0s; }
-.glow-delay-2 { animation: glowLoop 10s infinite; animation-delay: 2s; }
-.glow-delay-3 { animation: glowLoop 10s infinite; animation-delay: 4s; }
-.glow-delay-4 { animation: glowLoop 10s infinite; animation-delay: 6s; }
-.glow-delay-5 { animation: glowLoop 10s infinite; animation-delay: 8s; }
+.glow-delay-1 {
+  animation: glowLoop 10s infinite;
+  animation-delay: 0s;
+}
+.glow-delay-2 {
+  animation: glowLoop 10s infinite;
+  animation-delay: 2s;
+}
+.glow-delay-3 {
+  animation: glowLoop 10s infinite;
+  animation-delay: 4s;
+}
+.glow-delay-4 {
+  animation: glowLoop 10s infinite;
+  animation-delay: 6s;
+}
+.glow-delay-5 {
+  animation: glowLoop 10s infinite;
+  animation-delay: 8s;
+}
 
 /* Title Animations */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes fadeDown {
-  from { opacity: 0; transform: translateY(-40px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive */
@@ -651,7 +677,6 @@ body {
     width: 70%;
   }
 }
-
 
 /* ===================== Floating Icons ===================== */
 /* Floating Icons Base */
@@ -668,7 +693,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
   transition: transform 0.2s ease-in-out;
 }
 
@@ -693,4 +718,8 @@ body {
 .call:hover {
   background: #ffd400;
   color: #fff;
+}
+
+.btn-warning {
+  padding: 10px 40px !important;
 }

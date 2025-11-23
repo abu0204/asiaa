@@ -5,10 +5,22 @@ document.getElementById("travel-type").addEventListener("change", function () {
     returnTimeContainer.style.display = "flex"; // show
     document.getElementById("return-date").setAttribute("required", true);
     document.getElementById("return-time").setAttribute("required", true);
+    const vehicleTypeValues = document.getElementById("vehicle-type");
+    const option = document.createElement("option");
+    option.value = "toyotoInnova";
+    option.textContent = "Toyoto Innova";
+    vehicleTypeValues.appendChild(option);
   } else {
     returnTimeContainer.style.display = "none"; // hide
     document.getElementById("return-date").removeAttribute("required");
     document.getElementById("return-time").removeAttribute("required");
+    const vehicleTypeValues = document.getElementById("vehicle-type");
+    const innovaOption = vehicleTypeValues.querySelector(
+      'option[value="toyotoInnova"]'
+    );
+    if (innovaOption) {
+      innovaOption.remove();
+    }
   }
 });
 document.addEventListener("DOMContentLoaded", () => {

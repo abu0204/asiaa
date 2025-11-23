@@ -110,6 +110,14 @@ function calculateDistance(pickup, drop) {
     }
   );
 }
+document
+  .getElementById("estimation-btn")
+  .addEventListener("click", function () {
+    document.getElementById("estimation-section").scrollIntoView({
+      // top: 500,
+      behavior: "smooth",
+    });
+  });
 
 function getEstimationService() {
   const name = document.getElementById("name").value.trim();
@@ -188,16 +196,13 @@ function getEstimationService() {
   const totalDays = calculateDays(tripDate, returnDate);
   const durationDays = travelType === "onewayTrip" ? 1 : totalDays;
   const isPositive = totalDays - 3;
-  const waitingCharges = isPositive > 0 ? isPositive * 250 : 0;
-  const isTwoWayInOneDay = travelType !== "onewayTrip" && totalDays == 1;
+  // const waitingCharges = isPositive > 0 ? isPositive * 250 : 0;
+  // const isTwoWayInOneDay = travelType !== "onewayTrip" && totalDays == 1;
   const totalKmFinal =
     travelType === "onewayTrip"
       ? Math.max(totalKiloMeter, minKm)
-      : isTwoWayInOneDay
-      ? Math.max(totalKiloMeter, minKm)
-      : Math.max(totalKiloMeter, minKm) * 2;
+      : 250 * totalDays;
   const totalCost = parseInt(totalKmFinal) * costPerKilometer;
-  console.log({ totalKmFinal });
   const tripDetails = {
     status: true,
     data: {
@@ -212,7 +217,7 @@ function getEstimationService() {
       durationDays,
       waitingCharges,
       dateAndTime: `${tripDate}, ${convertTo12HourFormat(tripTime)}`,
-      actTotalCost: parseInt(totalCost + driverBata + waitingCharges),
+      actTotalCost: parseInt(totalCost + driverBata),
     },
   };
   displayEstimation(tripDetails);

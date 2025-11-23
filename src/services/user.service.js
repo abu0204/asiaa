@@ -201,7 +201,7 @@ class UserServices {
       await TripModel.create(req_Body);
       return {
         status: true,
-        message: "Trip Booked!"
+        message: "Booking Successfully!"
       }
     } catch (error) {
       console.error({ bookATrip: error });

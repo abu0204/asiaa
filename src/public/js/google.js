@@ -110,14 +110,14 @@ function calculateDistance(pickup, drop) {
     }
   );
 }
-document
-  .getElementById("estimation-btn")
-  .addEventListener("click", function () {
-    document.getElementById("estimation-section").scrollIntoView({
-      // top: 500,
-      behavior: "smooth",
-    });
-  });
+// document
+//   .getElementById("estimation-btn")
+//   .addEventListener("click", function () {
+//     document.getElementById("estimation-section").scrollIntoView({
+//       // top: 500,
+//       behavior: "smooth",
+//     });
+//   });
 
 function getEstimationService() {
   const name = document.getElementById("name").value.trim();
@@ -215,12 +215,16 @@ function getEstimationService() {
       totalCost,
       travelType,
       durationDays,
-      waitingCharges,
+      // waitingCharges,
       dateAndTime: `${tripDate}, ${convertTo12HourFormat(tripTime)}`,
       actTotalCost: parseInt(totalCost + driverBata),
     },
   };
   displayEstimation(tripDetails);
+  document.getElementById("estimation-section").scrollIntoView({
+    // top: 500,
+    behavior: "smooth",
+  });
 }
 
 function displayEstimation(response) {

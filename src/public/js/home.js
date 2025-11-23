@@ -8,7 +8,7 @@ document.getElementById("travel-type").addEventListener("change", function () {
     const vehicleTypeValues = document.getElementById("vehicle-type");
     const option = document.createElement("option");
     option.value = "toyotoInnova";
-    option.textContent = "Toyoto Innova";
+    option.textContent = "TOTOTA CRYSTA";
     vehicleTypeValues.appendChild(option);
   } else {
     returnTimeContainer.style.display = "none"; // hide

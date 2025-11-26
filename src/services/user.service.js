@@ -73,6 +73,27 @@ class UserServices {
     }
   }
 
+    async termsService() {
+    try {
+      return { status: true, title: "terms", pageName: "terms" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+    async privacyService() {
+    try {
+      return { status: true, title: "Privacy Policy", pageName: "policy" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+
   async createContactFormService(req_Body) {
     try {
        const { name, email, phone, subject, message } = req_Body;

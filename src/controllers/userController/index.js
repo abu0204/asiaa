@@ -66,6 +66,30 @@ class UserController {
       });
     }
   }
+  async terms(req, res) {
+    try {
+      const result = await UserServices.termsService(req);
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
+  async privacy(req, res) {
+    try {
+      const result = await UserServices.privacyService(req);
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
 
   async contactForm(req, res) {
     try {

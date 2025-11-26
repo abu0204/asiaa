@@ -7,7 +7,8 @@ router.get("/home", userController.home);
 router.get("/tariff", userController.tariff);
 router.get("/about", userController.about);
 router.get("/contact", userController.contact);
-
+router.get("/terms", userController.terms); 
+router.get("/privacy", userController.privacy);
 
 router.post("/get-estimation",userController.getEstimation);
 router.post("/book-trip",userController.bookATrip)

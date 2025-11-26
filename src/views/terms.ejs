@@ -1,8 +1,7 @@
 <!-- terms.ejs (or terms.html) - ready to use -->
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Terms & Conditions — Asiaa Travel</title>
@@ -10,454 +9,517 @@
     <!-- Keep header include (loads bootstrap/fonts/etc) -->
     <%- include('./layouts/header') %>
 
-        <!-- Namespaced Terms CSS (loads after header or can be anywhere) -->
-        <style>
-            /* NAMESPACE: everything scoped under .terms-page to avoid header/global overrides */
-            .terms-page {
-                --brand: #ffd400;
-                --brand-dark: #ffd400;
-                --bg: #f5f7fb;
-                --text: #111827;
-                --muted: #6b7280;
-                --radius: 16px;
-            }
-            body {
-                background-image: url("/assets/cubes.png");
-            }
+    <!-- Namespaced Terms CSS (loads after header or can be anywhere) -->
+    <style>
+      /* NAMESPACE: everything scoped under .terms-page to avoid header/global overrides */
+      .terms-page {
+        --brand: #ffd400;
+        --brand-dark: #ffd400;
+        --bg: #f5f7fb;
+        --text: #111827;
+        --muted: #6b7280;
+        --radius: 16px;
+      }
+      body {
+        background-image: url("/assets/cubes.png");
+      }
 
-            .terms-page * {
-                box-sizing: border-box;
-            }
+      .terms-page * {
+        box-sizing: border-box;
+      }
 
-            .terms-page body,
-            .terms-page html {
-                height: auto;
-            }
+      .terms-page body,
+      .terms-page html {
+        height: auto;
+      }
 
-            .terms-page .wrap {
-                max-width: 920px;
-                margin: 32px auto;
-                padding: 0 18px;
-                font-family: "Inter", system-ui, sans-serif;
-                color: var(--text);
-                background: transparent;
-                line-height: 1.65;
-            }
+      .terms-page .wrap {
+        max-width: 920px;
+        margin: 32px auto;
+        padding: 0 18px;
+        font-family: "Inter", system-ui, sans-serif;
+        color: var(--text);
+        background: transparent;
+        line-height: 1.65;
+      }
 
-            .terms-page .hero {
-                border-radius: var(--radius);
-                background: #fff;
-                border: 1px solid rgba(0, 0, 0, 0.05);
-                box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
-                overflow: hidden;
-                margin-top: 8rem;
-            }
+      .terms-page .hero {
+        border-radius: var(--radius);
+        background: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.04);
+        overflow: hidden;
+        margin-top: 8rem;
+      }
 
-            .terms-page .hero-head {
-                display: flex;
-                gap: 16px;
-                padding: 32px 22px 8px;
-                align-items: center;
-            }
+      .terms-page .hero-head {
+        display: flex;
+        gap: 16px;
+        padding: 32px 22px 8px;
+        align-items: center;
+      }
 
-            .terms-page .logo-mark {
-                width: 58px;
-                height: 58px;
-                border-radius: 14px;
-                background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-size: 1.1rem;
-                font-weight: 700;
-                color: #111;
-                box-shadow: 0 4px 14px rgba(217, 154, 0, 0.18);
-                flex-shrink: 0;
-            }
+      .terms-page .logo-mark {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+        background: linear-gradient(
+          135deg,
+          var(--brand) 0%,
+          var(--brand-dark) 100%
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #111;
+        box-shadow: 0 4px 14px rgba(217, 154, 0, 0.18);
+        flex-shrink: 0;
+      }
 
-            /* Headings - namespaced and specific to outrank global rules */
-            .terms-page h1 {
-                font-size: 1.9rem;
-                margin: 0;
-                font-weight: 700;
-                color: var(--text) !important;
-                letter-spacing: -0.3px;
-            }
+      /* Headings - namespaced and specific to outrank global rules */
+      .terms-page h1 {
+        font-size: 1.9rem;
+        margin: 0;
+        font-weight: 700;
+        color: var(--text) !important;
+        letter-spacing: -0.3px;
+      }
 
-            .terms-page h2 {
-                font-size: 1.25rem;
-                margin: 0 0 8px 0;
-                font-weight: 700;
-                color: var(--brand-dark) !important;
-                line-height: 1.25;
-            }
+      .terms-page h2 {
+        font-size: 1.25rem;
+        margin: 0 0 8px 0;
+        font-weight: 700;
+        color: var(--brand-dark) !important;
+        line-height: 1.25;
+      }
 
-            .terms-page h3 {
-                font-size: 1.02rem;
-                margin: 12px 0 6px 0;
-                font-weight: 600;
-                color: #ffd400 !important;
-            }
+      .terms-page h3 {
+        font-size: 1.02rem;
+        margin: 12px 0 6px 0;
+        font-weight: 600;
+        color: #ffd400 !important;
+      }
 
-            .terms-page .hero-sub {
-                margin-top: 6px;
-                font-size: 0.95rem;
-                color: var(--muted);
-            }
+      .terms-page .hero-sub {
+        margin-top: 6px;
+        font-size: 0.95rem;
+        color: var(--muted);
+      }
 
-            .terms-page .divider {
-                height: 1px;
-                margin: 16px 0;
-                background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
-            }
+      .terms-page .divider {
+        height: 1px;
+        margin: 16px 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(0, 0, 0, 0.06),
+          transparent
+        );
+      }
 
-            .terms-page .card-body {
-                padding: 22px 22px 32px;
-            }
+      .terms-page .card-body {
+        padding: 22px 22px 32px;
+      }
 
-            .terms-page .section {
-                margin-top: 28px;
-            }
+      .terms-page .section {
+        margin-top: 28px;
+      }
 
-            .terms-page .section-head {
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                margin-bottom: 8px;
-            }
+      .terms-page .section-head {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
 
-            .terms-page .section-icon {
-                width: 42px;
-                height: 42px;
-                border-radius: 12px;
-                background: linear-gradient(180deg, #fff, #fff7de);
-                border: 1px solid rgba(0, 0, 0, 0.04);
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 1.1rem;
-                color: var(--brand-dark);
-                box-shadow: 0 4px 14px rgba(217, 154, 0, 0.10);
-                flex-shrink: 0;
-            }
+      .terms-page .section-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(180deg, #fff, #fff7de);
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.1rem;
+        color: var(--brand-dark);
+        box-shadow: 0 4px 14px rgba(217, 154, 0, 0.1);
+        flex-shrink: 0;
+      }
 
-            .terms-page .section-desc {
-                font-size: 0.95rem;
-                color: var(--muted);
-                margin-top: 2px;
-            }
+      .terms-page .section-desc {
+        font-size: 0.95rem;
+        color: var(--muted);
+        margin-top: 2px;
+      }
 
-            /* Lists */
-            .terms-page ul {
-                padding-left: 0;
-                margin-top: 10px;
-                margin-bottom: 18px;
-            }
+      /* Lists */
+      .terms-page ul {
+        padding-left: 0;
+        margin-top: 10px;
+        margin-bottom: 18px;
+      }
 
-            .terms-page ul li {
-                list-style: none;
-                margin-bottom: 8px;
-                padding-left: 34px;
-                position: relative;
-                font-size: 1rem;
-            }
+      .terms-page ul li {
+        list-style: none;
+        margin-bottom: 8px;
+        padding-left: 34px;
+        position: relative;
+        font-size: 1rem;
+      }
 
-            .terms-page ul li::before {
-                content: "";
-                width: 18px;
-                height: 18px;
-                position: absolute;
-                left: 0;
-                top: 5px;
-                background: linear-gradient(180deg, var(--brand), var(--brand-dark));
-                border-radius: 6px;
-                mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.793l7.146-7.147a.5.5 0 0 1 .708 0z"/></svg>') center/contain no-repeat;
-                -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.793l7.146-7.147a.5.5 0 0 1 .708 0z"/></svg>') center/contain no-repeat;
-            }
+      .terms-page ul li::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        position: absolute;
+        left: 0;
+        top: 5px;
+        background: linear-gradient(180deg, var(--brand), var(--brand-dark));
+        border-radius: 6px;
+        mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.793l7.146-7.147a.5.5 0 0 1 .708 0z"/></svg>')
+          center/contain no-repeat;
+        -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill="white" d="M13.854 3.646a.5.5 0 0 1 0 .708l-7.5 7.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.793l7.146-7.147a.5.5 0 0 1 .708 0z"/></svg>')
+          center/contain no-repeat;
+      }
 
-            .terms-page p {
-                font-size: 1rem;
-                margin-bottom: 8px;
-            }
+      .terms-page p {
+        font-size: 1rem;
+        margin-bottom: 8px;
+      }
 
-            .terms-page .muted {
-                color: var(--muted);
-                font-size: 0.95rem;
-            }
+      .terms-page .muted {
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
 
-            /* Make sure links inside terms keep theme */
-            .terms-page a {
-                color: var(--brand-dark) !important;
-                text-decoration: none;
-            }
+      /* Make sure links inside terms keep theme */
+      .terms-page a {
+        color: var(--brand-dark) !important;
+        text-decoration: none;
+      }
 
-            .terms-page a:hover {
-                color: var(--brand) !important;
-                text-decoration: underline;
-            }
+      .terms-page a:hover {
+        color: var(--brand) !important;
+        text-decoration: underline;
+      }
 
-            /* Important overrides for common header conflicts */
-            .terms-page h1,
-            .terms-page h2,
-            .terms-page h3,
-            .terms-page p,
-            .terms-page ul li {
-                /* ensure our font-size, weight, color rules take precedence */
-                font-family: "Inter", system-ui, sans-serif !important;
-                
-            }
+      /* Important overrides for common header conflicts */
+      .terms-page h1,
+      .terms-page h2,
+      .terms-page h3,
+      .terms-page p,
+      .terms-page ul li {
+        /* ensure our font-size, weight, color rules take precedence */
+        font-family: "Inter", system-ui, sans-serif !important;
+      }
 
-            /* Small screens adjustments */
-            @media (max-width: 600px) {
-                .terms-page .hero-head {
-                    flex-direction: column;
-                    align-items: flex-start;
-                    gap: 8px;
-                    padding: 22px;
-                }
+      /* Small screens adjustments */
+      @media (max-width: 600px) {
+        .terms-page .hero-head {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+          padding: 22px;
+        }
 
-                .terms-page h1 {
-                    font-size: 1.55rem;
-                }
+        .terms-page h1 {
+          font-size: 1.55rem;
+        }
 
-                .terms-page h2 {
-                    font-size: 1.12rem;
-                }
+        .terms-page h2 {
+          font-size: 1.12rem;
+        }
 
-                .terms-page h3 {
-                    font-size: 1rem;
-                }
+        .terms-page h3 {
+          font-size: 1rem;
+        }
 
-                .terms-page .wrap {
-                    margin-top: 22px;
-                }
-            }
-        </style>
-</head>
+        .terms-page .wrap {
+          margin-top: 22px;
+        }
+      }
+    </style>
+  </head>
 
-<body>
-
+  <body>
     <!-- Keep header include here as before -->
     <%- include('./layouts/header') %>
 
-        <!-- Wrapped content: this class isolates all Terms styles -->
-        <main class="terms-page">
-            <div class="wrap" role="main" aria-labelledby="page-title">
-
-                <div class="hero">
-                    <div class="hero-head">
-                        <div class="logo-mark" aria-hidden="true">AT</div>
-                        <div>
-                            <h1 id="page-title">Terms &amp; Conditions</h1>
-                            <div class="hero-sub muted">Asiaa Travel — Please read before using our services.</div>
-                        </div>
-                    </div>
-
-                    <div class="divider" role="presentation"></div>
-
-                    <div class="card-body">
-                        <div class="text-muted small mb-3" id="lastUpdated">Last Updated: —</div>
-
-                        <!-- Section examples (keep the rest of your content identical) -->
-                        <section class="section" aria-labelledby="sec-1-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-file-text-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-1-title">1. General</h2>
-                                    <div class="section-desc">These terms apply to all bookings made with Asiaa Travel.
-                                    </div>
-                                </div>
-                            </div>
-                            <p>You accept these terms by accessing our website or using our services.</p>
-                        </section>
-
-                        <!-- (copy the rest of your sections here) -->
-                        <!-- SECTION 2 -->
-                        <section class="section" aria-labelledby="sec-2-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-car-front-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-2-title">2. Services Provided</h2>
-                                    <div class="section-desc">All services depend on availability.</div>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>One-way &amp; round-trip taxi services</li>
-                                <li>Outstation travel services</li>
-                                <li>Local ride bookings</li>
-                                <li>Airport pickup/drop</li>
-                                <li>Corporate travel (coming soon)</li>
-                            </ul>
-                        </section> <!-- SECTION 3 -->
-                        <section class="section" aria-labelledby="sec-3-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-clock-history"></i></div>
-                                <div>
-                                    <h2 id="sec-3-title">3. Booking Policy</h2>
-                                </div>
-                            </div>
-                            <h3>3.1 Booking Confirmation</h3>
-                            <ul>
-                                <li>You receive a confirmation through SMS, WhatsApp, or email.</li>
-                                <li>Pickup, drop, date, time, and vehicle type must be shared.</li>
-                            </ul>
-                            <h3>3.2 Last-Minute Changes</h3>
-                            <p>Changes depend on vehicle availability.</p>
-                            <h3>3.3 Driver Assignment</h3>
-                            <p>Driver details will be shared prior to the trip. They may change if required.</p>
-                        </section> <!-- SECTION 4 -->
-                        <section class="section" aria-labelledby="sec-4-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-currency-rupee"></i></div>
-                                <div>
-                                    <h2 id="sec-4-title">4. Pricing &amp; Payments</h2>
-                                </div>
-                            </div>
-                            <h3>4.1 Fare Details</h3>
-                            <ul>
-                                <li>Distance-based fare</li>
-                                <li>Vehicle type</li>
-                                <li>Tolls &amp; parking</li>
-                                <li>Driver bata / allowances</li>
-                                <li>Peak-time adjustments</li>
-                            </ul>
-                            <h3>4.2 Extra Charges</h3>
-                            <ul>
-                                <li>Waiting time</li>
-                                <li>Extra kilometers</li>
-                                <li>Night bata</li>
-                                <li>Additional pickups/drops</li>
-                                <li>Route deviation</li>
-                            </ul>
-                            <h3>4.3 Payment Methods</h3>
-                            <ul>
-                                <li>UPI</li>
-                                <li>Bank transfer</li>
-                                <li>Cash</li>
-                            </ul>
-                            <p class="muted">Full payment must be made at the end of the trip.</p>
-                        </section> <!-- SECTION 5 -->
-                        <section class="section" aria-labelledby="sec-5-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i
-                                        class="bi bi-exclamation-octagon-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-5-title">5. Cancellations</h2>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Vehicle breakdown</li>
-                                <li>Driver unavailability</li>
-                                <li>Safety issues</li>
-                                <li>Weather / natural disasters</li>
-                            </ul>
-                        </section> <!-- SECTION 6 -->
-                        <section class="section" aria-labelledby="sec-6-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-people-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-6-title">6. Customer Responsibilities</h2>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Provide accurate pickup details</li>
-                                <li>Be available at pickup location on time</li>
-                                <li>Maintain respectful behavior</li>
-                                <li>No illegal or hazardous items</li>
-                                <li>Wear seat belts</li>
-                            </ul>
-                        </section> <!-- SECTION 7 -->
-                        <section class="section" aria-labelledby="sec-7-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i
-                                        class="bi bi-shield-fill-exclamation"></i></div>
-                                <div>
-                                    <h2 id="sec-7-title">7. Driver &amp; Vehicle Rules</h2>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Drivers may refuse service in unsafe conditions</li>
-                                <li>Vehicle type may vary</li>
-                                <li>Driver may stop trip for safety issues</li>
-                            </ul>
-                        </section> <!-- SECTION 8 -->
-                        <section class="section" aria-labelledby="sec-8-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-x-circle-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-8-title">8. Liability &amp; Disclaimer</h2>
-                                </div>
-                            </div>
-                            <ul>
-                                <li>Traffic delays</li>
-                                <li>Weather interruptions</li>
-                                <li>Loss of personal belongings</li>
-                                <li>Third-party failures</li>
-                            </ul>
-                        </section> <!-- SECTION 9 -->
-                        <section class="section" aria-labelledby="sec-9-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-globe2"></i></div>
-                                <div>
-                                    <h2 id="sec-9-title">9. Website Usage</h2>
-                                </div>
-                            </div>
-                            <p class="muted">Scraping, hacking, or misuse of the website is prohibited.</p>
-                        </section> <!-- SECTION 10 -->
-                        <section class="section" aria-labelledby="sec-10-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-shield-lock-fill"></i>
-                                </div>
-                                <div>
-                                    <h2 id="sec-10-title">10. Privacy</h2>
-                                </div>
-                            </div>
-                            <p class="muted">Your information is handled according to our Privacy Policy.</p>
-                        </section> <!-- SECTION 11 -->
-                        <section class="section" aria-labelledby="sec-11-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-gavel-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-11-title">11. Governing Law</h2>
-                                </div>
-                            </div>
-                            <p class="muted">Indian laws apply. Disputes fall under Tamil Nadu courts.</p>
-                        </section>
-                        <!-- Example final contact section -->
-                        <section class="section" aria-labelledby="sec-12-title">
-                            <div class="section-head">
-                                <div class="section-icon" aria-hidden="true"><i class="bi bi-envelope-fill"></i></div>
-                                <div>
-                                    <h2 id="sec-12-title">12. Contact</h2>
-                                </div>
-                            </div>
-
-                            <p class="muted">
-                                <strong>Email:</strong>
-                                <a href="mailto:support@asiaa-travel.com">support@asiaa-travel.com</a><br>
-                                <strong>Phone:</strong>
-                                <a href="tel:+919514578005">+91 95145 78005</a> /
-                                <a href="tel:+919514878005">+91 95148 78005</a>
-                            </p>
-                        </section>
-
-                    </div>
-                </div>
+    <!-- Wrapped content: this class isolates all Terms styles -->
+    <main class="terms-page">
+      <div class="wrap" role="main" aria-labelledby="page-title">
+        <div class="hero">
+          <div class="hero-head">
+            <div class="logo-mark" aria-hidden="true">AT</div>
+            <div>
+              <h1 id="page-title">Terms &amp; Conditions</h1>
+              <div class="hero-sub muted">
+                Asiaa Travel — Please read before using our services.
+              </div>
             </div>
-        </main>
+          </div>
 
-        <!-- Keep footer include as before -->
-        <%- include('./layouts/footer') %>
+          <div class="divider" role="presentation"></div>
 
-            <script>
-                // set last-updated (optional)
-                (function () {
-                    const d = new Date();
-                    const opt = { year: "numeric", month: "long", day: "numeric" };
-                    document.getElementById("lastUpdated").textContent =
-                        "Last Updated: " + d.toLocaleDateString(undefined, opt);
-                })();
-            </script>
-</body>
+          <div class="card-body">
+            <div class="text-muted small mb-3" id="lastUpdated">
+              Last Updated: —
+            </div>
 
+            <!-- Section examples (keep the rest of your content identical) -->
+            <section class="section" aria-labelledby="sec-1-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-file-text-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-1-title">1. General</h2>
+                  <div class="section-desc">
+                    These terms apply to all bookings made with Asiaa Travel.
+                  </div>
+                </div>
+              </div>
+              <p>
+                You accept these terms by accessing our website or using our
+                services.
+              </p>
+            </section>
+
+            <!-- (copy the rest of your sections here) -->
+            <!-- SECTION 2 -->
+            <section class="section" aria-labelledby="sec-2-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-car-front-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-2-title">2. Services Provided</h2>
+                  <div class="section-desc">
+                    All services depend on availability.
+                  </div>
+                </div>
+              </div>
+              <ul>
+                <li>One-way &amp; round-trip taxi services</li>
+                <li>Outstation travel services</li>
+                <li>Local ride bookings</li>
+                <li>Airport pickup/drop</li>
+                <li>Corporate travel (coming soon)</li>
+              </ul>
+            </section>
+            <!-- SECTION 3 -->
+            <section class="section" aria-labelledby="sec-3-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div>
+                  <h2 id="sec-3-title">3. Booking Policy</h2>
+                </div>
+              </div>
+              <h3>3.1 Booking Confirmation</h3>
+              <ul>
+                <li>
+                  You receive a confirmation through SMS, WhatsApp, or email.
+                </li>
+                <li>
+                  Pickup, drop, date, time, and vehicle type must be shared.
+                </li>
+              </ul>
+              <h3>3.2 Last-Minute Changes</h3>
+              <p>Changes depend on vehicle availability.</p>
+              <h3>3.3 Driver Assignment</h3>
+              <p>
+                Driver details will be shared prior to the trip. They may change
+                if required.
+              </p>
+            </section>
+            <!-- SECTION 4 -->
+            <section class="section" aria-labelledby="sec-4-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-currency-rupee"></i>
+                </div>
+                <div>
+                  <h2 id="sec-4-title">4. Pricing &amp; Payments</h2>
+                </div>
+              </div>
+              <h3>4.1 Fare Details</h3>
+              <ul>
+                <li>Distance-based fare</li>
+                <li>Vehicle type</li>
+                <li>Tolls &amp; parking</li>
+                <li>Driver bata / allowances</li>
+                <li>Peak-time adjustments</li>
+              </ul>
+              <h3>4.2 Extra Charges</h3>
+              <ul>
+                <li>Waiting time</li>
+                <li>Extra kilometers</li>
+                <li>Night bata</li>
+                <li>Additional pickups/drops</li>
+                <li>Route deviation</li>
+              </ul>
+              <h3>4.3 Payment Methods</h3>
+              <ul>
+                <li>UPI</li>
+                <li>Bank transfer</li>
+                <li>Cash</li>
+              </ul>
+              <p class="muted">
+                Full payment must be made at the end of the trip.
+              </p>
+            </section>
+            <!-- SECTION 5 -->
+            <section class="section" aria-labelledby="sec-5-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-exclamation-octagon-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-5-title">5. Cancellations</h2>
+                </div>
+              </div>
+              <ul>
+                <li>Vehicle breakdown</li>
+                <li>Driver unavailability</li>
+                <li>Safety issues</li>
+                <li>Weather / natural disasters</li>
+              </ul>
+            </section>
+            <!-- SECTION 6 -->
+            <section class="section" aria-labelledby="sec-6-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-people-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-6-title">6. Customer Responsibilities</h2>
+                </div>
+              </div>
+              <ul>
+                <li>Provide accurate pickup details</li>
+                <li>Be available at pickup location on time</li>
+                <li>Maintain respectful behavior</li>
+                <li>No illegal or hazardous items</li>
+                <li>Wear seat belts</li>
+              </ul>
+            </section>
+            <!-- SECTION 7 -->
+            <section class="section" aria-labelledby="sec-7-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-shield-fill-exclamation"></i>
+                </div>
+                <div>
+                  <h2 id="sec-7-title">7. Driver &amp; Vehicle Rules</h2>
+                </div>
+              </div>
+              <ul>
+                <li>Drivers may refuse service in unsafe conditions</li>
+                <li>Vehicle type may vary</li>
+                <li>Driver may stop trip for safety issues</li>
+              </ul>
+            </section>
+            <!-- SECTION 8 -->
+            <section class="section" aria-labelledby="sec-8-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-x-circle-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-8-title">8. Liability &amp; Disclaimer</h2>
+                </div>
+              </div>
+              <ul>
+                <li>Traffic delays</li>
+                <li>Weather interruptions</li>
+                <li>Loss of personal belongings</li>
+                <li>Third-party failures</li>
+              </ul>
+            </section>
+            <!-- SECTION 9 -->
+            <section class="section" aria-labelledby="sec-9-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-globe2"></i>
+                </div>
+                <div>
+                  <h2 id="sec-9-title">9. Website Usage</h2>
+                </div>
+              </div>
+              <p class="muted">
+                Scraping, hacking, or misuse of the website is prohibited.
+              </p>
+            </section>
+            <!-- SECTION 10 -->
+            <section class="section" aria-labelledby="sec-10-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-shield-lock-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-10-title">10. Privacy</h2>
+                </div>
+              </div>
+              <p class="muted">
+                Your information is handled according to our Privacy Policy.
+              </p>
+            </section>
+            <!-- SECTION 11 -->
+            <section class="section" aria-labelledby="sec-11-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-gavel-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-11-title">11. Governing Law</h2>
+                </div>
+              </div>
+              <p class="muted">
+                Indian laws apply. Disputes fall under Tamil Nadu courts.
+              </p>
+            </section>
+            <!-- Example final contact section -->
+            <section class="section" aria-labelledby="sec-12-title">
+              <div class="section-head">
+                <div class="section-icon" aria-hidden="true">
+                  <i class="bi bi-envelope-fill"></i>
+                </div>
+                <div>
+                  <h2 id="sec-12-title">12. Contact</h2>
+                </div>
+              </div>
+
+              <p class="muted">
+                <strong>Email:</strong>
+                <a href="mailto:support@asiaa-travel.com"
+                  >support@asiaa-travel.com</a
+                ><br />
+                <strong>Phone:</strong>
+                <a href="tel:+919514578005">+91 95145 78005</a> /
+                <a href="tel:+919514878005">+91 95148 78005</a>
+              </p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Keep footer include as before -->
+    <%- include('./layouts/footer') %>
+
+    <script>
+      // set last-updated (optional)
+      (function () {
+        const d = new Date();
+        const opt = { year: "numeric", month: "long", day: "numeric" };
+        document.getElementById("lastUpdated").textContent =
+          "Last Updated: " + d.toLocaleDateString(undefined, opt);
+      })();
+    </script>
+  </body>
 </html>

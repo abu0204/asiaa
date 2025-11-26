@@ -93,10 +93,12 @@ const bookTrip = async () => {
 
       const data = await response.json();
       if (data.status) {
-        showToast(data.message, "success");
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        // showToast(data.message, "success");
+        // $("#successModal").modal("show");
+        var myModal = new bootstrap.Modal(
+          document.getElementById("successModal")
+        );
+        myModal.show();
       } else {
         showToast(data.message, "error");
       }
@@ -178,7 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
-
+function refresh() {
+  setTimeout(() => {
+    window.location.reload();
+  }, 1000);
+}
 function showToast(message, toastType) {
   Toastify({
     text: message,

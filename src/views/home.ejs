@@ -297,6 +297,22 @@
                 >
                   Book Now
                 </button>
+                <!-- modal trigger button -->
+                <button
+                  type="button"
+                  class="btn btn-warning"
+                  style="
+                    background: #ffd400;
+                    border: none;
+                    color: #000;
+                    font-weight: 600;
+                  "
+                  data-bs-toggle="modal"
+                  data-bs-target="#successModal"
+                >
+                  Book Now
+                </button>
+                <!-- modal trigger button ends here -->
               </div>
             </div>
           </div>
@@ -309,6 +325,63 @@
         style="background-color: rgba(0, 0, 0, 0.5)"
       ></div>
     </section>
+
+    <!-- SUCCESS MODAL (Asiaa Travel Theme) -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 16px">
+          <div
+            class="modal-header border-0"
+            style="background: #fff7d2; border-radius: 16px 16px 0 0"
+          >
+            <h5
+              class="modal-title w-100 text-center"
+              style="color: #ffd400; font-weight: 700"
+            >
+              <i
+                class="bi bi-check-circle-fill"
+                style="color: #ffd400; font-size: 1.8rem"
+              ></i
+              ><br />
+              Trip Booked Successfully
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body text-center" style="padding: 25px 20px">
+            <p style="margin-bottom: 6px; font-size: 1.05rem; font-weight: 500">
+              Your booking has been confirmed!
+            </p>
+            <p class="text-muted">
+              We will contact you shortly with driver details.
+            </p>
+          </div>
+
+          <div
+            class="modal-footer border-0 justify-content-center"
+            style="padding-bottom: 25px"
+          >
+            <button
+              class="btn px-4"
+              data-bs-dismiss="modal"
+              style="
+                background: #ffd400;
+                color: #000;
+                font-weight: 600;
+                border-radius: 10px;
+              "
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- SUCCESS MODAL ends here -->
 
     <section class="stats-section">
       <div class="container">

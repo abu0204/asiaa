@@ -190,14 +190,14 @@ class UserServices {
         }
 
         const result = validateDates(req_Body.dateTime, req_Body.returnDateTime);
-
+        console.log({result})
         if (!result.valid) {
           console.log(result.message);
         } else {
           console.log("Validation success!");
         }
       }
-      await sendMailer({ to: req_Body.email, subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
+      await sendMailer({ to: "asiaatravelcompany@gmail.com", subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
       await TripModel.create(req_Body);
       return {
         status: true,

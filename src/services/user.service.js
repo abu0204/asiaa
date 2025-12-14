@@ -1,5 +1,5 @@
-import TripModel from "../models/trip.model.js";
-import ContactForm from "../models/contact.schema.js"
+import TripModel from "../models/TripDetails.js";
+import ContactForm from "../models/ContactForm.js"
 import DistrictJson from "../config/tamilnadu.json" with {type: "json"};
 import tripConfig from "../config/trip.config.json" with {type: "json"};
 

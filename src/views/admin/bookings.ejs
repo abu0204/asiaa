@@ -1,0 +1,110 @@
+<%- include("../layouts/adminheaders") %> <%- include("../layouts/sidebar") %>
+
+<div class="container-fluid mt-4">
+  <h3 class="mb-4">Trip Bookings</h3>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Pickup</th>
+            <th>Drop</th>
+            <th>Travel Type</th>
+            <th>Vehicle</th>
+            <th>Total Fare</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if (data.length === 0) { %>
+          <tr>
+            <td colspan="10" class="text-center">No trips found</td>
+          </tr>
+          <% } %> <% data.forEach((trip, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td><%= trip.name %></td>
+            <td><%= trip.mobile %></td>
+            <td><%= trip.pickup %></td>
+            <td><%= trip.drop %></td>
+            <td><%= trip.travelType %></td>
+            <td><%= trip.vehicleType %></td>
+            <td>₹ <%= trip.totalVal %></td>
+            <td><%= new Date(trip.createdAt).toLocaleDateString("en-IN") %></td>
+            <td>
+              <button
+                class="btn btn-sm btn-info"
+                onclick="viewTrip('<%= trip._id %>')"
+              >
+                View
+              </button>
+
+              <button
+                class="btn btn-sm btn-danger"
+                onclick="deleteTrip('<%= trip._id %>')"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- View Driver Modal -->
+<div class="modal fade" id="tripModel" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Driver Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-bordered">
+          <tbody id="tripDetails">
+            <tr>
+              <td colspan="2" class="text-center">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function viewTrip(bookingId) {
+    const res = await fetch(`/admin/booking/${bookingId}`);
+    const data = await res.json();
+
+    const html = `
+      <tr><th>Name</th><td>${data.name}</td></tr>
+      <tr><th>Phone</th><td>${data.phone}</td></tr>
+      <tr><th>Verified</th><td>${data.isVerified ? "Yes" : "No"}</td></tr>
+      <tr><th>Created At</th><td>${new Date(
+        data.createdAt
+      ).toLocaleString()}</td></tr>
+    `;
+
+    document.getElementById("tripDetails").innerHTML = html;
+
+    const modal = new bootstrap.Modal(document.getElementById("tripModel"));
+    modal.show();
+  }
+</script>
+
+<%- include("../layouts/adminfooter") %>

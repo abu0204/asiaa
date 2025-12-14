@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const driverSchema = new mongoose.Schema(
+const adminSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -28,7 +28,7 @@ const driverSchema = new mongoose.Schema(
       default: false,
     },
   },
-  { timestamps: true, collection: "Drivers" }
+  { timestamps: true, collection: "Admin" }
 );
 
-export default mongoose.model("Drivers", driverSchema);
+export default mongoose.model("Admin", adminSchema);

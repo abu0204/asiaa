@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginAdmin } from "../../controllers/admin/auth.js";
+import { loginAdmin, logoutAdmin } from "../../controllers/admin/auth.js";
 import adminController from "../../controllers/admin/pages.js";
 import { adminAuth } from "../../middleware.js/auth.js";
 const router = Router();
@@ -11,5 +11,6 @@ router.get("/bookings", adminAuth, adminController.bookings);
 router.get("/booking/:bookingId", adminAuth, adminController.bookingDet);
 
 router.post("/auth/login", loginAdmin);
+router.post("/auth/logout", logoutAdmin);
 
 export default router;

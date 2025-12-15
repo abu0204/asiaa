@@ -1,4 +1,4 @@
-import TripModel from "../models/TripDetails.js";
+import BookingModel from "../models/Bookings.js";
 import ContactForm from "../models/ContactForm.js"
 import DistrictJson from "../config/tamilnadu.json" with {type: "json"};
 import tripConfig from "../config/trip.config.json" with {type: "json"};
@@ -9,6 +9,7 @@ import sendMailer from "../helpers/mail.helper.js";
 dotenv.config();
 import { bookingMailHtml } from "../helpers/bookingMailHtml.js"
 import { validateDates } from "../helpers/date.helper.js";
+import Admin from "../models/Admin.js";
 const { OSRM_API } = process.env;
 
 function calculateDays(startDate, endDate) {
@@ -26,8 +27,10 @@ function convertTo12HourFormat(time24) {
 
   return `${hours}:${minutes.toString().padStart(2, "0")} ${period}`;
 };
-
-
+let socket;
+export const socketInit = (io)=>{
+  socket = io
+}
 class UserServices {
   async homeService() {
     try {
@@ -158,9 +161,6 @@ class UserServices {
 
   async bookATrip(req_Body) {
     try {
-
-
-
       const requiredFields = [
         "name",
         // "email",
@@ -211,7 +211,6 @@ class UserServices {
         }
 
         const result = validateDates(req_Body.dateTime, req_Body.returnDateTime);
-        console.log({result})
         if (!result.valid) {
           console.log(result.message);
         } else {
@@ -219,11 +218,13 @@ class UserServices {
         }
       }
       await sendMailer({ to: "asiaatravelcompany@gmail.com", subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
-      await TripModel.create(req_Body);
+      const data = await BookingModel.create(req_Body);
+      const adminDet = await Admin.findOne({});
+      socket.to(String(adminDet._id)).emit("userBooked",data)
       return {
         status: true,
         message: "Booking Successfully!"
-      }
+      };
     } catch (error) {
       console.error({ bookATrip: error });
       return {

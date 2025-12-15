@@ -93,8 +93,6 @@ const bookTrip = async () => {
 
       const data = await response.json();
       if (data.status) {
-        // showToast(data.message, "success");
-        // $("#successModal").modal("show");
         var myModal = new bootstrap.Modal(
           document.getElementById("successModal")
         );

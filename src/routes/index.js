@@ -1,10 +1,11 @@
 import { Router } from "express";
-import userRouters from "./usersRouter/pages.js";
+import userPageRouters from "./usersRouter/pages.js";
+import userRouters from "./usersRouter/index.js";
 import driverAuthRouter from "./driverRouter/auth.js";
-import adminRouter from "./admin/index.js"
+import adminRouter from "./admin/index.js";
 const router = Router();
 
-router.use("/", userRouters);
+router.use("/", userPageRouters);
 
 router.use("/v1/users", userRouters);
 

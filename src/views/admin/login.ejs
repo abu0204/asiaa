@@ -84,7 +84,7 @@
 
         const data = await res.json();
         document.getElementById("msg").innerText = data.message;
-
+        localStorage.setItem("adminId", data.adminId);
         if (data.success) {
           window.location.href = "/admin/home";
         }

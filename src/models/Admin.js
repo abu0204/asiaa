@@ -23,10 +23,6 @@ const adminSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
-    isVerified: {
-      type: Boolean,
-      default: false,
-    },
   },
   { timestamps: true, collection: "Admin" }
 );

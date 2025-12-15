@@ -77,11 +77,27 @@ export const loginAdmin = async (req, res) => {
       success: true,
       message: "Login successful",
       token,
-      userId: user._id,
+      adminId: user._id,
     });
   } catch (error) {
     console.error(error);
     res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
+
+export const logoutAdmin = async (req, res) => {
+  try {
+    res.clearCookie("adminToken", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+    });
+    return res.json({ message: "Logout successful" });
+  } catch (err) {
+    console.error({ logoutAdmin: err });
+    return res.status(500).json({
       message: "Internal server error",
     });
   }

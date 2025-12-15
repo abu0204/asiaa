@@ -1,9 +1,9 @@
 const socket = io();
 
-socket.on("notify", (msg) => {
-  alert("Live Notification: " + msg);
-});
+(function joinRoom() {
+  socket.emit("joinAdmin", localStorage.getItem("adminId"));
+})();
 
 function sendNotify() {
   socket.emit("admin-notify", "New user registered!");
-};
+}

@@ -12,7 +12,6 @@ export const adminAuth = async (req, res, next) => {
     if (req.cookies?.adminToken) {
       token = req.cookies.adminToken;
     }
-    console.log({ token });
     if (!token) {
       return res.redirect("/admin/login");
     }

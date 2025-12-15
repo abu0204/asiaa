@@ -8,6 +8,7 @@ import { fileURLToPath } from "url";
 import { dirname } from "path";
 import { connectDB } from "./config/index.js";
 import dotenv from "dotenv";
+import { socketInit } from "./services/user.service.js";
 // import "./extractGeoData.js";
 dotenv.config();
 
@@ -27,16 +28,22 @@ app.use(cookieParser());
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
-
+socketInit(io);
 app.use("/", routers);
+
 io.on("connection", (socket) => {
   console.log("🟢 User connected:", socket.id);
+
+  socket.on("joinAdmin", (adminId) => {
+    socket.join(String(adminId));
+    console.log("Admin joined room:", adminId);
+  });
 
   socket.on("disconnect", () => {
     console.log("🔴 User disconnected:", socket.id);
   });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
 });

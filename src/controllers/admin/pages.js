@@ -1,5 +1,5 @@
 import Drivers from "../../models/Drivers.js";
-import TripDetails from "../../models/TripDetails.js";
+import BookingModel from "../../models/Bookings.js";
 import {
   errorResponse,
   renderResponse,
@@ -61,7 +61,7 @@ class AdminPages {
   };
   bookings = async (req, res) => {
     try {
-      const drivers = await TripDetails.find().sort({ createdAt: -1 }).lean();
+      const drivers = await BookingModel.find().sort({ createdAt: -1 }).lean();
       const payload = {
         status: true,
         title: "Home",
@@ -79,7 +79,7 @@ class AdminPages {
   };
   bookingDet = async (req, res) => {
     try {
-      const bookingData = await TripDetails.findById(
+      const bookingData = await BookingModel.findById(
         req.params.bookingId
       ).lean();
 

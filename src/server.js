@@ -9,7 +9,7 @@ import { dirname } from "path";
 import { connectDB } from "./config/index.js";
 import dotenv from "dotenv";
 import { socketInit } from "./services/user.service.js";
-// import "./extractGeoData.js";
+import { socketInitialize } from "./helpers/socket.helper.js";
 dotenv.config();
 
 const app = express();
@@ -29,6 +29,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.set("view engine", "ejs");
 socketInit(io);
+socketInitialize(io);
 app.use("/", routers);
 
 io.on("connection", (socket) => {

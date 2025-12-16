@@ -1,0 +1,64 @@
+<%- include("../layouts/adminheaders") %>
+
+<div class="admin-layout">
+  <%- include("../layouts/sidebar") %>
+
+  <main class="content-area">
+    <div class="container-fluid mt-4">
+      <h3 class="mb-4">Trip Details</h3>
+
+      <div class="card">
+        <div class="card-body table-responsive">
+          <table id="tripsTable" border="1">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Booking ID</th>
+                <th>Pickup</th>
+                <th>Drop</th>
+                <th>Drivers</th>
+                <th>Status</th>
+                <th>Created At</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<%- include("../layouts/adminfooter") %>
+<script>
+  document.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const response = await fetch("/admin/trips/get-tripes");
+      const result = await response.json();
+
+      if (!result.status) return;
+
+      const tbody = document.querySelector("#tripsTable tbody");
+      tbody.innerHTML = "";
+
+      result.data.forEach((trip, index) => {
+        console.log({ trip });
+        const drivers = trip.driverId.map((d) => d.name || d._id).join(", ");
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${index + 1}</td>
+            <td>${trip._id || "-"}</td>
+            <td>${trip.pickup || "-"}</td>
+            <td>${trip.bookingId?.drop || "-"}</td>
+            <td>${drivers}</td>
+            <td>${trip.status}</td>
+            <td>${new Date(trip.createdAt).toLocaleString()}</td>
+          </tr>
+        `;
+      });
+    } catch (err) {
+      console.error("Failed to load trips", err);
+    }
+  });
+</script>

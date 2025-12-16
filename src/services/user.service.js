@@ -30,12 +30,13 @@ function convertTo12HourFormat(time24) {
 let socket;
 export const socketInit = (io)=>{
   socket = io
-}
+};
+
 class UserServices {
   async homeService() {
     try {
       const data = DistrictJson;
-      return { status: true, title: "Home", pageName: "home", data: data };
+      return { status: true, title: "Home", pageName: "users/home", data: data };
     } catch (error) {
       return {
         status: false,
@@ -45,7 +46,7 @@ class UserServices {
   }
   async tariffService() {
     try {
-      return { status: true, title: "tariff", pageName: "tariff" };
+      return { status: true, title: "tariff", pageName: "users/tariff" };
     } catch (error) {
       return {
         status: false,
@@ -56,7 +57,7 @@ class UserServices {
 
   async aboutService() {
     try {
-      return { status: true, title: "about", pageName: "about" };
+      return { status: true, title: "about", pageName: "users/about" };
     } catch (error) {
       return {
         status: false,
@@ -67,7 +68,7 @@ class UserServices {
 
   async contactService() {
     try {
-      return { status: true, title: "contact", pageName: "contact" };
+      return { status: true, title: "contact", pageName: "users/contact" };
     } catch (error) {
       return {
         status: false,
@@ -78,7 +79,7 @@ class UserServices {
 
     async termsService() {
     try {
-      return { status: true, title: "terms", pageName: "terms" };
+      return { status: true, title: "terms", pageName: "users/terms" };
     } catch (error) {
       return {
         status: false,
@@ -88,7 +89,7 @@ class UserServices {
   }
     async privacyService() {
     try {
-      return { status: true, title: "Privacy Policy", pageName: "policy" };
+      return { status: true, title: "Privacy Policy", pageName: "users/policy" };
     } catch (error) {
       return {
         status: false,

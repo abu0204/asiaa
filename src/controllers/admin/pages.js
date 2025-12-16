@@ -7,6 +7,9 @@ import {
 } from "../../helpers/response.helper.js";
 
 class AdminPages {
+  redirectPage = async (req, res) => {
+    res.redirect("/admin/home");
+  };
   login = async (req, res) => {
     try {
       const payload = {
@@ -77,20 +80,16 @@ class AdminPages {
       });
     }
   };
-  bookingDet = async (req, res) => {
+
+  trips = async (req, res) => {
     try {
-      const bookingData = await BookingModel.findById(
-        req.params.bookingId
-      ).lean();
-
-      if (!bookingData) {
-        return errorResponse(req, res, {
-          status: false,
-          message: "Trip not found",
-        });
-      }
-
-      return successResponse(req, res, { data: bookingData });
+      const payload = {
+        status: true,
+        title: "Home",
+        pageName: "admin/trips",
+        data: [],
+      };
+      return renderResponse(req, res, payload);
     } catch (error) {
       return errorResponse(req, res, {
         status: false,

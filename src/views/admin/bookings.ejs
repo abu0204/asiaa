@@ -12,7 +12,7 @@
           <table class="table table-bordered table-hover align-middle">
             <thead class="table-dark">
               <tr>
-                <th>#</th>
+                <th>Sl.No</th>
                 <th>Name</th>
                 <th>Mobile</th>
                 <th>Pickup</th>
@@ -21,6 +21,7 @@
                 <th>Vehicle</th>
                 <th>Total Fare</th>
                 <th>Date</th>
+                <th>Status</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -43,12 +44,19 @@
                 <td>
                   <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
                 </td>
+                <td><%= trip.status %></td>
                 <td>
                   <button
                     class="btn btn-sm btn-info"
                     onclick="viewTrip('<%= trip._id %>')"
                   >
                     View
+                  </button>
+                  <button
+                    class="btn btn-sm btn-info"
+                    onclick="approveTrip('<%= trip._id %>')"
+                  >
+                    Approve
                   </button>
                 </td>
               </tr>
@@ -113,29 +121,33 @@
         <button class="btn btn-sm btn-info" onclick="viewTrip('${trip._id}')">
           View
         </button>
+         <button class="btn btn-sm btn-info" onclick="approveTrip('${
+           trip._id
+         }')">
+          Approve
+        </button>
       </td>
     `;
     tbody.prepend(row);
     updateSerialNumbers();
   }
+
   function updateSerialNumbers() {
     const rows = document.querySelectorAll("#tripTableBody tr");
     rows.forEach((tr, index) => {
       tr.children[0].innerText = index + 1;
     });
   }
+
   async function viewTrip(bookingId) {
     try {
-      const res = await fetch(`/admin/booking/${bookingId}`);
+      const res = await fetch(`/admin/bookings/${bookingId}`);
 
       if (!res.ok) {
         alert("Failed to fetch trip details");
         return;
       }
-
       const data = await res.json();
-      console.log({ data: data.data });
-
       const html = `
         <tr><th>Name</th><td>${data.data.name || "-"}</td></tr>
         <tr><th>Mobile</th><td>${data.data.mobile || "-"}</td></tr>
@@ -148,6 +160,10 @@
           <th>Created At</th>
           <td>${new Date(data.data.createdAt).toLocaleString("en-IN")}</td>
         </tr>
+         <tr>
+          <th>Status</th>
+          <td>${data.data.status}</td>
+        </tr>
       `;
       console.log({ html });
 
@@ -156,6 +172,25 @@
       const modalEl = document.getElementById("tripModel");
       const modal = new bootstrap.Modal(modalEl);
       modal.show();
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
+  }
+
+  async function approveTrip(bookingId) {
+    try {
+      const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
+        method: "put",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        alert("Failed to fetch trip details");
+        return;
+      }
+      const data = await res.json();
+      console.log({ data: data.data });
     } catch (err) {
       console.error(err);
       alert("Something went wrong");

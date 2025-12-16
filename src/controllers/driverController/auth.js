@@ -1,5 +1,6 @@
 import Drivers from "../../models/Drivers.js";
-import jwt from "jsonwebtoken";
+import Bookings from "../../models/Bookings.js";
+import TripModel from "../../models/TripDetails.js";
 import {
   decryptAES,
   encryptAES,
@@ -169,3 +170,4 @@ export const loginDriver = async (req, res) => {
     });
   }
 };
+

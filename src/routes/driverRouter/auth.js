@@ -3,7 +3,6 @@ import {
   loginDriver,
   registerDriver,
 } from "../../controllers/driverController/auth.js";
-
 const router = express.Router();
 
 router.post("/register", registerDriver);

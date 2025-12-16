@@ -22,5 +22,5 @@ const BookingSchema = new mongoose.Schema(
   { timestamps: true, collection: "Bookings" }
 );
 
-const TripModel = mongoose.model("Bookings", BookingSchema);
-export default TripModel;
+const BookingModel = mongoose.model("Bookings", BookingSchema);
+export default BookingModel;

@@ -44,7 +44,6 @@
       result.data.forEach((trip, index) => {
         console.log({ trip });
         const drivers = trip.driverId.map((d) => d.name || d._id).join(", ");
-
         tbody.innerHTML += `
           <tr>
             <td>${index + 1}</td>

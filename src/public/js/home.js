@@ -96,7 +96,7 @@ const bookTrip = async () => {
         var myModal = new bootstrap.Modal(
           document.getElementById("successModal")
         );
-        myModal.show();
+        // myModal.show();
       } else {
         showToast(data.message, "error");
       }

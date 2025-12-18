@@ -117,6 +117,7 @@
       <td>${trip.vehicleType}</td>
       <td>₹ ${trip.totalVal}</td>
       <td>${new Date(trip.createdAt).toLocaleDateString("en-IN")}</td>
+      <td>${trip.status}</td>
       <td>
         <button class="btn btn-sm btn-info" onclick="viewTrip('${trip._id}')">
           View
@@ -165,8 +166,6 @@
           <td>${data.data.status}</td>
         </tr>
       `;
-      console.log({ html });
-
       document.getElementById("tripDetails").innerHTML = html;
 
       const modalEl = document.getElementById("tripModel");

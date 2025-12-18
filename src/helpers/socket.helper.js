@@ -1,4 +1,3 @@
-import DriversModel from "../models/Drivers.js";
 import BookingModel from "../models/Bookings.js";
 let socket;
 export const socketInitialize = (io) => {

@@ -79,7 +79,7 @@ export const registerDriver = async (req, res) => {
     return res.json({
       success: true,
       message: "User registered successfully",
-      userId: user._id,
+      driverId: user._id,
     });
   } catch (error) {
     console.error(error);
@@ -161,7 +161,7 @@ export const loginDriver = async (req, res) => {
       success: true,
       message: "Login successful",
       token,
-      userId: user._id,
+      driverId: user._id,
     });
   } catch (error) {
     console.error(error);
@@ -170,4 +170,3 @@ export const loginDriver = async (req, res) => {
     });
   }
 };
-

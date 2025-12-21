@@ -90,6 +90,7 @@ export const configStatus = async (req, res) => {
     }
     userDet.isOnline = !userDet.isOnline;
     await userDet.save();
+    
     return res.status(200).json({
       status: true,
       message: `Driver is now ${userDet.isOnline ? "Online" : "Offline"}`,

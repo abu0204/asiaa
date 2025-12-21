@@ -12,7 +12,12 @@ export const myProfile = async (req, res) => {
       });
     }
 
-    const userDet = await DriversModel.findById(driverId).select("-password");
+    const userDet = await DriversModel.findById(driverId).select(
+      "name",
+      "phone",
+      "isVerified",
+      "isOnline"
+    );
 
     if (!userDet) {
       return res.status(404).json({

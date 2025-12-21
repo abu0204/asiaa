@@ -13,10 +13,7 @@ export const myProfile = async (req, res) => {
     }
 
     const userDet = await DriversModel.findById(driverId).select(
-      "name",
-      "phone",
-      "isVerified",
-      "isOnline"
+      "name phone isVerified isOnline"
     );
 
     if (!userDet) {

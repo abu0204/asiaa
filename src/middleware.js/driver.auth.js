@@ -19,7 +19,9 @@ export const driverAuth = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, DRIVER_JWT_SECRET);
-    const driver = await Drivers.findById(decoded.adminId);
+    console.log({ decoded });
+
+    const driver = await Drivers.findById(decoded.driverId);
 
     if (!driver) {
       return res

@@ -32,7 +32,7 @@ export const generateOTP = () =>
   Math.floor(100000 + Math.random() * 900000).toString();
 
 export const genDriverAuthToken = (driverId) => {
-  return jwt.sign({ userId: driverId }, DRIVER_JWT_SECRET, {
+  return jwt.sign({ driverId: driverId }, DRIVER_JWT_SECRET, {
     expiresIn: "7d",
   });
 };

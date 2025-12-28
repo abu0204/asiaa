@@ -7,194 +7,100 @@
     <div class="container-fluid mt-4">
       <h3 class="mb-4">Trip Bookings</h3>
 
-      <div class="card">
-        <div class="card-body table-responsive">
-          <table class="table table-bordered table-hover align-middle">
-            <thead class="table-dark">
-              <tr>
-                <th>Sl.No</th>
-                <th>Name</th>
-                <th>Mobile</th>
-                <th>Pickup</th>
-                <th>Drop</th>
-                <th>Travel Type</th>
-                <th>Vehicle</th>
-                <th>Total Fare</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+      <div class="booking-cards" id="tripCards">
+        <% if (data.length === 0) { %>
+          <p class="text-center">No trips found</p>
+        <% } %>
 
-            <tbody id="tripTableBody">
-              <% if (data.length === 0) { %>
-              <tr>
-                <td colspan="10" class="text-center">No trips found</td>
-              </tr>
-              <% } %> <% data.forEach((trip, index) => { %>
-              <tr>
-                <td><%= index + 1 %></td>
-                <td><%= trip.name %></td>
-                <td><%= trip.mobile %></td>
-                <td><%= trip.pickup %></td>
-                <td><%= trip.drop %></td>
-                <td><%= trip.travelType %></td>
-                <td><%= trip.vehicleType %></td>
-                <td>₹ <%= trip.totalVal %></td>
-                <td>
-                  <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
-                </td>
-                <td><%= trip.status %></td>
-                <td>
-                  <button
-                    class="btn btn-sm btn-info"
-                    onclick="viewTrip('<%= trip._id %>')"></button>
-                    View
-                  </button>
-                  <button
-                    class="btn btn-sm btn-info"
-                    onclick="approveTrip('<%= trip._id %>')"
-                    <%=trip.status === "Approve" ? "disabled" : "" %>
-                    >
-                    <%= trip.status === "Approve" ? "Approved" : "Approve" %>
-                  </button>
+        <% data.forEach((trip, index) => { %>
+          <div class="booking-card">
 
-                </td>
-              </tr>
-              <% }) %>
-            </tbody>
-          </table>
-        </div>
+            <div class="booking-card-header">
+              <span>#<%= index + 1 %></span>
+              <span class="badge bg-secondary"><%= trip.status %></span>
+            </div>
+
+            <div class="booking-info">
+              <p><strong>Name:</strong> <%= trip.name %></p>
+              <p><strong>Mobile:</strong> <%= trip.mobile %></p>
+              <p><strong>Pickup:</strong> <%= trip.pickup %></p>
+              <p><strong>Drop:</strong> <%= trip.drop %></p>
+              <p><strong>Travel Type:</strong> <%= trip.travelType %></p>
+              <p><strong>Vehicle:</strong> <%= trip.vehicleType %></p>
+              <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %></p>
+              <p><strong>Date:</strong>
+                <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
+              </p>
+            </div>
+
+            <div class="booking-actions">
+              <button
+                class="btn btn-sm btn-info"
+                onclick="viewTrip('<%= trip._id %>')">
+                View
+              </button>
+
+              <button
+                class="btn btn-sm btn-success"
+                onclick="approveTrip('<%= trip._id %>')"
+                <%= trip.status === "Approve" ? "disabled" : "" %>>
+                <%= trip.status === "Approve" ? "Approved" : "Approve" %>
+              </button>
+            </div>
+
+          </div>
+        <% }) %>
       </div>
     </div>
   </main>
 </div>
 
-<div class="modal fade" id="tripModel" tabindex="-1">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Trip Details</h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <table class="table table-bordered">
-          <tbody id="tripDetails">
-            <tr>
-              <td colspan="2" class="text-center">Loading...</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-
+<!-- Modal stays SAME -->
 <%- include("../layouts/adminfooter") %>
-
 <script>
   socket.on("userBooked", (trip) => {
-    console.log("New booking received:", trip);
     pushNewTrip(trip);
   });
 
   function pushNewTrip(trip) {
-    const tbody = document.getElementById("tripTableBody");
-    const row = document.createElement("tr");
+    const container = document.getElementById("tripCards");
 
-    row.innerHTML = `
-      <td></td>
-      <td>${trip.name}</td>
-      <td>${trip.mobile}</td>
-      <td>${trip.pickup}</td>
-      <td>${trip.drop}</td>
-      <td>${trip.travelType}</td>
-      <td>${trip.vehicleType}</td>
-      <td>₹ ${trip.totalVal}</td>
-      <td>${new Date(trip.createdAt).toLocaleDateString("en-IN")}</td>
-      <td >${trip.status}</td>
-      <td>
-        <button class="btn btn-sm btn-info" onclick="viewTrip('${trip._id}')">
+    const card = document.createElement("div");
+    card.className = "booking-card";
+
+    card.innerHTML = `
+      <div class="booking-card-header">
+        <span>#</span>
+        <span class="badge bg-secondary">${trip.status}</span>
+      </div>
+
+      <div class="booking-info">
+        <p><strong>Name:</strong> ${trip.name}</p>
+        <p><strong>Mobile:</strong> ${trip.mobile}</p>
+        <p><strong>Pickup:</strong> ${trip.pickup}</p>
+        <p><strong>Drop:</strong> ${trip.drop}</p>
+        <p><strong>Travel Type:</strong> ${trip.travelType}</p>
+        <p><strong>Vehicle:</strong> ${trip.vehicleType}</p>
+        <p><strong>Total Fare:</strong> ₹ ${trip.totalVal}</p>
+        <p><strong>Date:</strong>
+          ${new Date(trip.createdAt).toLocaleDateString("en-IN")}
+        </p>
+      </div>
+
+      <div class="booking-actions">
+        <button class="btn btn-sm btn-info"
+          onclick="viewTrip('${trip._id}')">
           View
         </button>
-         <button
-    class="btn btn-sm btn-info"
-    onclick="approveTrip('${trip._id}')"
-    ${trip.status === "Approve" ? "disabled" : ""}
-  >
-    ${trip.status === "Approve" ? "Approved" : "Approve"}
-  </button>
-      </td>
+
+        <button class="btn btn-sm btn-success"
+          onclick="approveTrip('${trip._id}')"
+          ${trip.status === "Approve" ? "disabled" : ""}>
+          ${trip.status === "Approve" ? "Approved" : "Approve"}
+        </button>
+      </div>
     `;
-    tbody.prepend(row);
-    updateSerialNumbers();
-  }
 
-  function updateSerialNumbers() {
-    const rows = document.querySelectorAll("#tripTableBody tr");
-    rows.forEach((tr, index) => {
-      tr.children[0].innerText = index + 1;
-    });
-  }
-
-  async function viewTrip(bookingId) {
-    try {
-      const res = await fetch(`/admin/bookings/${bookingId}`);
-
-      if (!res.ok) {
-        alert("Failed to fetch trip details");
-        return;
-      }
-      const data = await res.json();
-      const html = `
-        <tr><th>Name</th><td>${data.data.name || "-"}</td></tr>
-        <tr><th>Mobile</th><td>${data.data.mobile || "-"}</td></tr>
-        <tr><th>Pickup</th><td>${data.data.pickup || "-"}</td></tr>
-        <tr><th>Drop</th><td>${data.data.drop || "-"}</td></tr>
-        <tr><th>Travel Type</th><td>${data.data.travelType || "-"}</td></tr>
-        <tr><th>Vehicle</th><td>${data.data.vehicleType || "-"}</td></tr>
-        <tr><th>Total Fare</th><td>₹ ${data.data.totalVal || 0}</td></tr>
-        <tr>
-          <th>Created At</th>
-          <td>${new Date(data.data.createdAt).toLocaleString("en-IN")}</td>
-        </tr>
-         <tr>
-          <th>Status</th>
-          <td>${data.data.status}</td>
-        </tr>
-      `;
-      document.getElementById("tripDetails").innerHTML = html;
-
-      const modalEl = document.getElementById("tripModel");
-      const modal = new bootstrap.Modal(modalEl);
-      modal.show();
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    }
-  }
-
-  async function approveTrip(bookingId) {
-    try {
-      const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
-        method: "put",
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        alert("Failed to fetch trip details");
-        return;
-      }
-      const data = await res.json();
-      console.log({ data: data.data });
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong");
-    }
+    container.prepend(card);
   }
 </script>

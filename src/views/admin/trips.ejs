@@ -1,41 +1,44 @@
 <%- include("../layouts/adminheaders") %>
-<link rel="stylesheet" href="/css/trip.css">
+  <link rel="stylesheet" href="/css/trip.css">
 
-<div class="admin-layout">
-  <%- include("../layouts/sidebar") %>
+  <div class="admin-layout">
+    <%- include("../layouts/sidebar") %>
 
-  <main class="tripcontent-area">
-    <div class="container-fluid mt-4">
-      <h3 class="mb-4">Trip Details</h3>
+      <main class="tripcontent-area">
+        <div class="container-fluid mt-4">
+          <h3 class="mb-4">Trip Details</h3>
 
-      <div class="trip-cards" id="tripCards">
-        <!-- Cards injected by JS -->
-      </div>
-    </div>
-  </main>
-</div>
+          <div class="trip-cards" id="tripCards">
+            <!-- Cards injected by JS -->
+          </div>
+        </div>
+      </main>
+  </div>
 
-<%- include("../layouts/adminfooter") %>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    const response = await fetch("/admin/trips/get-tripes");
-    const result = await response.json();
+  <%- include("../layouts/adminfooter") %>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("/admin/trips/get-tripes");
+          const result = await response.json();
 
-    if (!result.status) return;
+          if (!result.status) return;
 
-    const container = document.getElementById("tripCards");
-    container.innerHTML = "";
+          const container = document.getElementById("tripCards");
+          container.innerHTML = "";
 
-    result.data.forEach((trip, index) => {
+          result.data.forEach((trip, index) => {
 
-      const drivers = (trip.driverId || [])
-        .slice(0, 3)
-        .map(d => d.name || d._id);
+            const drivers = (trip.driverId || []).slice(0, 3).map((d) => ({
+              name: d.name,
+              _id: d._id,
+            }));
 
-      while (drivers.length < 3) drivers.push("—");
+            while (drivers.length < 3) {
+              drivers.push({ name: "—", _id: null });
+            };
 
-      container.innerHTML += `
+            container.innerHTML += `
         <div class="trip-card">
 
           <div class="trip-card-header">
@@ -55,10 +58,10 @@ document.addEventListener("DOMContentLoaded", async () => {
           <div class="trip-drivers">
             ${drivers.map(driver => `
               <div class="driver-row">
-                <span>${driver}</span>
+                <span>${driver.name}</span>
                 <button class="btn-assign"
                   ${driver === "—" ? "disabled" : ""}
-                  onclick="assignDriver('${trip._id}', '${driver}')">
+                  onclick="assignDriver('${trip._id}', '${driver._id}')">
                   Assign
                 </button>
               </div>
@@ -67,10 +70,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         </div>
       `;
-    });
+          });
 
-  } catch (err) {
-    console.error("Failed to load trips", err);
-  }
-});
-</script>
+        } catch (err) {
+          console.error("Failed to load trips", err);
+        }
+      });
+
+      async function assignDriver(tripId, driverId) {
+        if (!driverId || driverId === "—" || driverId == "null") {
+          alert("Invalid driver");
+          return;
+        }
+
+        if (!confirm("Are you sure you want to assign this driver?")) return;
+
+        try {
+          const response = await fetch("/admin/bookings/assign", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({ tripId, driverId }),
+          });
+
+          const result = await response.json();
+
+          if (!result.status) {
+            alert(result.message || "Failed to assign driver");
+            return;
+          }
+
+          alert("Driver assigned successfully");
+
+          // Reload page or re-fetch trips
+          location.reload();
+        } catch (error) {
+          console.error("Assign error:", error);
+          alert("Something went wrong");
+        }
+      } 
+    </script>

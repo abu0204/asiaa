@@ -14,7 +14,6 @@ const ConfirmedOrdersSchema = new Schema(
       required: true,
       index: true,
     },
-
     bookingId: {
       type: Schema.Types.ObjectId,
       ref: "Bookings",
@@ -23,7 +22,6 @@ const ConfirmedOrdersSchema = new Schema(
     },
     status: {
       type: String,
-      enum: ["confirmed", "cancelled", "completed"],
       default: "confirmed",
     },
   },

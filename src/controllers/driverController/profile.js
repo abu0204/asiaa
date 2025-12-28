@@ -55,14 +55,14 @@ export const rideInfo = async (req, res) => {
         message: "Driver not found",
       });
     }
-    const rideDet = await ConfirmedOrdersModel.findById(driverId);
+    const rideDet = await ConfirmedOrdersModel.find({ driverId });
     return res.status(200).json({
       status: true,
-      message: "Profile fetched successfully",
+      message: "Bookings fetched successfully",
       data: rideDet,
     });
   } catch (error) {
-    console.error("myProfile error:", error);
+    console.error("ride info error:", error);
     return res.status(500).json({
       status: false,
       message: "Internal server error",
@@ -90,7 +90,7 @@ export const configStatus = async (req, res) => {
     }
     userDet.isOnline = !userDet.isOnline;
     await userDet.save();
-    
+
     return res.status(200).json({
       status: true,
       message: `Driver is now ${userDet.isOnline ? "Online" : "Offline"}`,

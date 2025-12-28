@@ -83,7 +83,7 @@ export const acceptBooking = async (req, res) => {
       data: trip,
     });
   } catch (error) {
-    console.error({ acceptBooking: error });
+    console.log({ acceptBooking: error });
     return res
       .status(500)
       .send({ status: false, message: "Internal Server Error" });
@@ -137,7 +137,7 @@ export const cancelBooking = async (req, res) => {
       data: trip,
     });
   } catch (error) {
-    console.error({ cancelBooking: error });
+    console.log({ cancelBooking: error });
     return res.status(500).send({
       status: false,
       message: "Internal Server Error",

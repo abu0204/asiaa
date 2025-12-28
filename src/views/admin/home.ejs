@@ -2,16 +2,174 @@
 <%- include("../layouts/sidebar") %>
 
 
-<div class="main">
-  <h1>Welcome Admin 👋</h1>
+<div class="dashboard">
 
-  <div class="cards">
-    <div class="card">Total Users: 120</div>
-    <div class="card">Active Drivers: 45</div>
-    <div class="card">Today Earnings: ₹12,500</div>
+  <!-- Header -->
+  <header class="dash-header">
+    <h1>Welcome Admin 👋</h1>
+    <button class="btn-primary" onclick="sendNotify()">Send Live Notification</button>
+  </header>
+
+  <!-- Stats Cards -->
+  <section class="stats-grid">
+    <div class="stat-card users">
+      <h3>Total Users</h3>
+      <p>120</p>
+    </div>
+    <div class="stat-card drivers">
+      <h3>Active Drivers</h3>
+      <p>45</p>
+    </div>
+    <div class="stat-card earnings">
+      <h3>Today Earnings</h3>
+      <p>₹12,500</p>
+    </div>
+    <div class="stat-card trips">
+      <h3>Today Trips</h3>
+      <p>68</p>
+    </div>
+  </section>
+
+  <!-- Content Grid -->
+  <section class="content-grid">
+
+    <!-- Recent Trips -->
+    <div class="panel">
+      <h2>Recent Trips</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pickup</th>
+            <th>Drop</th>
+            <th>Driver</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Chennai</td>
+            <td>Vellore</td>
+            <td>Ramesh</td>
+            <td class="success">Completed</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Madurai</td>
+            <td>Trichy</td>
+            <td>Suresh</td>
+            <td class="pending">Ongoing</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Driver Status -->
+    <div class="panel">
+      <h2>Driver Status</h2>
+      <ul class="driver-list">
+        <li><span class="online"></span> Sabari – Online</li>
+        <li><span class="online"></span> Rahul – Online</li>
+        <li><span class="offline"></span> Abu – Offline</li>
+      </ul>
+
+      <div class="quick-actions">
+        <button>Add Driver</button>
+        <button>View All Drivers</button>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== Earnings Analytics Section ===== -->
+<section class="dashboard-section earnings-analytics">
+
+  <!-- Header -->
+  <div class="section-header">
+    <h2>Earnings Analytics</h2>
+
+    <div class="filter-buttons">
+      <button class="active" onclick="updateChart('day', this)">Day</button>
+      <button onclick="updateChart('month', this)">Month</button>
+      <button onclick="updateChart('year', this)">Year</button>
+    </div>
   </div>
 
-  <button onclick="sendNotify()">Send Live Notification</button>
+  <!-- Chart Card -->
+  <div class="chart-card">
+    <canvas id="earningsChart" height="260"></canvas>
+  </div>
+
+</section>
+
 </div>
+<script>
+const chartData = {
+  day: {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    values: [8500, 9200, 7800, 11000, 12500, 15000, 13200]
+  },
+  month: {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+    values: [120000, 135000, 128000, 145000, 160000, 175000]
+  },
+  year: {
+    labels: ["2021", "2022", "2023", "2024", "2025"],
+    values: [1250000, 1480000, 1620000, 1890000, 2150000]
+  }
+};
+
+const canvas = document.getElementById("earningsChart");
+const ctx = canvas.getContext("2d");
+canvas.width = canvas.parentElement.offsetWidth;
+
+function drawChart(type) {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const { labels, values } = chartData[type];
+  const padding = 40;
+  const barWidth = 38;
+  const height = canvas.height;
+  const maxValue = Math.max(...values);
+
+  /* Axes */
+  ctx.strokeStyle = "#e5e7eb";
+  ctx.beginPath();
+  ctx.moveTo(padding, 10);
+  ctx.lineTo(padding, height - padding);
+  ctx.lineTo(canvas.width - 10, height - padding);
+  ctx.stroke();
+
+  /* Bars */
+  values.forEach((val, i) => {
+    const x = padding + 20 + i * (barWidth + 30);
+    const barHeight = (val / maxValue) * (height - 80);
+    const y = height - padding - barHeight;
+
+    ctx.fillStyle = "#ffd400";
+    ctx.fillRect(x, y, barWidth, barHeight);
+
+    /* Value */
+    ctx.fillStyle = "#111827";
+    ctx.font = "12px Inter, sans-serif";
+    ctx.fillText("₹" + val.toLocaleString(), x - 6, y - 6);
+
+    /* Label */
+    ctx.fillStyle = "#6b7280";
+    ctx.fillText(labels[i], x + 4, height - 14);
+  });
+}
+
+function updateChart(type, btn) {
+  document.querySelectorAll(".filter-buttons button")
+    .forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  drawChart(type);
+}
+
+/* Initial Load */
+drawChart("day");
+</script>
 
 <%- include("../layouts/adminfooter") %>

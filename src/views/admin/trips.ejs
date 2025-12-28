@@ -1,30 +1,15 @@
 <%- include("../layouts/adminheaders") %>
 <link rel="stylesheet" href="/css/trip.css">
+
 <div class="admin-layout">
   <%- include("../layouts/sidebar") %>
 
-  <main class="content-area">
+  <main class="tripcontent-area">
     <div class="container-fluid mt-4">
       <h3 class="mb-4">Trip Details</h3>
 
-      <div class="card">
-        <div class="card-body table-responsive table-striped">
-          <table id="tripsTable" border="1">
-            <thead>
-              <tr>
-                <th>SL No</th>
-                <th>Date & Time</th>
-                <th>Booking ID</th>
-                <th>Pickup</th>
-                <th>Drop</th>
-                <th>Status</th>
-                <th>Drivers</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <div class="trip-cards" id="tripCards">
+        <!-- Cards injected by JS -->
       </div>
     </div>
   </main>
@@ -32,68 +17,60 @@
 
 <%- include("../layouts/adminfooter") %>
 <script>
-  document.addEventListener("DOMContentLoaded", async () => {
-    try {
-      const response = await fetch("/admin/trips/get-tripes");
-      const result = await response.json();
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    const response = await fetch("/admin/trips/get-tripes");
+    const result = await response.json();
 
-      if (!result.status) return;
+    if (!result.status) return;
 
-      const tbody = document.querySelector("#tripsTable tbody");
-      tbody.innerHTML = "";
+    const container = document.getElementById("tripCards");
+    container.innerHTML = "";
 
-      result.data.forEach((trip, index) => {
-        // Get max 3 drivers
-        const drivers = (trip.driverId || [])
-          .slice(0, 3)
-          .map(d => d.name || d._id);
+    result.data.forEach((trip, index) => {
 
-        // Fill empty rows if less than 3
-        while (drivers.length < 3) {
-          drivers.push("—");
-        }
+      const drivers = (trip.driverId || [])
+        .slice(0, 3)
+        .map(d => d.name || d._id);
 
-        tbody.innerHTML += `
-  <tr>
-    <td rowspan="3">${index + 1}</td>
-    <td rowspan="3">${new Date(trip.createdAt).toLocaleString()}</td>
-    <td rowspan="3">${trip._id || "-"}</td>
-    <td rowspan="3">${trip.bookingId?.pickup || "-"}</td>
-    <td rowspan="3">${trip.bookingId?.drop || "-"}</td>
-    <td rowspan="3">${trip.status}</td>
+      while (drivers.length < 3) drivers.push("—");
 
-    <td>${drivers[0]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[0]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
+      container.innerHTML += `
+        <div class="trip-card">
 
-  <tr>
-    <td>${drivers[1]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[1]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
+          <div class="trip-card-header">
+            <span class="trip-id">#${index + 1}</span>
+            <span class="status ${trip.status}">
+              ${trip.status}
+            </span>
+          </div>
 
-  <tr>
-    <td>${drivers[2]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[2]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
-`;
-      });
-    } catch (err) {
-      console.error("Failed to load trips", err);
-    }
-  });
-</script>   
+          <div class="trip-info">
+            <p><strong>Date:</strong> ${new Date(trip.createdAt).toLocaleString()}</p>
+            <p><strong>Booking ID:</strong> ${trip._id}</p>
+            <p><strong>Pickup:</strong> ${trip.bookingId?.pickup || "-"}</p>
+            <p><strong>Drop:</strong> ${trip.bookingId?.drop || "-"}</p>
+          </div>
+
+          <div class="trip-drivers">
+            ${drivers.map(driver => `
+              <div class="driver-row">
+                <span>${driver}</span>
+                <button class="btn-assign"
+                  ${driver === "—" ? "disabled" : ""}
+                  onclick="assignDriver('${trip._id}', '${driver}')">
+                  Assign
+                </button>
+              </div>
+            `).join("")}
+          </div>
+
+        </div>
+      `;
+    });
+
+  } catch (err) {
+    console.error("Failed to load trips", err);
+  }
+});
+</script>

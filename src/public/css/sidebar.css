@@ -114,20 +114,6 @@
 }
 
 /* ===============================
-   CONTENT
-================================ */
-.content-area {
-  margin-left: 70px;
-  width: calc(100% - 70px);
-  transition: margin-left 0.35s ease, width 0.35s ease;
-}
-
-.sidebar:hover ~ .content-area {
-  margin-left: 240px;
-  width: calc(100% - 240px);
-}
-
-/* ===============================
    MOBILE → TOP NAVBAR (ICONS ONLY)
 ================================ */
 /* ===============================

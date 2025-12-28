@@ -48,16 +48,17 @@
                 <td>
                   <button
                     class="btn btn-sm btn-info"
-                    onclick="viewTrip('<%= trip._id %>')"
-                  >
+                    onclick="viewTrip('<%= trip._id %>')"></button>
                     View
                   </button>
                   <button
                     class="btn btn-sm btn-info"
                     onclick="approveTrip('<%= trip._id %>')"
-                  >
-                    Approve
+                    <%=trip.status === "Approve" ? "disabled" : "" %>
+                    >
+                    <%= trip.status === "Approve" ? "Approved" : "Approve" %>
                   </button>
+
                 </td>
               </tr>
               <% }) %>
@@ -78,8 +79,7 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+          aria-label="Close"></button>
       </div>
 
       <div class="modal-body">
@@ -117,16 +117,18 @@
       <td>${trip.vehicleType}</td>
       <td>₹ ${trip.totalVal}</td>
       <td>${new Date(trip.createdAt).toLocaleDateString("en-IN")}</td>
-      <td>${trip.status}</td>
+      <td >${trip.status}</td>
       <td>
         <button class="btn btn-sm btn-info" onclick="viewTrip('${trip._id}')">
           View
         </button>
-         <button class="btn btn-sm btn-info" onclick="approveTrip('${
-           trip._id
-         }')">
-          Approve
-        </button>
+         <button
+    class="btn btn-sm btn-info"
+    onclick="approveTrip('${trip._id}')"
+    ${trip.status === "Approve" ? "disabled" : ""}
+  >
+    ${trip.status === "Approve" ? "Approved" : "Approve"}
+  </button>
       </td>
     `;
     tbody.prepend(row);

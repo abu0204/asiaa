@@ -1,5 +1,5 @@
 <%- include("../layouts/adminheaders") %>
-<link rel="stylesheet" href="/css/trip.css">
+<link rel="stylesheet" href="/css/trip.css" />
 <div class="admin-layout">
   <%- include("../layouts/sidebar") %>
 
@@ -43,57 +43,92 @@
       tbody.innerHTML = "";
 
       result.data.forEach((trip, index) => {
-        // Get max 3 drivers
-        const drivers = (trip.driverId || [])
-          .slice(0, 3)
-          .map(d => d.name || d._id);
+        const drivers = (trip.driverId || []).slice(0, 3).map((d) => ({
+          name: d.name,
+          _id: d._id,
+        }));
 
-        // Fill empty rows if less than 3
         while (drivers.length < 3) {
-          drivers.push("—");
+          drivers.push({ name: "—", _id: null });
         }
 
+        console.log({ drivers });
         tbody.innerHTML += `
-  <tr>
-    <td rowspan="3">${index + 1}</td>
-    <td rowspan="3">${new Date(trip.createdAt).toLocaleString()}</td>
-    <td rowspan="3">${trip._id || "-"}</td>
-    <td rowspan="3">${trip.bookingId?.pickup || "-"}</td>
-    <td rowspan="3">${trip.bookingId?.drop || "-"}</td>
-    <td rowspan="3">${trip.status}</td>
+    <tr>
+      <td rowspan="3">${index + 1}</td>
+      <td rowspan="3">${new Date(trip.createdAt).toLocaleString()}</td>
+      <td rowspan="3">${trip._id || "-"}</td>
+      <td rowspan="3">${trip.bookingId?.pickup || "-"}</td>
+      <td rowspan="3">${trip.bookingId?.drop || "-"}</td>
+      <td rowspan="3">${trip.status}</td>
 
-    <td>${drivers[0]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[0]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
+      <td>${drivers[0].name}</td>
+      <td>
+        <button class="btn-assign btn-sm btn-primary"
+          onclick="assignDriver('${trip._id}', '${drivers[0]._id}')">
+          Assign
+        </button>
+      </td>
+    </tr>
 
-  <tr>
-    <td>${drivers[1]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[1]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
+    <tr>
+      <td>${drivers[1].name}</td>
+      <td>
+        <button class="btn-assign btn-sm btn-primary"
+          onclick="assignDriver('${trip._id}', '${drivers[1]._id}')">
+          Assign
+        </button>
+      </td>
+    </tr>
 
-  <tr>
-    <td>${drivers[2]}</td>
-    <td>
-      <button class="btn-assign btn-sm btn-primary"
-        onclick="assignDriver('${trip._id}', '${drivers[2]}')">
-        Assign
-      </button>
-    </td>
-  </tr>
-`;
+    <tr>
+      <td>${drivers[2].name}</td>
+      <td>
+        <button class="btn-assign btn-sm btn-primary"
+          onclick="assignDriver('${trip._id}', '${drivers[2]._id}')">
+          Assign
+        </button>
+      </td>
+    </tr>
+  `;
       });
     } catch (err) {
       console.error("Failed to load trips", err);
     }
   });
-</script>   
+
+  async function assignDriver(tripId, driverId) {
+    if (!driverId || driverId === "—" || driverId == "null") {
+      alert("Invalid driver");
+      return;
+    }
+
+    if (!confirm("Are you sure you want to assign this driver?")) return;
+
+    try {
+      const response = await fetch("/admin/bookings/assign", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ tripId, driverId }),
+      });
+
+      const result = await response.json();
+
+      if (!result.status) {
+        alert(result.message || "Failed to assign driver");
+        return;
+      }
+
+      alert("Driver assigned successfully");
+
+      // Reload page or re-fetch trips
+      location.reload();
+    } catch (error) {
+      console.error("Assign error:", error);
+      alert("Something went wrong");
+    }
+  }
+</script>

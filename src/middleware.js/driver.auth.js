@@ -34,7 +34,7 @@ export const driverAuth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.error("Drivers Auth Error:", error.message);
+    console.log("Drivers Auth Error:", error.message);
     return res
       .status(500)
       .send({ status: false, message: "Internal Server Error" });

@@ -1,5 +1,5 @@
 /* ===============================
-   GLOBAL FIX (VERY IMPORTANT)
+   GLOBAL FIX
 ================================ */
 *,
 *::before,
@@ -9,88 +9,76 @@
 
 body {
   margin: 0;
-  overflow-x: hidden; /* final safety */
-}
-
-/* ===== Content Area ===== */
-.content-area {
-  margin-left: 70px;           /* sidebar width */
-  padding: 20px;
-  background: #f7f7f7;
-  min-height: 100vh;
-  width: auto;                 /* 🔥 remove calc() overflow */
   overflow-x: hidden;
 }
 
-/* ===== Card Container ===== */
-.card {
-  border: none;
-  border-radius: 14px;
+/* ===============================
+   TRIP CARD GRID
+================================ */
+.trip-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.trip-card {
   background: #ffffff;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
 }
 
-/* ===== Card Body ===== */
-.card-body {
-  padding: 25px;
+.trip-card:hover {
+  transform: translateY(-2px);
 }
 
-/* ===== Table Wrapper ===== */
-.table-responsive {
-  border-radius: 12px;
-  overflow-x: auto;            /* allow scroll only if needed */
-  -webkit-overflow-scrolling: touch;
+/* ===============================
+   CARD HEADER
+================================ */
+.trip-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
-/* ===== Table ===== */
-#tripsTable {
-  width: 100%;
-  max-width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  font-size: 14px;
-  word-wrap: break-word;
-}
-
-/* ===== Table Header ===== */
-#tripsTable thead th {
-  background: linear-gradient(90deg, #0b0b0b, #1a1a1a);
-  color: #ffd400;
-  padding: 14px 12px;
+.trip-id {
   font-weight: 700;
-  text-transform: uppercase;
-  font-size: 12px;
-  border: none;
-  letter-spacing: 0.4px;
+  font-size: 14px;
 }
 
-/* ===== Table Body ===== */
-#tripsTable tbody td {
-  padding: 12px;
-  border-bottom: 1px solid #eee;
-  vertical-align: middle;
+/* ===============================
+   INFO
+================================ */
+.trip-info p {
+  font-size: 13px;
+  margin: 4px 0;
   color: #333;
-  word-break: break-word;
 }
 
-/* ===== Zebra Striping ===== */
-#tripsTable tbody tr:nth-child(even) {
-  background: #fffbea;
+/* ===============================
+   DRIVERS
+================================ */
+.trip-drivers {
+  margin-top: 12px;
+  border-top: 1px dashed #eee;
 }
 
-/* ===== Hover Effect ===== */
-#tripsTable tbody tr:hover {
-  background: rgba(255, 212, 0, 0.15);
-  transition: background 0.2s ease;
+.driver-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 13px;
 }
 
-/* ===== Drivers Cell ===== */
-#tripsTable td:nth-child(5) {
-  font-weight: 600;
-  color: #000;
-}
-
-/* ===== Status Badge ===== */
+/* ===============================
+   STATUS BADGE
+================================ */
 .status {
   padding: 5px 14px;
   border-radius: 20px;
@@ -114,43 +102,9 @@ body {
   color: #842029;
 }
 
-/* ===== Responsive Fix ===== */
-@media (max-width: 768px) {
-
-  #tripsTable {
-    font-size: 13px;
-  }
-
-  #tripsTable thead {
-    display: none;
-  }
-
-  #tripsTable tr {
-    display: block;
-    margin-bottom: 15px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-    background: #fff;
-  }
-
-  #tripsTable td {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 10px 15px;
-    flex-wrap: wrap;           /* 🔥 KEY FIX */
-  }
-
-  #tripsTable td::before {
-    content: attr(data-label);
-    font-weight: 600;
-    color: #111;
-    max-width: 45%;
-  }
-}
-
-/* ===== Assign Button ===== */
+/* ===============================
+   ASSIGN BUTTON
+================================ */
 .btn-assign {
   padding: 6px 14px;
   border-radius: 20px;
@@ -164,22 +118,41 @@ body {
   white-space: nowrap;
 }
 
-/* Hover */
 .btn-assign:hover {
   background: #ffd400;
-  color: #000;
-  box-shadow: 0 4px 12px rgba(255, 212, 0, 0.45);
+  box-shadow: 0 4px 12px rgba(255,212,0,0.45);
   transform: translateY(-1px);
 }
 
-/* Active / Click */
 .btn-assign:active {
   transform: scale(0.95);
 }
 
-/* Disabled */
 .btn-assign:disabled {
   opacity: 0.5;
   cursor: not-allowed;
   box-shadow: none;
+}
+@media (min-width: 992px) {
+  .tripcontent-area {
+    margin-left: 5rem;
+  }
+}
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 576px) {
+  .trip-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .driver-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .btn-assign {
+    width: 100%;
+  }
 }

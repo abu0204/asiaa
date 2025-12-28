@@ -1,0 +1,58 @@
+/* ===============================
+   BOOKING CARD VIEW
+================================ */
+.booking-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+.booking-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.booking-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+/* Info */
+.booking-info p {
+  font-size: 13px;
+  margin: 4px 0;
+  color: #333;
+}
+
+/* Actions */
+.booking-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.booking-actions .btn {
+  flex: 1;
+}
+@media (min-width: 992px) {
+  .bookingcontent-area {
+    margin-left: calc(70px + 2rem);
+  }
+}
+
+/* Mobile polish */
+@media (max-width: 576px) {
+  .booking-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-actions {
+    flex-direction: column;
+  }
+}

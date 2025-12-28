@@ -15,7 +15,7 @@ export const getNewBookings = async (req, res) => {
       .status(500)
       .send({ status: false, message: "Internal Server Error" });
   }
-};
+};6
 
 export const acceptBooking = async (req, res) => {
   try {

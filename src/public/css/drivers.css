@@ -1,0 +1,195 @@
+/* ===============================
+   GLOBAL RESET & SAFETY
+================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #f7f7f7;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   CONTENT AREA
+================================ */
+.content-area {
+  margin-left: 70px;
+  padding: 20px;
+  min-height: 100vh;
+  transition: margin-left 0.35s ease;
+}
+
+.sidebar:hover ~ .content-area {
+  margin-left: 240px;
+}
+
+/* ===============================
+   CARD
+================================ */
+.card {
+  width: 100%;
+  max-width: 100%;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  overflow-x: hidden;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+/* ===============================
+   TABLE WRAPPER
+================================ */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 🔥 VERY IMPORTANT */
+  font-size: 14px;
+}
+
+.table thead th {
+  background: linear-gradient(90deg, #0b0b0b, #1a1a1a);
+  color: #ffd400;
+  padding: 14px 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: none;
+}
+
+.table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  vertical-align: middle;
+  word-break: break-word;
+}
+
+/* Zebra */
+.table tbody tr:nth-child(even) {
+  background: #fffbea;
+}
+
+/* Hover */
+.table-hover tbody tr:hover {
+  background: rgba(255,212,0,0.15);
+}
+
+/* ===============================
+   TABLE CELLS
+================================ */
+.table th,
+.table td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Action column */
+.table td:last-child {
+    white-space: normal;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-content: stretch;
+    justify-content: flex-start;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn {
+  padding: 5px 5px;
+  font-size: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.btn-info {
+  background: #ffd400;
+  border: none;
+  color: #000;
+}
+
+.btn-info:hover {
+  background: #000;
+  color: #ffd400;
+}
+
+.btn-danger {
+  background: #dc3545;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-danger:hover {
+  background: #b02a37;
+}
+
+/* ===============================
+   BADGES
+================================ */
+.badge {
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+
+  .content-area {
+    margin-left: 70px;
+    padding: 15px;
+  }
+
+  .table thead {
+    display: none;
+  }
+
+  .table tr {
+    display: block;
+    margin-bottom: 15px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 15px;
+    flex-wrap: wrap;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: #111;
+    max-width: 45%;
+  }
+}

@@ -10,6 +10,7 @@ import { connectDB } from "./config/index.js";
 import dotenv from "dotenv";
 import { socketInit } from "./services/user.service.js";
 import { socketInitialize } from "./helpers/socket.helper.js";
+// import { sendSMS } from "./helpers/sms.helper.js";
 dotenv.config();
 
 const app = express();
@@ -21,7 +22,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 connectDB();
-
+// sendSMS(9159734169,"Hello Sabari!")
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

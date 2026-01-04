@@ -1,74 +1,119 @@
 <%- include("../layouts/adminheaders") %>
 
-<div class="admin-layout">
-  <%- include("../layouts/sidebar") %>
+  <div class="admin-layout">
+    <%- include("../layouts/sidebar") %>
 
-  <main class="bookingcontent-area">
-    <div class="container-fluid mt-4">
-      <h3 class="mb-4">Trip Bookings</h3>
+      <main class="bookingcontent-area">
+        <div class="container-fluid mt-4">
+          <h3 class="mb-4">Trip Bookings</h3>
 
-      <div class="booking-cards" id="tripCards">
-        <% if (data.length === 0) { %>
-          <p class="text-center">No trips found</p>
-        <% } %>
+          <div class="booking-cards" id="tripCards">
+            <% if (data.length===0) { %>
+              <p class="text-center">No trips found</p>
+              <% } %>
 
-        <% data.forEach((trip, index) => { %>
-          <div class="booking-card">
+                <% data.forEach((trip, index)=> { %>
+                  <div class="booking-card">
 
-            <div class="booking-card-header">
-              <span>#<%= index + 1 %></span>
-              <span class="badge bg-secondary"><%= trip.status %></span>
-            </div>
+                    <div class="booking-card-header">
+                      <span>#<%= index + 1 %></span>
+                      <span class="badge bg-secondary">
+                        <%= trip.status %>
+                      </span>
+                    </div>
 
-            <div class="booking-info">
-              <p><strong>Name:</strong> <%= trip.name %></p>
-              <p><strong>Mobile:</strong> <%= trip.mobile %></p>
-              <p><strong>Pickup:</strong> <%= trip.pickup %></p>
-              <p><strong>Drop:</strong> <%= trip.drop %></p>
-              <p><strong>Travel Type:</strong> <%= trip.travelType %></p>
-              <p><strong>Vehicle:</strong> <%= trip.vehicleType %></p>
-              <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %></p>
-              <p><strong>Date:</strong>
-                <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
-              </p>
-            </div>
+                    <div class="booking-info">
+                      <p><strong>Name:</strong>
+                        <%= trip.name %>
+                      </p>
+                      <p><strong>Mobile:</strong>
+                        <%= trip.mobile %>
+                      </p>
+                      <p><strong>Pickup:</strong>
+                        <%= trip.pickup %>
+                      </p>
+                      <p><strong>Drop:</strong>
+                        <%= trip.drop %>
+                      </p>
+                      <p><strong>Travel Type:</strong>
+                        <%= trip.travelType %>
+                      </p>
+                      <p><strong>Vehicle:</strong>
+                        <%= trip.vehicleType %>
+                      </p>
+                      <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %>
+                      </p>
+                      <p><strong>Date:</strong>
+                        <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
+                      </p>
+                    </div>
 
-            <div class="booking-actions">
-              <button
-                class="btn btn-sm btn-info"
-                onclick="viewTrip('<%= trip._id %>')">
-                View
-              </button>
+                    <div class="booking-actions">
+                      <button class="btn btn-sm btn-info" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
+                        View
+                      </button>
 
-              <button
-                class="btn btn-sm btn-success"
-                onclick="approveTrip('<%= trip._id %>')"
-                <%= trip.status === "Approve" ? "disabled" : "" %>>
-                <%= trip.status === "Approve" ? "Approved" : "Approve" %>
-              </button>
-            </div>
 
+                      <button class="btn btn-sm btn-success" onclick="approveTrip('<%= trip._id %>')"
+                        <%=trip.status==="Approve" ? "disabled" : "" %>>
+                        <%= trip.status==="Approve" ? "Approved" : "Approve" %>
+                      </button>
+                    </div>
+
+                  </div>
+                  <% }) %>
           </div>
-        <% }) %>
+        </div>
+      </main>
+
+      <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="border-radius: 16px">
+            <div class="modal-header border-0" style="background: #fff7d2; border-radius: 16px 16px 0 0">
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" style="padding: 25px 20px">
+              <p><strong>Name:</strong> <span id="mName"></span></p>
+              <p><strong>Mobile:</strong> <span id="mMobile"></span></p>
+              <p><strong>Pickup:</strong> <span id="mPickup"></span></p>
+              <p><strong>Drop:</strong> <span id="mDrop"></span></p>
+              <p><strong>Travel Type:</strong> <span id="mTravel"></span></p>
+              <p><strong>Vehicle:</strong> <span id="mVehicle"></span></p>
+              <p><strong>Total Fare:</strong> ₹ <span id="mFare"></span></p>
+              <p><strong>Status:</strong> <span id="mStatus"></span></p>
+              <p><strong>Date:</strong> <span id="mDate"></span></p>
+            </div>
+
+            <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px">
+              <button class="btn px-4" data-bs-dismiss="modal" style="
+                background: #ffd400;
+                color: #000;
+                font-weight: 600;
+                border-radius: 10px;
+              " onclick="refresh()">
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </main>
-</div>
+  </div>
 
-<!-- Modal stays SAME -->
-<%- include("../layouts/adminfooter") %>
-<script>
-  socket.on("userBooked", (trip) => {
-    pushNewTrip(trip);
-  });
+  <!-- Modal stays SAME -->
+  <%- include("../layouts/adminfooter") %>
+    <script>
+      socket.on("userBooked", (trip) => {
+        pushNewTrip(trip);
+      });
 
-  function pushNewTrip(trip) {
-    const container = document.getElementById("tripCards");
+      function pushNewTrip(trip) {
+        const container = document.getElementById("tripCards");
 
-    const card = document.createElement("div");
-    card.className = "booking-card";
+        const card = document.createElement("div");
+        card.className = "booking-card";
 
-    card.innerHTML = `
+        card.innerHTML = `
       <div class="booking-card-header">
         <span>#</span>
         <span class="badge bg-secondary">${trip.status}</span>
@@ -89,7 +134,7 @@
 
       <div class="booking-actions">
         <button class="btn btn-sm btn-info"
-          onclick="viewTrip('${trip._id}')">
+            onclick='viewTrip(${JSON.stringify(trip)})'>
           View
         </button>
 
@@ -101,6 +146,28 @@
       </div>
     `;
 
-    container.prepend(card);
-  }
-</script>
+        container.prepend(card);
+      }
+      function viewTrip(bookingData) {
+        document.getElementById("mName").innerText = bookingData.name;
+        document.getElementById("mMobile").innerText = bookingData.mobile;
+        document.getElementById("mPickup").innerText = bookingData.pickup;
+        document.getElementById("mDrop").innerText = bookingData.drop;
+        document.getElementById("mTravel").innerText = bookingData.travelType;
+        document.getElementById("mVehicle").innerText = bookingData.vehicleType;
+        document.getElementById("mFare").innerText = bookingData.totalVal;
+        document.getElementById("mStatus").innerText = bookingData.status;
+        document.getElementById("mDate").innerText =
+          new Date(bookingData.createdAt).toLocaleDateString("en-IN");
+        var myModal = new bootstrap.Modal(
+          document.getElementById("bookingDetailsModal")
+        );
+        myModal.show();
+      }
+      function refresh() {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    </script>
+    

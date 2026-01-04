@@ -28,8 +28,8 @@ export const decryptAdminAES = (cipher) => {
   return bytes.toString(CryptoJS.enc.Utf8);
 };
 
-export const generateOTP = () =>
-  Math.floor(100000 + Math.random() * 900000).toString();
+export const generateOTP = () => 123456
+  // Math.floor(100000 + Math.random() * 900000).toString();
 
 export const genDriverAuthToken = (driverId) => {
   return jwt.sign({ driverId: driverId }, DRIVER_JWT_SECRET, {

@@ -9,7 +9,6 @@ router.get("/home", adminAuth, adminController.home);
 router.get("/drivers", adminAuth, adminController.drivers);
 router.get("/bookings", adminAuth, adminController.bookings);
 router.get("/trips", adminAuth, adminController.trips);
-router.get("/payments", adminAuth, adminController.payments);
 
 
 export default router;

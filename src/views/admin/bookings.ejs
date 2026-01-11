@@ -49,12 +49,12 @@
                     </div>
 
                     <div class="booking-actions">
-                      <button class="btn btn-sm btn-info" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
+                      <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
                         View
                       </button>
 
 
-                      <button class="btn btn-sm btn-success" onclick="approveTrip('<%= trip._id %>')"
+                      <button class="btn btn-sm btn-secondary " onclick="approveTrip('<%= trip._id %>')"
                         <%=trip.status==="Approve" ? "disabled" : "" %>>
                         <%= trip.status==="Approve" ? "Approved" : "Approve" %>
                       </button>
@@ -69,11 +69,13 @@
       <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content" style="border-radius: 16px">
-            <div class="modal-header border-0" style="background: #fff7d2; border-radius: 16px 16px 0 0">
+            <div class="modal-header booking-header border-0">
+              <h5 class="modal-title">Booking Details</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
-            <div class="modal-body" style="padding: 25px 20px">
+
+            <div class="modal-body" style="padding: 25px 20px; ">
               <p><strong>Name:</strong> <span id="mName"></span></p>
               <p><strong>Mobile:</strong> <span id="mMobile"></span></p>
               <p><strong>Pickup:</strong> <span id="mPickup"></span></p>
@@ -170,4 +172,3 @@
         }, 1000);
       }
     </script>
-    

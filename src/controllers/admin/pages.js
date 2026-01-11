@@ -98,6 +98,23 @@ class AdminPages {
       });
     }
   };
+  payments = async (req, res) => {
+    try {
+      const payload = {
+        status: true,
+        title: "payments",
+        pageName: "admin/payments",
+        data: [],
+      };
+      return renderResponse(req, res, payload);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  };
 }
 
 export default new AdminPages();

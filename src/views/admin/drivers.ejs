@@ -1,54 +1,163 @@
 <%- include("../layouts/adminheaders") %> <%- include("../layouts/sidebar") %>
-<link rel="stylesheet" href="/css/drivers.css">
-<div class="container-fluid mt-4 ml-5">
-  <h3 class="mb-4">Drivers List</h3>
+    <link rel="stylesheet" href="/css/drivers.css">
+    <div class="container-fluid mt-4 ml-5">
+      <h3 class="mb-4">Drivers List</h3>
 
-  <div class="card">
-    <div class="card-body">
-      <table class="table table-bordered table-hover">
-        <thead class="table-dark">
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Verified</th>
-            <th>Joined</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <% console.log(data,"datadata") %>
-        <tbody>
-          <% if (data.length === 0) { %>
-          <tr>
-            <td colspan="6" class="text-center">No drivers found</td>
-          </tr>
-          <% } %> <% data.forEach((driver, index) => { %>
-          <tr>
-            <td><%= index + 1 %></td>
-            <td><%= driver.name %></td>
-            <td><%= driver.phone %></td>
-            <td>
-              <% if (driver.isVerified) { %>
-              <span class="badge bg-success">Verified</span>
-              <% } else { %>
-              <span class="badge bg-warning text-dark">Pending</span>
-              <% } %>
-            </td>
-            <td><%= new Date(driver.createdAt).toLocaleDateString() %></td>
-            <td>
-              <a
-                href="/admin/drivers/<%= driver._id %>"
-                class="btn btn-sm btn-info"
-              >
-                View
-              </a>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
+      <div class="card">
+        <div class="card-body">
+          <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Verified</th>
+                <th>Joined</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <% console.log(data,"datadata") %>
+              <tbody>
+                <% if (data.length===0) { %>
+                  <tr>
+                    <td colspan="6" class="text-center">No drivers found</td>
+                  </tr>
+                  <% } %>
+                    <% data.forEach((driver, index)=> { %>
+                      <tr>
+                        <td>
+                          <%= index + 1 %>
+                        </td>
+                        <td>
+                          <%= driver.name %>
+                        </td>
+                        <td>
+                          <%= driver.phone %>
+                        </td>
+                        <td>
+                          <% if (driver.isVerified) { %>
+                            <span class="badge bg-success">Verified</span>
+                            <% } else { %>
+                              <span class="badge bg-warning text-dark">Pending</span>
+                              <% } %>
+                        </td>
+                        <td>
+                          <%= new Date(driver.createdAt).toLocaleDateString() %>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-info add-payment-btn" data-bs-toggle="modal"
+                            data-bs-target="#addPaymentModal" data-driver-id="<%= driver._id %>">
+                            Add Payment
+                          </button>
+                          <button class="btn btn-sm btn-info deduct-payment-btn" data-bs-toggle="modal"
+                            data-bs-target="#deductPaymentModal" data-driver-id="<%= driver._id %>">
+                            Deduct Payment
+                          </button>
+
+                          <a href="/admin/drivers/<%= driver._id %>" class="btn btn-sm btn-info">
+                            View
+                          </a>
+                        </td>
+                      </tr>
+                      <% }) %>
+              </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-<%- include("../layouts/adminfooter") %>
+    <!-- modal -->
+    <!-- Add Payment Modal -->
+    <div class="modal fade" id="addPaymentModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Add Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="/admin/drivers/add-payment" method="POST">
+            <div class="modal-body">
+
+              <!-- Hidden Driver ID -->
+              <input type="hidden" name="driverId" id="paymentDriverId">
+
+              <div class="mb-3">
+                <label class="form-label">Amount</label>
+                <input type="number" name="amount" class="form-control" required min="1" />
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-success">
+                Add
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- deduct modal -->
+     <div class="modal fade" id="deductPaymentModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Deduct Payment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="/admin/drivers/deduct -payment" method="POST">
+            <div class="modal-body">
+
+              <!-- Hidden Driver ID -->
+              <input type="hidden" name="driverId" id="paymentDriverId">
+
+              <div class="mb-3">
+                <label class="form-label">Amount</label>
+                <input type="number" name="amount" class="form-control" required min="1" />
+              </div>
+
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-success">
+                Deduct
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".add-payment-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.getElementById("paymentDriverId").value =
+              btn.getAttribute("data-driver-id");
+          });
+        });
+      });
+      // dedut modal
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll(".deduct-payment-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            document.getElementById("paymentDriverId").value =
+              btn.getAttribute("data-driver-id");
+          });
+        });
+      });
+    </script>
+
+    <%- include("../layouts/adminfooter") %>

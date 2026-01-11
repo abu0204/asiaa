@@ -19,7 +19,7 @@
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
         try {
-          const response = await fetch("/admin/trips/get-tripes");
+          const response = await fetch("/admin/bookings/get-tripes");
           const result = await response.json();
 
           if (!result.status) return;

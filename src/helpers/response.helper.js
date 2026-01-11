@@ -7,7 +7,7 @@ export const successResponse = async (req, res, datas) => {
   });
 };
 
-export const errorResponse = async (req, res, datas) => {
+export const errorResponse = async (req, res, errors) => {
   res.send({
     status: false,
     code: errors.code || 500,
@@ -17,5 +17,5 @@ export const errorResponse = async (req, res, datas) => {
 };
 
 export const renderResponse = async (req, res, datas) => {
-  res.render(datas.pageName, { title: datas.title, data: datas.data });
+  res.render(datas.pageName, { title: datas.title, data: datas.data, pagination: datas.pagination });
 };

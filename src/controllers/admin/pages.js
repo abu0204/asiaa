@@ -46,12 +46,30 @@ class AdminPages {
   };
   drivers = async (req, res) => {
     try {
-      const drivers = await Drivers.find().sort({ createdAt: -1 }).lean();
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+
+      const [drivers, totalDrivers] = await Promise.all([
+        Drivers.find()
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .lean(),
+        Drivers.countDocuments()
+      ]);
+
+      const totalPages = Math.ceil(totalDrivers / limit);
+
       const payload = {
         status: true,
-        title: "Home",
+        title: "Drivers",
         pageName: "admin/drivers",
         data: drivers,
+        pagination: {
+          page,
+          totalPages,
+        },
       };
       return renderResponse(req, res, payload);
     } catch (error) {

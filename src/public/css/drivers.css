@@ -110,7 +110,7 @@ body {
     display: flex;
     gap: 6px;
     align-items: center;
-    flex-direction: row-reverse;
+    flex-direction: column-reverse;
     flex-wrap: wrap;
     align-content: stretch;
     justify-content: flex-start;

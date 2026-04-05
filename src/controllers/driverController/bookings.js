@@ -17,7 +17,25 @@ export const getNewBookings = async (req, res) => {
       .status(500)
       .send({ status: false, message: "Internal Server Error" });
   }
+};  
+export const getAcceptedBookings = async (req, res) => {
+  try {
+    const { driverId } = req; 
+    const trips = await TripModel.find({ driverId: { $in: [driverId] }, status: "Assigned" }).populate("bookingId");
+    const acceptedBookings = trips.map((trip) => trip.bookingId);
+    return res.status(200).send({
+      status: true,
+      message: "Accepted Bookings!",
+      data: acceptedBookings || [],
+    });
+  } catch (error) {
+    console.error({ getAcceptedBookings: error });
+    return res
+      .status(500)
+      .send({ status: false, message: "Internal Server Error" });
+  }
 };
+
 
 export const acceptBooking = async (req, res) => {
   try {

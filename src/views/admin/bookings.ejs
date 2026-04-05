@@ -47,15 +47,14 @@
                         <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
                       </p>
                     </div>
-
                     <div class="booking-actions">
                       <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
                         View
                       </button>
 
-
-                      <button class="btn btn-sm btn-secondary " onclick="approveTrip('<%= trip._id %>')"
+                      <button class="btn btn-sm btn-secondary" onclick="approveTrip('<%= trip._id %>')"
                         <%=trip.status==="Approve" ? "disabled" : "" %>>
+
                         <%= trip.status==="Approve" ? "Approved" : "Approve" %>
                       </button>
                     </div>
@@ -170,5 +169,24 @@
         setTimeout(() => {
           window.location.reload();
         }, 1000);
+      }
+
+      async function approveTrip(bookingId) {
+        try {
+          const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
+            method: "put",
+            credentials: "include",
+          });
+
+          if (!res.ok) {
+            alert("Failed to fetch trip details");
+            return;
+          }
+          const data = await res.json();
+          console.log({ data: data.data });
+        } catch (err) {
+          console.error(err);
+          alert("Something went wrong");
+        }
       }
     </script>

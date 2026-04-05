@@ -11,6 +11,9 @@ export const bookingDet = async (req, res) => {
       req.params.bookingId
     ).lean();
 
+    const datas = await TripModel.find({  });
+    console.log({ datas });
+
     if (!bookingData) {
       return errorResponse(req, res, {
         status: false,
@@ -104,7 +107,7 @@ export const assignBooking = async (req, res) => {
 
 export const getAllTrips = async (req, res) => {
   try {
-    const trips = await TripModel.find({})
+    const trips = await TripModel.find({})  
       .populate("bookingId")
       .populate("driverId")
       .sort({ createdAt: -1 });
@@ -115,10 +118,10 @@ export const getAllTrips = async (req, res) => {
       data: trips,
     });
   } catch (error) {
-    console.error({ getAllTrips: error });
+    console.log({ getAllTrips: error });
     return res.status(500).send({
       status: false,
-      message: "Internal Server Error",
+      message: "Internal Server Error!!!",
     });
   }
 };

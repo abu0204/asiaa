@@ -2,6 +2,7 @@ import Bookings from "../../models/Bookings.js";
 import TripModel from "../../models/TripDetails.js";
 import { alertDriversForNewBookings } from "../../helpers/socket.helper.js";
 import ConfirmedOrdersModel from "../../models/ConfirmedOrders.js";
+import ClosingFormModel from "../../models/ClosingForm.js";
 
 export const getNewBookings = async (req, res) => {
   try {
@@ -17,10 +18,10 @@ export const getNewBookings = async (req, res) => {
       .status(500)
       .send({ status: false, message: "Internal Server Error" });
   }
-};  
+};
 export const getAcceptedBookings = async (req, res) => {
   try {
-    const { driverId } = req; 
+    const { driverId } = req;
     const trips = await TripModel.find({ driverId: { $in: [driverId] }, status: "Assigned" }).populate("bookingId");
     const acceptedBookings = trips.map((trip) => trip.bookingId);
     return res.status(200).send({
@@ -254,6 +255,84 @@ export const completeBooking = async (req, res) => {
     });
   } catch (error) {
     console.log({ completeTrip: error });
+    return res.status(500).send({
+      status: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+export const closeRide = async (req, res) => {
+  try {
+    const { driverId, driver } = req;
+
+    const {
+      bookingId=0,
+      driverBata=0,
+      tollParking=0,
+      waittingCharges=0,
+      hillsCharges=0,
+      statePermitCharges=0,
+      otherCharges=0
+    } = req.body;
+    if (!driver.isOnline) {
+      return res.status(403).send({
+        status: false,
+        message: "You're offline right now. Go online to proceed.",
+      });
+    }
+    const booking = await Bookings.findById(bookingId);
+    if (!booking) {
+      return res.status(404).send({
+        status: false,
+        message: "Booking not found",
+      });
+    }
+    const trip = await TripModel.findOne({ bookingId });
+    if (!trip) {
+      return res.status(404).send({
+        status: false,
+        message: "Trip not found",
+      });
+    }
+    if (trip.status !== "Completed") {
+      return res.status(400).send({
+        status: false,
+        message: "Trip is not completed yet",
+      });
+    }
+    if (!trip.driverId.some((id) => id.toString() === driverId.toString())) {
+      return res.status(403).send({
+        status: false,
+        message: "You are not assigned to this trip",
+      });
+    }
+    const closingForm = await ClosingFormModel.create({
+      driverId,
+      bookingId,
+      driverBata,
+      tollParking,
+      waittingCharges,
+      hillsCharges,
+      statePermitCharges,
+      otherCharges,
+    });
+
+    trip.status = "Closed";
+    await trip.save();
+    booking.status = "Closed";
+    await booking.save();
+    return res.status(200).send({
+      status: true,
+      message: "Ride closed successfully",
+      data: {
+        booking,
+        trip,
+        closingForm
+      },
+    });
+  } catch (error) {
+    console.log({ closeRide: error });
     return res.status(500).send({
       status: false,
       message: "Internal Server Error",

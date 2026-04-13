@@ -1,5 +1,6 @@
 import DriversModel from "../../models/Drivers.js";
 import ConfirmedOrdersModel from "../../models/ConfirmedOrders.js";
+import WalletsModel from "../../models/Wallets.js";
 
 export const myProfile = async (req, res) => {
   try {
@@ -101,6 +102,33 @@ export const configStatus = async (req, res) => {
     return res.status(500).json({
       status: false,
       message: "Internal server error",
+    });
+  }
+};
+
+export const balance = async (req, res) => {
+  try {
+    const { driverId } = req;
+    console.log({ driverId });
+
+    if (!driverId) {
+      return res.status(401).json({
+        status: false,
+        message: "Unauthorized access",
+      });
+    };
+    const userDet = await WalletsModel.findOne({ driverId });
+    return res.status(200).json({
+      status: true,
+      message: "Balance fetched successfully",
+      balance: userDet?.balance || 0,
+    });
+  } catch (error) {
+    console.error("balance error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+      balance: 0
     });
   }
 };

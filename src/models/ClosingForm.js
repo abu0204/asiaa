@@ -35,6 +35,6 @@ const closingFormSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-});
+}, { collection: "ClosingForm", timestamps: true });
 
 export default mongoose.model("ClosingForm", closingFormSchema);

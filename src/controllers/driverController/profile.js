@@ -1,6 +1,7 @@
 import DriversModel from "../../models/Drivers.js";
 import ConfirmedOrdersModel from "../../models/ConfirmedOrders.js";
 import WalletsModel from "../../models/Wallets.js";
+import TransactionsModel from "../../models/Transactions.js";
 
 export const myProfile = async (req, res) => {
   try {
@@ -129,6 +130,24 @@ export const balance = async (req, res) => {
       status: false,
       message: "Internal server error",
       balance: 0
+    });
+  }
+};
+
+export const transactions = async (req, res) => {
+  try {
+    const { driverId } = req;
+    const txns = await TransactionsModel.find({ driverId });
+    return res.status(200).json({
+      status: true,
+      message: "Transactions fetched successfully",
+      data: txns,
+    });
+  } catch (error) {
+    console.error("transactions error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
     });
   }
 };

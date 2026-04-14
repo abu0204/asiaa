@@ -1,4 +1,5 @@
 import WalletModel from "../../models/Wallets.js";
+import TransactionModel from "../../models/Transactions.js";
 import { errorResponse, successResponse } from "../../helpers/response.helper.js";
 
 export const addPayment = async (req, res) => {
@@ -11,11 +12,15 @@ export const addPayment = async (req, res) => {
         code: 400
       });
     }
-
+    await TransactionModel.create({
+      driverId,
+      amount,
+      description: "Admin added payment"
+    });
     const wallet = await WalletModel.findOneAndUpdate(
       { driverId },
       { $inc: { balance: amount } },
-      { new: true, upsert: true } 
+      { new: true, upsert: true }
     );
 
     return successResponse(req, res, { data: wallet });
@@ -38,7 +43,11 @@ export const deductPayment = async (req, res) => {
         code: 400
       });
     }
-
+    await TransactionModel.create({
+      driverId,
+      amount,
+      description: "Admin deducted payment"
+    });
     const wallet = await WalletModel.findOne({ driverId });
 
     if (!wallet) {

@@ -172,6 +172,11 @@ export const cancelBooking = async (req, res) => {
     if (trip.status === "full-requested" && trip.driverId.length < 3) {
       trip.status = "Pending";
     }
+    if(trip.driverId.length === 0){
+      trip.status = "Pending";
+      booking.status = "Approve";
+      await booking.save();
+    }
 
     await trip.save();
 

@@ -102,7 +102,13 @@ export const myProfile = async (req, res) => {
     return res.status(200).json({
       status: true,
       message: "Profile fetched successfully",
-      data: userDet,
+      data: {
+        name: userDet.name,
+        profile: userDet.profile,
+        phone: userDet.phone,
+        isVerified: userDet.isVerified,
+        isOnline: userDet.isOnline,
+      },
     });
   } catch (error) {
     console.error("myProfile error:", error);

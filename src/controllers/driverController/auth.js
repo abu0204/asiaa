@@ -7,6 +7,7 @@ import {
   genDriverAuthToken,
   generateOTP,
 } from "../../helpers/common.js";
+import { sendSMS } from "../../helpers/sms.helper.js";
 
 export const registerDriver = async (req, res) => {
   try {
@@ -41,7 +42,7 @@ export const registerDriver = async (req, res) => {
         await user.save();
       }
 
-      // await sendOTP(phone, generatedOtp);
+      await sendSMS(phone, generatedOtp, "register");
 
       return res.json({
         success: true,
@@ -131,7 +132,7 @@ export const loginDriver = async (req, res) => {
       user.otpExpireAt = Date.now() + 1 * 60 * 1000;
       await user.save();
 
-      // await sendOTP(phone, generatedOtp);
+      await sendSMS(phone, generatedOtp, "login");
 
       return res.json({
         success: true,

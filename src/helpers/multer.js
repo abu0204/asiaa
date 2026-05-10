@@ -24,3 +24,5 @@ export const uploadDriverDocuments = upload.fields([
   { name: "license", maxCount: 1 },
   { name: "aadhaar", maxCount: 1 },
 ]);
+
+export const uploadProfilePicture = upload.single("profile_picture");

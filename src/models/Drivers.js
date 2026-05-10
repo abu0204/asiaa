@@ -6,6 +6,10 @@ const driverSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    profile: {
+      type: String,
+      default: null,
+    },
     phone: {
       type: String,
       required: true,

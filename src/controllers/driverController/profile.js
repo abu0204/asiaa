@@ -23,6 +23,60 @@ const uploadToCloudinary = (file, folder) => {
   });
 };
 
+export const updateProfile = async (req, res) => {
+  try {
+    const { driverId } = req;
+    const { name, phone } = req.body;
+    if (!driverId) {
+      return res.status(401).json({
+        status: false,
+        message: "Unauthorized access",
+      });
+    }
+    const userDet = await DriversModel.findById(driverId);
+    if (!userDet) {
+      return res.status(404).json({
+        status: false,
+        message: "Driver not found",
+      });
+    }
+    if (name) userDet.name = name;
+    if (phone) userDet.phone = phone;
+
+    // Handle profile picture upload
+    if (req.file) {
+      try {
+        const profileUrl = await uploadToCloudinary(req.file, "driver-profiles");
+        userDet.profile = profileUrl;
+      } catch (uploadError) {
+        console.error("Profile picture upload error:", uploadError);
+        return res.status(400).json({
+          status: false,
+          message: "Failed to upload profile picture",
+        });
+      }
+    }
+
+    await userDet.save();
+    return res.status(200).json({
+      status: true,
+      message: "Profile updated successfully",
+      data: {
+        name: userDet.name,
+        phone: userDet.phone,
+        isVerified: userDet.isVerified,
+        isOnline: userDet.isOnline,
+        profile: userDet.profile
+      },
+    });
+  } catch (error) {
+    console.error("updateProfile error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
+};
 export const myProfile = async (req, res) => {
   try {
     const { driverId } = req;

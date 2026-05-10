@@ -1,16 +1,18 @@
 import express from "express";
 import { driverAuth } from "../../middleware.js/driver.auth.js";
-import { uploadDriverDocuments } from "../../helpers/multer.js";
+import { uploadDriverDocuments, uploadProfilePicture } from "../../helpers/multer.js";
 import {
   myProfile,
   rideInfo,
   configStatus,
   balance,
   transactions,
-  uploadDocuments
+  uploadDocuments,
+  updateProfile
 } from "../../controllers/driverController/profile.js";
 const router = express.Router();
 
+router.post("/update-profile",   driverAuth, uploadProfilePicture, updateProfile);
 router.get("/me", driverAuth, myProfile);
 router.get("/ride-info", driverAuth, rideInfo);
 router.post("/config-status", driverAuth, configStatus);

@@ -99,6 +99,44 @@
           </div>
         </div>
       </div>
+
+  <!-- Notes Modal for Approval -->
+  <div class="modal fade" id="approvalNotesModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content" style="border-radius: 16px">
+            <div class="modal-header booking-header border-0">
+              <h5 class="modal-title">Add Approval Notes</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" style="padding: 25px 20px;">
+              <div class="form-group">
+                <label for="approvalNotes" class="form-label mb-2"><strong>Notes:</strong></label>
+                <textarea id="approvalNotes" class="form-control" rows="4" placeholder="Enter any notes for this approval..." style="border-radius: 8px;"></textarea>
+              </div>
+            </div>
+
+            <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px; gap: 10px;">
+              <button class="btn px-4" data-bs-dismiss="modal" style="
+                background: #e9ecef;
+                color: #000;
+                font-weight: 600;
+                border-radius: 10px;
+              ">
+                Cancel
+              </button>
+              <button class="btn px-4" onclick="submitApprovalWithNotes()" style="
+                background: #28a745;
+                color: #fff;
+                font-weight: 600;
+                border-radius: 10px;
+              ">
+                Approve
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 
   <!-- Modal stays SAME -->
@@ -172,18 +210,37 @@
       }
 
       async function approveTrip(bookingId) {
+        document.getElementById("approvalNotes").value = "";
+        document.getElementById("approvalNotes").dataset.bookingId = bookingId;
+        
+        var notesModal = new bootstrap.Modal(
+          document.getElementById("approvalNotesModal")
+        );
+        notesModal.show();
+      }
+
+      async function submitApprovalWithNotes() {
+        const bookingId = document.getElementById("approvalNotes").dataset.bookingId;
+        const notes = document.getElementById("approvalNotes").value;
+
         try {
           const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
             method: "put",
             credentials: "include",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ notes: notes })
           });
 
           if (!res.ok) {
-            alert("Failed to fetch trip details");
+            alert("Failed to approve trip");
             return;
           }
-          const data = await res.json();
-          console.log({ data: data.data });
+          
+          bootstrap.Modal.getInstance(document.getElementById("approvalNotesModal")).hide();
+          alert("Trip approved successfully");
+          refresh();
         } catch (err) {
           console.error(err);
           alert("Something went wrong");

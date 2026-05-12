@@ -4,6 +4,7 @@ import {
   genAdminAuthToken,
   generateOTP,
 } from "../../helpers/common.js";
+import { sendSMS } from "../../helpers/sms.helper.js";
 
 export const loginAdmin = async (req, res) => {
   try {
@@ -40,9 +41,11 @@ export const loginAdmin = async (req, res) => {
 
       user.otp = generatedOtp;
       user.otpExpireAt = Date.now() + 1 * 60 * 1000;
+      console.log({user});
+      
       await user.save();
 
-      // await sendOTP(phone, generatedOtp);
+      await sendSMS(phone, generatedOtp, "login");
 
       return res.json({
         success: true,

@@ -8,18 +8,20 @@ import {
   generateOTP,
 } from "../../helpers/common.js";
 import { sendSMS } from "../../helpers/sms.helper.js";
+import { stat } from "fs";
 
 export const registerDriver = async (req, res) => {
   try {
     const { name, phone, password, otp = "" } = req.body;
     if (!phone) {
-      return res.status(400).json({ message: "Phone number required" });
+      return res.status(400).json({ success: false, message: "Phone number required" });
     }
 
     const user = await Drivers.findOne({ phone });
     if (otp == "" || !otp) {
       if (user && user.isVerified) {
         return res.status(400).json({
+          success: false,
           message: "User already registered and verified",
         });
       }
@@ -51,23 +53,27 @@ export const registerDriver = async (req, res) => {
     }
     if (!user) {
       return res.status(404).json({
+        success: false,
         message: "User not found. Please register first",
       });
     }
 
     if (user.isVerified) {
       return res.status(400).json({
+        success: false,
         message: "User already verified",
       });
     }
     if (user.otp != otp) {
       return res.status(400).json({
+        success: false,
         message: "Invalid OTP",
       });
     }
 
     if (user.otpExpireAt < Date.now()) {
       return res.status(400).json({
+        success: false,
         message: "OTP expired",
       });
     }
@@ -85,6 +91,7 @@ export const registerDriver = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
+      success: false,
       message: "Internal server error",
     });
   }
@@ -95,25 +102,28 @@ export const loginDriver = async (req, res) => {
     const { phone, password, otp = "" } = req.body;
 
     if (!phone) {
-      return res.status(400).json({ message: "Phone number required" });
+      return res.status(400).json({ success: false, message: "Phone number required" });
     }
 
     const user = await Drivers.findOne({ phone });
 
     if (!user) {
       return res.status(404).json({
+        success: false,
         message: "User not registered",
       });
     }
 
     if (!user.isVerified) {
       return res.status(403).json({
+        success: false,
         message: "User not verified. Please complete registration.",
       });
     }
     if (!otp || otp == "") {
       if (!password) {
         return res.status(400).json({
+          success: false,
           message: "Password required",
         });
       }
@@ -122,6 +132,7 @@ export const loginDriver = async (req, res) => {
 
       if (password !== decryptedPass) {
         return res.status(401).json({
+          success: false,
           message: "Invalid credentials",
         });
       }
@@ -142,12 +153,14 @@ export const loginDriver = async (req, res) => {
 
     if (user.otp != otp) {
       return res.status(400).json({
+        success: false,
         message: "Invalid OTP",
       });
     }
 
     if (user.otpExpireAt < Date.now()) {
       return res.status(400).json({
+        success: false,
         message: "OTP expired",
       });
     }
@@ -167,6 +180,7 @@ export const loginDriver = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({
+      success: false,
       message: "Internal server error",
     });
   }

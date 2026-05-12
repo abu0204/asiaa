@@ -33,6 +33,7 @@ export const bookingDet = async (req, res) => {
 
 export const approveBooking = async (req, res) => {
   try {
+    const { notes } = req.body;
     const bookingData = await BookingModel.findById(
       req.params.bookingId
     ).lean();
@@ -45,7 +46,7 @@ export const approveBooking = async (req, res) => {
     }
     const updated = await BookingModel.findOneAndUpdate(
       { _id: req.params.bookingId },
-      { $set: { status: "Approve" } },
+      { $set: { status: "Approve", notes: notes || "" } },
       { new: true }
     ).lean();
     await alertDriversForNewBookings();

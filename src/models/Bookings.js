@@ -18,6 +18,7 @@ const BookingSchema = new mongoose.Schema(
     fareVal: { type: String },
     totalVal: { type: String },
     status: { type: String, default: "No-Approve" }, //Approve, Assigned,Completed
+    notes: { type: String, default: "" },
   },
   { timestamps: true, collection: "Bookings" }
 );

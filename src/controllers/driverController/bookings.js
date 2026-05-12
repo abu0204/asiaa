@@ -17,17 +17,18 @@ export const getNewBookings = async (req, res) => {
           as: "tripDetails",
         },
       },
-      {
-        $match: {
-          $or: [
-            { tripDetails: { $size: 0 } },
-            { "tripDetails.driverId": { $size: 0 } },
-          ],
-        },
-      },
+      // {
+      //   $match: {
+      //     $or: [
+      //       { tripDetails: { $size: 0 } },
+      //       { "tripDetails.driverId": { $size: 0 } },
+      //     ],
+      //   },
+      // },
       {
         $match: {
           "tripDetails.driverId": { $not: { $elemMatch: { $eq: driverId } } },
+          "tripDetails.status": { $ne: "full-requested" },
         },
       },
       {

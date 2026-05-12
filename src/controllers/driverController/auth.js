@@ -21,7 +21,7 @@ export const registerDriver = async (req, res) => {
     if (otp == "" || !otp) {
       if (user && user.isVerified) {
         return res.status(400).json({
-          success: false,
+          status: false,
           message: "User already registered and verified",
         });
       }

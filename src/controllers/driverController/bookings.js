@@ -6,7 +6,37 @@ import ClosingFormModel from "../../models/ClosingForm.js";
 
 export const getNewBookings = async (req, res) => {
   try {
-    const bookingDet = await Bookings.find({ status: "Approve" });
+    const { driverId } = req;
+    const bookingDet = await Bookings.aggregate([
+      { $match: { status: "Approve" } },
+      {
+        $lookup: {
+          from: "TripDetails",
+          localField: "_id",
+          foreignField: "bookingId",
+          as: "tripDetails",
+        },
+      },
+      {
+        $match: {
+          $or: [
+            { tripDetails: { $size: 0 } },
+            { "tripDetails.driverId": { $size: 0 } },
+          ],
+        },
+      },
+      {
+        $match: {
+          "tripDetails.driverId": { $not: { $elemMatch: { $eq: driverId } } },
+        },
+      },
+      {
+        $project: {
+          tripDetails: 0,
+        },
+      },
+    ]);
+    
     return res.status(200).send({
       status: true,
       message: "New Bookings!",
@@ -19,6 +49,7 @@ export const getNewBookings = async (req, res) => {
       .send({ status: false, message: "Internal Server Error" });
   }
 };
+
 export const getAcceptedBookings = async (req, res) => {
   try {
     const { driverId } = req;

@@ -60,14 +60,13 @@
               <div class="driver-row">
                 <span>${driver.name}</span>
                 <button class="btn-assign"
-                  ${driver === "—" ? "disabled" : ""}
+                  ${driver === "—" || trip.status === "Closed" ? "disabled" : ""}
                   onclick="assignDriver('${trip._id}', '${driver._id}')">
                   Assign
                 </button>
               </div>
             `).join("")}
           </div>
-
         </div>
       `;
           });

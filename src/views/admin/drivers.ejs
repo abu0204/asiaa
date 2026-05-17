@@ -38,7 +38,7 @@
                           <% if (driver.isVerified) { %>
                             <span class="badge bg-success">Verified</span>
                             <% } else { %>
-                              <span class="badge bg-warning text-dark">Pending</span>
+                              <span class="badge bg-danger text-dark">Not Verified</span>
                               <% } %>
                         </td>
                         <td>
@@ -53,10 +53,13 @@
                             data-bs-target="#deductPaymentModal" data-driver-id="<%= driver._id %>">
                             Deduct Payment
                           </button>
-
-                          <a href="/admin/drivers/<%= driver._id %>" class="btn btn-sm btn-info">
+                          <button class="btn btn-sm btn-info approve-driver-btn" data-driver-id="<%= driver._id %>" data-verified="<%= driver.isVerified %>">
+                            <%= driver.isVerified ? 'Unverify' : 'Verify' %>
+                          </button>
+                          <button class="btn btn-sm btn-info view-driver-btn" data-bs-toggle="modal"
+                            data-bs-target="#driverDetailsModal" data-driver-id="<%= driver._id %>">
                             View
-                          </a>
+                          </button>
                         </td>
                       </tr>
                       <% }) %>
@@ -114,7 +117,7 @@
 
               <div class="mb-3">
                 <label class="form-label">Amount</label>
-                <input type="number"  id="addAmount" name="addAmount" class="form-control" required min="1" />
+                <input type="number" id="addAmount" name="addAmount" class="form-control" required min="1" />
               </div>
 
             </div>
@@ -169,6 +172,54 @@
         </div>
       </div>
     </div>
+
+<!-- Driver Details Modal -->
+    <div class="modal fade" id="driverDetailsModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h5 class="modal-title">Driver Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Name:</label>
+                <p id="detailsName"></p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Phone:</label>
+                <p id="detailsPhone"></p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Verification Status:</label>
+                <p id="detailsVerified"></p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Joined Date:</label>
+                <p id="detailsJoinedDate"></p>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">License:</label>
+                <p id="detailsLicense"></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Close
+            </button>
+            <a href="#" id="viewFullProfileLink" class="btn btn-info">View Full Profile</a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
     <script>
       document.addEventListener("DOMContentLoaded", () => {
 
@@ -186,7 +237,42 @@
           });
         });
 
+        document.querySelectorAll(".view-driver-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const driverId = btn.dataset.driverId;
+            populateDriverDetails(driverId);
+          });
+        });
+
+        document.querySelectorAll(".approve-driver-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const driverId = btn.dataset.driverId;
+            const isVerified = btn.dataset.verified === 'true';
+            const action = isVerified ? 'unverify' : 'verify';
+            approveDriver(driverId, action);
+          });
+        });
+
       });
+
+      function populateDriverDetails(driverId) {
+        // Find driver in the data
+        const drivers = <%- JSON.stringify(data) %>;
+        const driver = drivers.find(d => d._id === driverId);
+        console.log({ driver });
+        if (driver) {
+          document.getElementById("detailsName").textContent = driver.name || "N/A";
+          document.getElementById("detailsPhone").textContent = driver.phone || "N/A";
+          document.getElementById("detailsVerified").innerHTML = driver.isVerified
+            ? '<span class="badge bg-success">Verified</span>' 
+            : '<span class="badge bg-warning text-dark">Pending</span>';
+          document.getElementById("detailsJoinedDate").textContent = driver.createdAt 
+            ? new Date(driver.createdAt).toLocaleDateString() 
+            : "N/A";
+          document.getElementById("detailsLicense").textContent = driver.Documents?.[0]?.license || "N/A";
+          document.getElementById("viewFullProfileLink").href = `/admin/drivers/${driverId}`;
+        }
+      }
 
       async function addPayment() {
         const driverId = document.getElementById("addPaymentDriverId").value;
@@ -241,6 +327,35 @@
           location.reload();
 
         } catch (err) {
+          showToast("Network error", "error");
+        }
+      };
+
+      async function approveDriver(driverId, action) {
+        const endpoint = action === 'verify' ? '/admin/drivers/verify' : '/admin/drivers/unverify';
+        const actionText = action === 'verify' ? 'verified' : 'unverified';
+
+        try {
+          const res = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ driverId }),
+          });
+
+          const data = await res.json();
+
+          if (!res.ok) {
+            showToast(data.message, "error");
+            return;
+          }
+
+          showToast(`Driver ${actionText} successfully`, "success");
+          location.reload();
+
+        } catch (err) {
+          console.error(err);
           showToast("Network error", "error");
         }
       };

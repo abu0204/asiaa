@@ -35,8 +35,21 @@ const driverSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
   },
-  { timestamps: true, collection: "Drivers" }
+  {
+    timestamps: true,
+    collection: "Drivers",
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
-
+driverSchema.virtual("Documents", {
+  ref: "Documents",
+  localField: "_id",
+  foreignField: "driverId",
+});
 export default mongoose.model("Drivers", driverSchema);

@@ -10,6 +10,7 @@ import adminRouter from "./admin/index.js";
 import adminAuthRouter from "./admin/auth.js";
 import adminBookingsRouter from "./admin/bookings.js";
 import adminTransactionsRouter from "./admin/transactions.js";
+import adminDriversRouter from "./admin/drivers.js";
 
 
 const router = Router();
@@ -25,6 +26,7 @@ router.use("/admin", adminRouter);
 router.use("/admin/auth", adminAuthRouter);
 router.use("/admin/bookings", adminBookingsRouter);
 router.use("/admin/transactions", adminTransactionsRouter);
+router.use("/admin/drivers", adminDriversRouter);
 
 
 export default router;

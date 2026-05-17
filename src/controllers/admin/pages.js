@@ -52,6 +52,7 @@ class AdminPages {
 
       const [drivers, totalDrivers] = await Promise.all([
         Drivers.find()
+          .populate("Documents")
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit)
@@ -73,6 +74,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
+      console.log({error})
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",

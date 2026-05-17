@@ -137,7 +137,37 @@ export const rideInfo = async (req, res) => {
         message: "Driver not found",
       });
     }
-    const rideDet = await ConfirmedOrdersModel.find({ driverId });
+    const rideDet = await ConfirmedOrdersModel.aggregate([
+      { $match: { driverId: userDet._id } },
+      {
+        $lookup: {
+          from: "ClosingForm",
+          localField: "bookingId",
+          foreignField: "bookingId",
+          as: "ClosingForm",
+        },
+      },
+      {
+        $lookup: {
+          from: "Bookings",
+          localField: "bookingId",
+          foreignField: "_id",
+          as: "Booking",
+        },
+      },
+      { $unwind: "$Booking" },
+      { $unwind: { path: "$ClosingForm", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          tripId: 1,
+          bookingId: 1,
+          status: 1,
+          closingDetails: { $arrayElemAt: ["$ClosingForm", 0] },
+          bookingDetails: "$Booking",
+        },
+      },
+    ]);
+
     return res.status(200).json({
       status: true,
       message: "Bookings fetched successfully",

@@ -19,3 +19,4 @@ router.post("/complete", driverAuth, completeBooking);
 router.post("/close-ride", driverAuth, closeRide);
 
 export default router;
+  

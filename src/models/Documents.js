@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const DocumentSchema = new mongoose.Schema({
     driverId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Driver",
+        ref: "Drivers",
         required: true,
     },
     car_photo: {

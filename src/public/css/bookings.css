@@ -1,3 +1,31 @@
+/* =========================
+   SEARCH BOX
+========================= */
+.search-box {
+  width: 320px;
+}
+
+.search-box input {
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  padding: 10px 14px;
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #ffd400;
+  box-shadow: 0 0 0 4px rgba(255,212,0,0.2);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .search-box {
+    width: 100%;
+  }
+}
+
 /* ===============================
    BOOKING CARD VIEW
 ================================ */

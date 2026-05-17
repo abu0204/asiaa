@@ -1,3 +1,25 @@
+<div class="container-fluid mt-4">
+  
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <h3 class="mb-0">Trip Bookings</h3>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="tripSearch" 
+        placeholder="Search Trip booking..."
+        class="form-control"
+      >
+    </div>
+  </div>
+
+  <div class="trip-cards" id="tripCards">
+    <!-- Cards injected by JS -->
+  </div>
+</div>
+
+
 <%- include("../layouts/adminheaders") %>
 
   <div class="admin-layout">
@@ -5,7 +27,6 @@
 
       <main class="bookingcontent-area">
         <div class="container-fluid mt-4">
-          <h3 class="mb-4">Trip Bookings</h3>
 
           <div class="booking-cards" id="tripCards">
             <% if (data.length===0) { %>
@@ -172,12 +193,12 @@
       </div>
 
       <div class="booking-actions">
-        <button class="btn btn-sm btn-info"
+        <button class="btn btn-sm btn-warning"
             onclick='viewTrip(${JSON.stringify(trip)})'>
           View
         </button>
 
-        <button class="btn btn-sm btn-success"
+        <button class="btn btn-sm btn-secondary"
           onclick="approveTrip('${trip._id}')"
           ${trip.status === "Approve" ? "disabled" : ""}>
           ${trip.status === "Approve" ? "Approved" : "Approve"}

@@ -1,12 +1,28 @@
 <%- include("../layouts/adminheaders") %>
   <link rel="stylesheet" href="/css/trip.css">
 
+  <div class="container-fluid mt-4">
+  
+  <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+    <h3 class="mb-0">Trip Details</h3>
+
+    <!-- Search Bar -->
+    <div class="search-box">
+      <input 
+        type="text" 
+        id="tripSearch" 
+        placeholder="Search Trip Details..."
+        class="form-control"
+      >
+    </div>
+  </div>
+
   <div class="admin-layout">
     <%- include("../layouts/sidebar") %>
 
       <main class="tripcontent-area">
         <div class="container-fluid mt-4">
-          <h3 class="mb-4">Trip Details</h3>
+        
 
           <div class="trip-cards" id="tripCards">
             <!-- Cards injected by JS -->
@@ -14,6 +30,7 @@
         </div>
       </main>
   </div>
+
 
   <%- include("../layouts/adminfooter") %>
     <script>

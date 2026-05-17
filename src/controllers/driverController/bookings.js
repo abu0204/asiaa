@@ -36,8 +36,11 @@ export const getNewBookings = async (req, res) => {
           tripDetails: 0,
         },
       },
+      {
+        $sort: { createdAt: -1 },
+      }
     ]);
-    
+
     return res.status(200).send({
       status: true,
       message: "New Bookings!",
@@ -204,7 +207,7 @@ export const cancelBooking = async (req, res) => {
     if (trip.status === "full-requested" && trip.driverId.length < 3) {
       trip.status = "Pending";
     }
-    if(trip.driverId.length === 0){
+    if (trip.driverId.length === 0) {
       trip.status = "Pending";
       booking.status = "Approve";
       await booking.save();
@@ -304,13 +307,13 @@ export const closeRide = async (req, res) => {
     const { driverId, driver } = req;
 
     const {
-      bookingId=0,
-      driverBata=0,
-      tollParking=0,
-      waittingCharges=0,
-      hillsCharges=0,
-      statePermitCharges=0,
-      otherCharges=0
+      bookingId = 0,
+      driverBata = 0,
+      tollParking = 0,
+      waittingCharges = 0,
+      hillsCharges = 0,
+      statePermitCharges = 0,
+      otherCharges = 0
     } = req.body;
     if (!driver.isOnline) {
       return res.status(403).send({

@@ -162,7 +162,7 @@ export const rideInfo = async (req, res) => {
           tripId: 1,
           bookingId: 1,
           status: 1,
-          closingDetails: { $arrayElemAt: ["$ClosingForm", 0] },
+          closingDetails: "$ClosingForm",
           bookingDetails: "$Booking",
         },
       },

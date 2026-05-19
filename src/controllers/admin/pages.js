@@ -231,6 +231,131 @@ class AdminPages {
       });
     }
   };
+
+  getDashboardStats = async (req, res) => {
+    try {
+      // Get today's date range
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const tomorrow = new Date(today);
+      tomorrow.setDate(tomorrow.getDate() + 1);
+
+      // Parallel queries for all stats
+      const [totalUsers, activeDrivers, todayBookings, todayTrips, last7DaysEarnings, last6MonthsEarnings, last5YearsEarnings] = await Promise.all([
+        Drivers.countDocuments(), // Total users who made bookings
+        Drivers.countDocuments({ isOnline: true }), // Active/verified drivers
+        BookingModel.find({
+          createdAt: { $gte: today, $lt: tomorrow }
+        }).lean(), // Today's bookings
+        TripDetails.countDocuments({
+          createdAt: { $gte: today, $lt: tomorrow }
+        }), // Today's trips
+        BookingModel.aggregate([
+          {
+            $match: {
+              createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }
+            }
+          },
+          {
+            $group: {
+              _id: {
+                $dateToString: { format: "%a", date: "$createdAt" }
+              },
+              total: { $sum: { $toDouble: "$totalVal" } }
+            }
+          },
+          { $sort: { "_id": 1 } }
+        ]),
+        BookingModel.aggregate([
+          {
+            $match: {
+              createdAt: { $gte: new Date(Date.now() - 180 * 24 * 60 * 60 * 1000) }
+            }
+          },
+          {
+            $group: {
+              _id: {
+                $dateToString: { format: "%b", date: "$createdAt" }
+              },
+              total: { $sum: { $toDouble: "$totalVal" } }
+            }
+          },
+          { $sort: { "_id": 1 } }
+        ]),
+        BookingModel.aggregate([
+          {
+            $group: {
+              _id: { $year: "$createdAt" },
+              total: { $sum: { $toDouble: "$totalVal" } }
+            }
+          },
+          { $sort: { "_id": 1 } }
+        ])
+      ]);
+
+      // Calculate today's earnings
+      const todayEarnings = todayBookings.reduce((sum, booking) => {
+        return sum + (parseFloat(booking.totalVal) || 0);
+      }, 0);
+
+      // Format chart data
+      const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      const dayValues = new Array(7).fill(0);
+      last7DaysEarnings.forEach(item => {
+        const dayIndex = dayLabels.findIndex(label => label === item._id);
+        if (dayIndex !== -1) dayValues[dayIndex] = Math.round(item.total);
+      });
+
+      const monthLabels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      const monthValues = new Array(6).fill(0);
+      last6MonthsEarnings.forEach(item => {
+        const monthIndex = monthLabels.findIndex(label => label === item._id);
+        if (monthIndex !== -1) monthValues[monthIndex] = Math.round(item.total);
+      });
+
+      const yearLabels = [];
+      const yearValues = [];
+      last5YearsEarnings.forEach(item => {
+        yearLabels.push(item._id.toString());
+        yearValues.push(Math.round(item.total));
+      });
+
+      const payload = {
+        status: true,
+        data: {
+          stats: {
+            totalUsers: totalUsers,
+            activeDrivers: activeDrivers,
+            todayEarnings: Math.round(todayEarnings),
+            todayTrips: todayTrips
+          },
+          chartData: {
+            day: {
+              labels: dayLabels,
+              values: dayValues
+            },
+            month: {
+              labels: monthLabels.slice(0, 6),
+              values: monthValues
+            },
+            year: {
+              labels: yearLabels,
+              values: yearValues
+            }
+          }
+        }
+      };
+
+      return res.json(payload);
+    } catch (error) {
+      console.log({ error });
+      return res.status(500).json({
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  };
 }
 
 export default new AdminPages();

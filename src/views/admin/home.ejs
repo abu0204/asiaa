@@ -7,26 +7,26 @@
   <!-- Header -->
   <header class="dash-header">
     <h1>Welcome Admin 👋</h1>
-    <button class="btn-primary" onclick="sendNotify()">Send Live Notification</button>
+    <!-- <button class="btn-primary" onclick="sendNotify()">Send Live Notification</button> -->
   </header>
 
   <!-- Stats Cards -->
   <section class="stats-grid" id="statsContainer">
-    <div class="stat-card loading">
+    <div class="stat-card users">
       <h3>Total Users</h3>
-      <p>-</p>
+      <p id="totalUsersValue">-</p>
     </div>
-    <div class="stat-card loading">
+    <div class="stat-card drivers">
       <h3>Active Drivers</h3>
-      <p>-</p>
+      <p id="activeDriversValue">-</p>
     </div>
-    <div class="stat-card loading">
+    <div class="stat-card earnings">
       <h3>Today Earnings</h3>
-      <p>-</p>
+      <p id="todayEarningsValue">-</p>
     </div>
-    <div class="stat-card loading">
+    <div class="stat-card trips">
       <h3>Today Trips</h3>
-      <p>-</p>
+      <p id="todayTripsValue">-</p>
     </div>
   </section>
 
@@ -73,7 +73,7 @@
 
 <script>
   // Placeholder chart data
-  const chartData = {
+  let chartData = {
     day: {
       labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
       values: [0, 0, 0, 0, 0, 0, 0]
@@ -139,22 +139,34 @@
   /* Initial Load */
   drawChart("day");
 
-  // Load dashboard data
+  // Load dashboard data from API
   async function loadDashboardData() {
     try {
-      // You can add API calls here to fetch real data
-      // Example: const stats = await fetch('/api/admin/stats').then(r => r.json());
-      
-      // For now, show empty state
-      document.getElementById("recentTripsBody").innerHTML = `
-        <tr>
-          <td colspan="5" class="text-center">No recent trips</td>
-        </tr>
-      `;
+      const response = await fetch("/admin/api/dashboard-stats", {
+        credentials: "include"
+      });
 
-      document.getElementById("driverStatusList").innerHTML = `
-        <li>No drivers available</li>
-      `;
+      if (!response.ok) {
+        throw new Error("Failed to fetch dashboard stats");
+      }
+
+      const result = await response.json();
+
+      if (result.status && result.data) {
+        const { stats, chartData: apiChartData } = result.data;
+
+        // Update stats cards
+        document.getElementById("totalUsersValue").textContent = stats.totalUsers.toLocaleString();
+        document.getElementById("activeDriversValue").textContent = stats.activeDrivers.toLocaleString();
+        document.getElementById("todayEarningsValue").textContent = "₹" + stats.todayEarnings.toLocaleString();
+        document.getElementById("todayTripsValue").textContent = stats.todayTrips.toLocaleString();
+
+        // Update chart data
+        chartData = apiChartData;
+
+        // Redraw chart with new data
+        drawChart("day");
+      }
     } catch (error) {
       console.error("Error loading dashboard data:", error);
     }

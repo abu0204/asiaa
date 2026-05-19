@@ -1,5 +1,6 @@
 import Drivers from "../../models/Drivers.js";
 import BookingModel from "../../models/Bookings.js";
+import TripDetails from "../../models/TripDetails.js";
 import {
   errorResponse,
   renderResponse,
@@ -49,15 +50,27 @@ class AdminPages {
       const page = parseInt(req.query.page) || 1;
       const limit = 10;
       const skip = (page - 1) * limit;
+      const searchQuery = req.query.search || "";
+
+      // Build search filter
+      let searchFilter = {};
+      if (searchQuery) {
+        searchFilter = {
+          $or: [
+            { name: { $regex: searchQuery, $options: "i" } },
+            { phone: { $regex: searchQuery, $options: "i" } },
+          ]
+        };
+      }
 
       const [drivers, totalDrivers] = await Promise.all([
-        Drivers.find()
+        Drivers.find(searchFilter)
           .populate("Documents")
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit)
           .lean(),
-        Drivers.countDocuments()
+        Drivers.countDocuments(searchFilter)
       ]);
 
       const totalPages = Math.ceil(totalDrivers / limit);
@@ -70,6 +83,7 @@ class AdminPages {
         pagination: {
           page,
           totalPages,
+          searchQuery
         },
       };
       return renderResponse(req, res, payload);
@@ -84,12 +98,46 @@ class AdminPages {
   };
   bookings = async (req, res) => {
     try {
-      const drivers = await BookingModel.find().sort({ createdAt: -1 }).lean();
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+      const searchQuery = req.query.search || "";
+
+      // Build search filter
+      let searchFilter = {};
+      if (searchQuery) {
+        searchFilter = {
+          $or: [
+            { _id: { $regex: searchQuery, $options: "i" } }, // Allow searching by booking ID
+            { name: { $regex: searchQuery, $options: "i" } },
+            { mobile: { $regex: searchQuery, $options: "i" } },
+            { pickup: { $regex: searchQuery, $options: "i" } },
+            { drop: { $regex: searchQuery, $options: "i" } }
+          ]
+        };
+      }
+
+      const [bookings, totalBookings] = await Promise.all([
+        BookingModel.find(searchFilter)
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .lean(),
+        BookingModel.countDocuments(searchFilter)
+      ]);
+
+      const totalPages = Math.ceil(totalBookings / limit);
+
       const payload = {
         status: true,
-        title: "Home",
+        title: "Bookings",
         pageName: "admin/bookings",
-        data: drivers,
+        data: bookings,
+        pagination: {
+          page,
+          totalPages,
+          searchQuery
+        }
       };
       return renderResponse(req, res, payload);
     } catch (error) {
@@ -103,14 +151,52 @@ class AdminPages {
 
   trips = async (req, res) => {
     try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+      const searchQuery = req.query.search || "";
+
+      // Build search filter
+      let searchFilter = {};
+      if (searchQuery) {
+        searchFilter = {
+          $or: [
+            { status: { $regex: searchQuery, $options: "i" } },
+            { _id: { $regex: searchQuery, $options: "i" } }, // Allow searching by trip ID
+          ]
+        };
+      }
+
+      const [trips, totalTrips] = await Promise.all([
+        TripDetails.find(searchFilter)
+          .populate("driverId")
+          .populate({
+            path: "bookingId",
+            select: "name mobile pickup drop status"
+          })
+          .sort({ createdAt: -1 })
+          .skip(skip)
+          .limit(limit)
+          .lean(),
+        TripDetails.countDocuments(searchFilter)
+      ]);
+
+      const totalPages = Math.ceil(totalTrips / limit);
+
       const payload = {
         status: true,
-        title: "Home",
+        title: "Trips",
         pageName: "admin/trips",
-        data: [],
+        data: trips,
+        pagination: {
+          page,
+          totalPages,
+          searchQuery
+        }
       };
       return renderResponse(req, res, payload);
     } catch (error) {
+      console.log({error});
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",

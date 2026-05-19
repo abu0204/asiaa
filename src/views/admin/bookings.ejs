@@ -4,20 +4,23 @@
     <h3 class="mb-0">Trip Bookings</h3>
 
     <!-- Search Bar -->
-    <div class="search-box">
-      <input 
-        type="text" 
-        id="tripSearch" 
-        placeholder="Search Trip booking..."
-        class="form-control"
-      >
+    <div class="search-box" style="min-width: 300px;">
+      <form id="searchForm" class="d-flex gap-2">
+        <input 
+          type="text" 
+          id="bookingSearch" 
+          name="search"
+          placeholder="Search by name, phone, pickup, drop, booking id..."
+          class="form-control"
+          value="<%= pagination.searchQuery || '' %>"
+        >
+        <button type="submit" class="btn btn-primary">Search</button>
+        <% if (pagination.searchQuery) { %>
+          <a href="/admin/bookings" class="btn btn-secondary">Clear</a>
+        <% } %>
+      </form>
     </div>
   </div>
-
-  <div class="trip-cards" id="tripCards">
-    <!-- Cards injected by JS -->
-  </div>
-</div>
 
 
 <%- include("../layouts/adminheaders") %>
@@ -83,6 +86,32 @@
                   </div>
                   <% }) %>
           </div>
+
+          <% if (pagination.totalPages > 1) { %>
+            <nav>
+              <ul class="pagination justify-content-center mt-4">
+                <% if (pagination.page > 1) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
+                  </li>
+                <% } %>
+
+                <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                  <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
+                      <%= i %>
+                    </a>
+                  </li>
+                <% } %>
+
+                <% if (pagination.page < pagination.totalPages) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
+                  </li>
+                <% } %>
+              </ul>
+            </nav>
+          <% } %>
         </div>
       </main>
 
@@ -163,6 +192,17 @@
   <!-- Modal stays SAME -->
   <%- include("../layouts/adminfooter") %>
     <script>
+      // Handle search form submission
+      document.getElementById("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const searchQuery = document.getElementById("bookingSearch").value.trim();
+        if (searchQuery) {
+          window.location.href = `/admin/bookings?search=${encodeURIComponent(searchQuery)}`;
+        } else {
+          window.location.href = `/admin/bookings`;
+        }
+      });
+
       socket.on("userBooked", (trip) => {
         pushNewTrip(trip);
       });

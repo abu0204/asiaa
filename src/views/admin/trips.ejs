@@ -7,13 +7,21 @@
     <h3 class="mb-0">Trip Details</h3>
 
     <!-- Search Bar -->
-    <div class="search-box">
-      <input 
-        type="text" 
-        id="tripSearch" 
-        placeholder="Search Trip Details..."
-        class="form-control"
-      >
+    <div class="search-box" style="min-width: 300px;">
+      <form id="searchForm" class="d-flex gap-2">
+        <input 
+          type="text" 
+          id="tripSearch" 
+          name="search"
+          placeholder="Search Trip Details..."
+          class="form-control"
+          value="<%= pagination.searchQuery || '' %>"
+        >
+        <button type="submit" class="btn btn-primary">Search</button>
+        <% if (pagination.searchQuery) { %>
+          <a href="/admin/trips" class="btn btn-secondary">Clear</a>
+        <% } %>
+      </form>
     </div>
   </div>
 
@@ -23,10 +31,78 @@
       <main class="tripcontent-area">
         <div class="container-fluid mt-4">
         
-
           <div class="trip-cards" id="tripCards">
-            <!-- Cards injected by JS -->
+            <% if (data.length === 0) { %>
+              <p class="text-center">No trips found</p>
+            <% } %>
+
+            <% data.forEach((trip, index) => { %>
+              <% 
+                const drivers = (trip.driverId || []).slice(0, 3).map((d) => ({
+                  name: d.name,
+                  _id: d._id,
+                }));
+
+                while (drivers.length < 3) {
+                  drivers.push({ name: "—", _id: null });
+                }
+              %>
+              <div class="trip-card">
+                <div class="trip-card-header">
+                  <span class="trip-id">#<%= index + 1 %></span>
+                  <span class="status <%= trip.status %>">
+                    <%= trip.status %>
+                  </span>
+                </div>
+
+                <div class="trip-info">
+                  <p><strong>Date:</strong> <%= new Date(trip.createdAt).toLocaleString() %></p>
+                  <p><strong>Booking ID:</strong> <%= trip.bookingId?._id || trip._id %></p>
+                  <p><strong>Pickup:</strong> <%= trip.bookingId?.pickup || "-" %></p>
+                  <p><strong>Drop:</strong> <%= trip.bookingId?.drop || "-" %></p>
+                </div>
+
+                <div class="trip-drivers">
+                  <% drivers.forEach(driver => { %>
+                    <div class="driver-row">
+                      <span><%= driver.name %></span>
+                      <button class="btn-assign"
+                        <%= driver.name === "—" || trip.status === "Closed" ? "disabled" : "" %>
+                        onclick="assignDriver('<%= trip._id %>', '<%= driver._id %>') ">
+                        Assign
+                      </button>
+                    </div>
+                  <% }) %>
+                </div>
+              </div>
+            <% }) %>
           </div>
+
+          <% if (pagination.totalPages > 1) { %>
+            <nav>
+              <ul class="pagination justify-content-center mt-4">
+                <% if (pagination.page > 1) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
+                  </li>
+                <% } %>
+
+                <% for (let i = 1; i <= pagination.totalPages; i++) { %>
+                  <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
+                    <a class="page-link" href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
+                      <%= i %>
+                    </a>
+                  </li>
+                <% } %>
+
+                <% if (pagination.page < pagination.totalPages) { %>
+                  <li class="page-item">
+                    <a class="page-link" href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
+                  </li>
+                <% } %>
+              </ul>
+            </nav>
+          <% } %>
         </div>
       </main>
   </div>
@@ -34,62 +110,14 @@
 
   <%- include("../layouts/adminfooter") %>
     <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        try {
-          const response = await fetch("/admin/bookings/get-tripes");
-          const result = await response.json();
-
-          if (!result.status) return;
-
-          const container = document.getElementById("tripCards");
-          container.innerHTML = "";
-
-          result.data.forEach((trip, index) => {
-
-            const drivers = (trip.driverId || []).slice(0, 3).map((d) => ({
-              name: d.name,
-              _id: d._id,
-            }));
-
-            while (drivers.length < 3) {
-              drivers.push({ name: "—", _id: null });
-            };
-
-            container.innerHTML += `
-        <div class="trip-card">
-
-          <div class="trip-card-header">
-            <span class="trip-id">#${index + 1}</span>
-            <span class="status ${trip.status}">
-              ${trip.status}
-            </span>
-          </div>
-
-          <div class="trip-info">
-            <p><strong>Date:</strong> ${new Date(trip.createdAt).toLocaleString()}</p>
-            <p><strong>Booking ID:</strong> ${trip._id}</p>
-            <p><strong>Pickup:</strong> ${trip.bookingId?.pickup || "-"}</p>
-            <p><strong>Drop:</strong> ${trip.bookingId?.drop || "-"}</p>
-          </div>
-
-          <div class="trip-drivers">
-            ${drivers.map(driver => `
-              <div class="driver-row">
-                <span>${driver.name}</span>
-                <button class="btn-assign"
-                  ${driver === "—" || trip.status === "Closed" ? "disabled" : ""}
-                  onclick="assignDriver('${trip._id}', '${driver._id}')">
-                  Assign
-                </button>
-              </div>
-            `).join("")}
-          </div>
-        </div>
-      `;
-          });
-
-        } catch (err) {
-          console.error("Failed to load trips", err);
+      // Handle search form submission
+      document.getElementById("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const searchQuery = document.getElementById("tripSearch").value.trim();
+        if (searchQuery) {
+          window.location.href = `/admin/trips?search=${encodeURIComponent(searchQuery)}`;
+        } else {
+          window.location.href = `/admin/trips`;
         }
       });
 

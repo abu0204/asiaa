@@ -4,13 +4,21 @@
     <h3 class="mb-0">Driver Details</h3>
 
     <!-- Search Bar -->
-    <div class="search-box">
-      <input 
-        type="text" 
-        id="tripSearch" 
-        placeholder="Search Driver Details..."
-        class="form-control"
-      >
+    <div class="search-box" style="min-width: 300px;">
+      <form id="searchForm" class="d-flex gap-2">
+        <input 
+          type="text" 
+          id="driverSearch" 
+          name="search"
+          placeholder="Search by name, phone..."
+          class="form-control"
+          value="<%= pagination.searchQuery || '' %>"
+        >
+        <button type="submit" class="btn btn-primary">Search</button>
+        <% if (pagination.searchQuery) { %>
+          <a href="/admin/drivers" class="btn btn-secondary">Clear</a>
+        <% } %>
+      </form>
     </div>
   </div>
 
@@ -55,10 +63,10 @@
                           <%= driver.phone %>
                         </td>
                         <td>
-                          <% if (driver.isVerified) { %>
-                            <span class="badge bg-success">Verified</span>
+                          <% if (driver.isApproved) { %>
+                            <span class="badge bg-success">Approved</span>
                             <% } else { %>
-                              <span class="badge bg-danger text-dark">Not Verified</span>
+                              <span class="badge bg-danger text-dark">Not Approved</span>
                               <% } %>
                         </td>
                         <td>
@@ -73,8 +81,8 @@
                             data-bs-target="#deductPaymentModal" data-driver-id="<%= driver._id %>">
                             Deduct Payment
                           </button>
-                          <button class="btn btn-sm btn-info approve-driver-btn" data-driver-id="<%= driver._id %>" data-verified="<%= driver.isVerified %>">
-                            <%= driver.isVerified ? 'Unverify' : 'Verify' %>
+                          <button class="btn btn-sm btn-info approve-driver-btn" data-driver-id="<%= driver._id %>" data-approved="<%= driver.isApproved %>">
+                            <%= driver.isApproved ? 'Disapprove' : 'Approve' %>
                           </button>
                           <button class="btn btn-sm btn-info view-driver-btn" data-bs-toggle="modal"
                             data-bs-target="#driverDetailsModal" data-driver-id="<%= driver._id %>">
@@ -92,13 +100,13 @@
 
                 <% if (pagination.page> 1) { %>
                   <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page - 1 %>">Prev</a>
+                    <a class="page-link" href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
                   </li>
                   <% } %>
 
                     <% for (let i=1; i <=pagination.totalPages; i++) { %>
                       <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
-                        <a class="page-link" href="?page=<%= i %>">
+                        <a class="page-link" href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
                           <%= i %>
                         </a>
                       </li>
@@ -106,7 +114,7 @@
 
                         <% if (pagination.page < pagination.totalPages) { %>
                           <li class="page-item">
-                            <a class="page-link" href="?page=<%= pagination.page + 1 %>">Next</a>
+                            <a class="page-link" href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
                           </li>
                           <% } %>
 
@@ -232,7 +240,6 @@
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
               Close
             </button>
-            <a href="#" id="viewFullProfileLink" class="btn btn-info">View Full Profile</a>
           </div>
 
         </div>
@@ -241,6 +248,17 @@
 
     
     <script>
+      // Handle search form submission
+      document.getElementById("searchForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const searchQuery = document.getElementById("driverSearch").value.trim();
+        if (searchQuery) {
+          window.location.href = `/admin/drivers?search=${encodeURIComponent(searchQuery)}`;
+        } else {
+          window.location.href = `/admin/drivers`;
+        }
+      });
+
       document.addEventListener("DOMContentLoaded", () => {
 
         document.querySelectorAll(".add-payment-btn").forEach(btn => {
@@ -266,9 +284,11 @@
 
         document.querySelectorAll(".approve-driver-btn").forEach(btn => {
           btn.addEventListener("click", () => {
+            console.log("btn.dataset",btn.dataset);
+            
             const driverId = btn.dataset.driverId;
-            const isVerified = btn.dataset.verified === 'true';
-            const action = isVerified ? 'unverify' : 'verify';
+            const isApproved = btn.dataset.approved === 'true';
+            const action = isApproved ? 'disapprove' : 'approve';
             approveDriver(driverId, action);
           });
         });
@@ -279,18 +299,16 @@
         // Find driver in the data
         const drivers = <%- JSON.stringify(data) %>;
         const driver = drivers.find(d => d._id === driverId);
-        console.log({ driver });
         if (driver) {
           document.getElementById("detailsName").textContent = driver.name || "N/A";
           document.getElementById("detailsPhone").textContent = driver.phone || "N/A";
-          document.getElementById("detailsVerified").innerHTML = driver.isVerified
-            ? '<span class="badge bg-success">Verified</span>' 
+          document.getElementById("detailsVerified").innerHTML = driver.isApproved
+            ? '<span class="badge bg-success">Approved</span>' 
             : '<span class="badge bg-warning text-dark">Pending</span>';
           document.getElementById("detailsJoinedDate").textContent = driver.createdAt 
             ? new Date(driver.createdAt).toLocaleDateString() 
             : "N/A";
           document.getElementById("detailsLicense").textContent = driver.Documents?.[0]?.license || "N/A";
-          document.getElementById("viewFullProfileLink").href = `/admin/drivers/${driverId}`;
         }
       }
 
@@ -308,16 +326,12 @@
           });
 
           const data = await res.json();
-          console.log({ data });
-
           if (!res.ok) {
             showToast(data.message, "error");
             return;
           }
-
           showToast(data.message, "success");
           location.reload();
-
         } catch (err) {
           showToast("Network error", "error");
         }
@@ -352,8 +366,8 @@
       };
 
       async function approveDriver(driverId, action) {
-        const endpoint = action === 'verify' ? '/admin/drivers/verify' : '/admin/drivers/unverify';
-        const actionText = action === 'verify' ? 'verified' : 'unverified';
+        const endpoint = action === 'approve' ? '/admin/drivers/approve' : '/admin/drivers/disapprove';
+        const actionText = action === 'approve' ? 'approved' : 'disapproved';
 
         try {
           const res = await fetch(endpoint, {

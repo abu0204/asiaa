@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Drivers from "../../models/Drivers.js";
 import BookingModel from "../../models/Bookings.js";
 import TripDetails from "../../models/TripDetails.js";
@@ -106,15 +107,19 @@ class AdminPages {
       // Build search filter
       let searchFilter = {};
       if (searchQuery) {
-        searchFilter = {
-          $or: [
-            { _id: { $regex: searchQuery, $options: "i" } }, // Allow searching by booking ID
-            { name: { $regex: searchQuery, $options: "i" } },
-            { mobile: { $regex: searchQuery, $options: "i" } },
-            { pickup: { $regex: searchQuery, $options: "i" } },
-            { drop: { $regex: searchQuery, $options: "i" } }
-          ]
-        };
+        const orConditions = [
+          { name: { $regex: searchQuery, $options: "i" } },
+          { mobile: { $regex: searchQuery, $options: "i" } },
+          { pickup: { $regex: searchQuery, $options: "i" } },
+          { drop: { $regex: searchQuery, $options: "i" } }
+        ];
+
+        // Check if search query is a valid ObjectId
+        if (mongoose.Types.ObjectId.isValid(searchQuery)) {
+          orConditions.push({ _id: new mongoose.Types.ObjectId(searchQuery) });
+        }
+
+        searchFilter = { $or: orConditions };
       }
 
       const [bookings, totalBookings] = await Promise.all([
@@ -141,6 +146,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
+      console.log({error});
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -159,12 +165,16 @@ class AdminPages {
       // Build search filter
       let searchFilter = {};
       if (searchQuery) {
-        searchFilter = {
-          $or: [
-            { status: { $regex: searchQuery, $options: "i" } },
-            { _id: { $regex: searchQuery, $options: "i" } }, // Allow searching by trip ID
-          ]
-        };
+        const orConditions = [
+          { status: { $regex: searchQuery, $options: "i" } }
+        ];
+
+        // Check if search query is a valid ObjectId
+        if (mongoose.Types.ObjectId.isValid(searchQuery)) {
+          orConditions.push({ _id: new mongoose.Types.ObjectId(searchQuery) });
+        }
+
+        searchFilter = { $or: orConditions };
       }
 
       const [trips, totalTrips] = await Promise.all([

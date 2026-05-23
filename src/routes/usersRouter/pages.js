@@ -12,6 +12,8 @@ router.get("/privacy", userController.privacy);
 
 router.get("/driver/privacy-policy", userController.driverPrivacy);
 router.get("/driver/terms-and-conditions", userController.driverTerms);
+router.get("/driver/delete-account", userController.deleteAccount);
+
 
 
 export default router;

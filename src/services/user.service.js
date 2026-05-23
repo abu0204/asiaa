@@ -118,6 +118,17 @@ class UserServices {
     }
   }
 
+  async deleteAccount() {
+    try {
+      return { status: true, title: "Delete Account", pageName: "driver/deleteAccount" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+
   async createContactFormService(req_Body) {
     try {
       const { name, email, phone, subject, message } = req_Body;

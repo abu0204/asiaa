@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account Instructions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd400 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        }
+
+        .warning-box p {
+            color: #856404;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .instructions {
+            margin-bottom: 30px;
+        }
+
+        .instruction-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ffd400;
+        }
+
+        .instruction-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: #ffd400;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+
+        .step-content {
+            flex: 1;
+            padding-top: 5px;
+        }
+
+        .step-content h3 {
+            font-size: 15px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .step-content p {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .dialog-preview {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .dialog-box {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .dialog-header {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .dialog-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .dialog-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel {
+            background: #e9ecef;
+            color: #495057;
+        }
+
+        .btn-cancel:hover {
+            background: #dee2e6;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+        }
+
+        .btn-primary {
+            flex: 1;
+            padding: 12px 20px;
+            background: #ffd400;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px 20px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #f5f5f5;
+        }
+
+        .success-message {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            color: #155724;
+            font-size: 14px;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ Delete Account</h1>
+            <p>Instructions to delete your driver account</p>
+        </div>
+
+        <!-- <div class="warning-box">
+            <p><strong>Warning:</strong> Deleting your account is permanent and cannot be undone. All your data, including driving history, bookings, and earnings will be lost.</p>
+        </div> -->
+
+        <div class="instructions">
+            <div class="instruction-title">Step-by-Step Instructions</div>
+            <div class="instruction-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Open Your Driver App</h3>
+                        <p>Launch the driver application on your device and log in with your credentials.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Go to Profile Page</h3>
+                        <p>Navigate to the profile section by tapping the profile icon in the app menu or bottom navigation bar.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Click Delete Account Button</h3>
+                        <p>Scroll to the bottom of your profile page and click the "Delete Account" button (usually displayed in red).</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Review Confirmation Dialog</h3>
+                        <p>A confirmation popup will appear asking you to confirm the deletion. Read the warning carefully.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Confirm Deletion</h3>
+                        <p>Click "Yes" in the confirmation dialog to proceed with account deletion.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Account Deleted</h3>
+                        <p>Your account will be deleted. You will be logged out and redirected to the login page.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="dialog-preview">
+            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Preview of Confirmation Dialog:</p>
+            <div class="dialog-box">
+                <div class="dialog-header">Confirm Account Deletion</div>
+                <div class="dialog-message">
+                    Are you sure you want to delete your account? This action cannot be undone and all your data will be removed.
+                </div>
+                <div class="dialog-actions">
+                    <button class="btn btn-cancel">No</button>
+                    <button class="btn btn-delete">Yes</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-secondary" onclick="goBack()">Go Back</button>
+            <button class="btn-primary" id="deleteBtn" onclick="openConfirmDialog()">Delete My Account</button>
+        </div>
+
+        <div class="success-message" id="successMsg">
+            <strong>✓ Account Deletion Complete</strong><br>
+            Your account has been successfully deleted. You will be redirected to the login page shortly.
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function openConfirmDialog() {
+            const confirmed = confirm('Are you sure you want to delete your account?\n\nThis action cannot be undone and all your data will be removed.');
+            
+            if (confirmed) {
+                deleteAccount();
+            }
+        }
+
+        function deleteAccount() {
+            const deleteBtn = document.getElementById('deleteBtn');
+            const successMsg = document.getElementById('successMsg');
+            
+            // Disable button to prevent multiple clicks
+            deleteBtn.disabled = true;
+            deleteBtn.textContent = 'Deleting...';
+            deleteBtn.style.opacity = '0.6';
+            deleteBtn.style.cursor = 'not-allowed';
+            
+            // Simulate API call (replace with actual API endpoint)
+            setTimeout(() => {
+                successMsg.classList.add('show');
+                
+                // Redirect after 2 seconds
+                setTimeout(() => {
+                    window.location.href = '/driver/login'; // Update with your actual login route
+                }, 2000);
+            }, 1500);
+        }
+    </script> -->
+</body>
+</html>

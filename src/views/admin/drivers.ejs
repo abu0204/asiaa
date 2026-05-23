@@ -230,8 +230,24 @@
                 <p id="detailsJoinedDate"></p>
               </div>
               <div class="col-md-6 mb-3">
+                <label class="fw-bold">aadhaar:</label>
+                <img id="detailsAadhaar" src="" alt="Aadhaar" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Car Image:</label>
+                <img id="detailsCarImage" src="" alt="Car Image" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+              </div>
+              <div class="col-md-6 mb-3">
                 <label class="fw-bold">License:</label>
-                <p id="detailsLicense"></p>
+                <img id="detailsLicense" src="" alt="License" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="fw-bold">Insurance:</label>
+                <img id="detailsInsurance" src="" alt="Insurance" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+              </div>
+                <div class="col-md-6 mb-3">
+                <label class="fw-bold">Register Certificate:</label>
+                <img id="detailsRegisterCertificate" src="" alt="Register Certificate" style="max-width: 100%; max-height: 200px; object-fit: contain;">
               </div>
             </div>
           </div>
@@ -308,7 +324,12 @@
           document.getElementById("detailsJoinedDate").textContent = driver.createdAt 
             ? new Date(driver.createdAt).toLocaleDateString() 
             : "N/A";
-          document.getElementById("detailsLicense").textContent = driver.Documents?.[0]?.license || "N/A";
+          document.getElementById("detailsLicense").src = driver.Documents?.[0]?.license || "";
+          document.getElementById("detailsAadhaar").src = driver.Documents?.[0]?.aadhaar || "";
+          document.getElementById("detailsCarImage").src = driver.Documents?.[0]?.car_photo || "";
+          document.getElementById("detailsInsurance").src = driver.Documents?.[0]?.insurance || "";
+          document.getElementById("detailsRegisterCertificate").src = driver.Documents?.[0]?.register_certificate || "";
+
         }
       }
 

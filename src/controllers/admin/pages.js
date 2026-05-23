@@ -89,7 +89,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({error})
+      console.log({ error })
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -146,7 +146,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({error});
+      console.log({ error });
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -162,18 +162,15 @@ class AdminPages {
       const skip = (page - 1) * limit;
       const searchQuery = req.query.search || "";
 
-      // Build search filter
       let searchFilter = {};
       if (searchQuery) {
         const orConditions = [
           { status: { $regex: searchQuery, $options: "i" } }
         ];
-
-        // Check if search query is a valid ObjectId
         if (mongoose.Types.ObjectId.isValid(searchQuery)) {
           orConditions.push({ _id: new mongoose.Types.ObjectId(searchQuery) });
+          orConditions.push({ bookingId: new mongoose.Types.ObjectId(searchQuery) });
         }
-
         searchFilter = { $or: orConditions };
       }
 
@@ -206,7 +203,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({error});
+      console.log({ error });
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",

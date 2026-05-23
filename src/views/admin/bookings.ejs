@@ -1,225 +1,229 @@
 <div class="container-fluid mt-4">
-  
+
   <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
     <h3 class="mb-0">&nbsp; &nbsp; &nbsp; &nbsp; Booking Details</h3>
 
     <!-- Search Bar -->
     <div class="search-box" style="min-width: 300px;">
       <form id="searchForm" class="d-flex gap-2">
-        <input 
-          type="text" 
-          id="bookingSearch" 
-          name="search"
-          placeholder="Search by name, phone, pickup, drop, booking id..."
-          class="form-control"
-          value="<%= pagination.searchQuery || '' %>"
-        >
+        <input type="text" id="bookingSearch" name="search"
+          placeholder="Search by name, phone, pickup, drop, booking id..." class="form-control"
+          value="<%= pagination.searchQuery || '' %>">
         <button type="submit" class="btn btn-dark">Search</button>
         <% if (pagination.searchQuery) { %>
           <a href="/admin/bookings" class="btn btn-secondary">Clear</a>
-        <% } %>
+          <% } %>
       </form>
     </div>
   </div>
 
 
-<%- include("../layouts/adminheaders") %>
+  <%- include("../layouts/adminheaders") %>
 
-  <div class="admin-layout">
-    <%- include("../layouts/sidebar") %>
+    <div class="admin-layout">
+      <%- include("../layouts/sidebar") %>
 
-      <main class="bookingcontent-area">
-        <div class="container-fluid mt-4">
+        <main class="bookingcontent-area">
+          <div class="container-fluid mt-4">
 
-          <div class="booking-cards" id="tripCards">
-            <% if (data.length===0) { %>
-              <p class="text-center">No trips found</p>
+            <div class="booking-cards" id="tripCards">
+              <% if (data.length===0) { %>
+                <p class="text-center">No trips found</p>
+                <% } %>
+
+                  <% data.forEach((trip, index)=> { %>
+                    <div class="booking-card">
+
+                      <div class="booking-card-header">
+                        <span>#<%= index + 1 %></span>
+                        <span class="badge bg-secondary">
+                          <%= trip.status %>
+                        </span>
+                      </div>
+
+                      <div class="booking-info">
+                        <p><strong>Booking Id:</strong>
+                          <%= trip._id %>
+                        </p>
+                        <p><strong>Name:</strong>
+                          <%= trip.name %>
+                        </p>
+                        <p><strong>Mobile:</strong>
+                          <%= trip.mobile %>
+                        </p>
+                        <p><strong>Pickup:</strong>
+                          <%= trip.pickup %>
+                        </p>
+                        <p><strong>Drop:</strong>
+                          <%= trip.drop %>
+                        </p>
+                        <p><strong>Travel Type:</strong>
+                          <%= trip.travelType %>
+                        </p>
+                        <p><strong>Vehicle:</strong>
+                          <%= trip.vehicleType %>
+                        </p>
+                        <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %>
+                        </p>
+                        <p><strong>Date:</strong>
+                          <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
+                        </p>
+                      </div>
+                      <div class="booking-actions">
+                        <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
+                          View
+                        </button>
+
+                        <button class="btn btn-sm btn-secondary" onclick="approveTrip('<%= trip._id %>')"
+                          <%=trip.status==="Approve" ? "disabled" : "" %>>
+
+                          <%= trip.status==="Approve" ? "Approved" : "Approve" %>
+                        </button>
+                      </div>
+
+                    </div>
+                    <% }) %>
+            </div>
+
+            <% if (pagination.totalPages> 1) { %>
+              <nav>
+                <ul class="pagination justify-content-center mt-4">
+                  <% if (pagination.page> 1) { %>
+                    <li class="page-item">
+                      <a class="page-link"
+                        href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
+                    </li>
+                    <% } %>
+
+                      <% for (let i=1; i <=pagination.totalPages; i++) { %>
+                        <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
+                          <a class="page-link"
+                            href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
+                            <%= i %>
+                          </a>
+                        </li>
+                        <% } %>
+
+                          <% if (pagination.page < pagination.totalPages) { %>
+                            <li class="page-item">
+                              <a class="page-link"
+                                href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
+                            </li>
+                            <% } %>
+                </ul>
+              </nav>
               <% } %>
-
-                <% data.forEach((trip, index)=> { %>
-                  <div class="booking-card">
-
-                    <div class="booking-card-header">
-                      <span>#<%= index + 1 %></span>
-                      <span class="badge bg-secondary">
-                        <%= trip.status %>
-                      </span>
-                    </div>
-
-                    <div class="booking-info">
-                      <p><strong>Name:</strong>
-                        <%= trip.name %>
-                      </p>
-                      <p><strong>Mobile:</strong>
-                        <%= trip.mobile %>
-                      </p>
-                      <p><strong>Pickup:</strong>
-                        <%= trip.pickup %>
-                      </p>
-                      <p><strong>Drop:</strong>
-                        <%= trip.drop %>
-                      </p>
-                      <p><strong>Travel Type:</strong>
-                        <%= trip.travelType %>
-                      </p>
-                      <p><strong>Vehicle:</strong>
-                        <%= trip.vehicleType %>
-                      </p>
-                      <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %>
-                      </p>
-                      <p><strong>Date:</strong>
-                        <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
-                      </p>
-                    </div>
-                    <div class="booking-actions">
-                      <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
-                        View
-                      </button>
-
-                      <button class="btn btn-sm btn-secondary" onclick="approveTrip('<%= trip._id %>')"
-                        <%=trip.status==="Approve" ? "disabled" : "" %>>
-
-                        <%= trip.status==="Approve" ? "Approved" : "Approve" %>
-                      </button>
-                    </div>
-
-                  </div>
-                  <% }) %>
           </div>
+        </main>
 
-          <% if (pagination.totalPages > 1) { %>
-            <nav>
-              <ul class="pagination justify-content-center mt-4">
-                <% if (pagination.page > 1) { %>
-                  <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
-                  </li>
-                <% } %>
-
-                <% for (let i = 1; i <= pagination.totalPages; i++) { %>
-                  <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
-                    <a class="page-link" href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
-                      <%= i %>
-                    </a>
-                  </li>
-                <% } %>
-
-                <% if (pagination.page < pagination.totalPages) { %>
-                  <li class="page-item">
-                    <a class="page-link" href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
-                  </li>
-                <% } %>
-              </ul>
-            </nav>
-          <% } %>
-        </div>
-      </main>
-
-      <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style="border-radius: 16px">
-            <div class="modal-header booking-header border-0">
-              <h5 class="modal-title">Booking Details</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
+        <div class="modal fade" id="bookingDetailsModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px">
+              <div class="modal-header booking-header border-0">
+                <h5 class="modal-title">Booking Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
 
 
-            <div class="modal-body" style="padding: 25px 20px; ">
-              <p><strong>Name:</strong> <span id="mName"></span></p>
-              <p><strong>Mobile:</strong> <span id="mMobile"></span></p>
-              <p><strong>Pickup:</strong> <span id="mPickup"></span></p>
-              <p><strong>Drop:</strong> <span id="mDrop"></span></p>
-              <p><strong>Travel Type:</strong> <span id="mTravel"></span></p>
-              <p><strong>Vehicle:</strong> <span id="mVehicle"></span></p>
-              <p><strong>Total Fare:</strong> ₹ <span id="mFare"></span></p>
-              <p><strong>Status:</strong> <span id="mStatus"></span></p>
-              <p><strong>Date:</strong> <span id="mDate"></span></p>
-            </div>
+              <div class="modal-body" style="padding: 25px 20px; ">
+                <p><strong>Booking Id:</strong> <span id="mBookingId"></span></p>
+                <p><strong>Name:</strong> <span id="mName"></span></p>
+                <p><strong>Mobile:</strong> <span id="mMobile"></span></p>
+                <p><strong>Pickup:</strong> <span id="mPickup"></span></p>
+                <p><strong>Drop:</strong> <span id="mDrop"></span></p>
+                <p><strong>Travel Type:</strong> <span id="mTravel"></span></p>
+                <p><strong>Vehicle:</strong> <span id="mVehicle"></span></p>
+                <p><strong>Total Fare:</strong> ₹ <span id="mFare"></span></p>
+                <p><strong>Status:</strong> <span id="mStatus"></span></p>
+                <p><strong>Date:</strong> <span id="mDate"></span></p>
+              </div>
 
-            <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px">
-              <button class="btn px-4" data-bs-dismiss="modal" style="
+              <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px">
+                <button class="btn px-4" data-bs-dismiss="modal" style="
                 background: #ffd400;
                 color: #000;
                 font-weight: 600;
                 border-radius: 10px;
               " onclick="refresh()">
-                OK
-              </button>
+                  OK
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-  <!-- Notes Modal for Approval -->
-  <div class="modal fade" id="approvalNotesModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content" style="border-radius: 16px">
-            <div class="modal-header booking-header border-0">
-              <h5 class="modal-title">Add Approval Notes</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-
-            <div class="modal-body" style="padding: 25px 20px;">
-              <div class="form-group">
-                <label for="approvalNotes" class="form-label mb-2"><strong>Notes:</strong></label>
-                <textarea id="approvalNotes" class="form-control" rows="4" placeholder="Enter any notes for this approval..." style="border-radius: 8px;"></textarea>
+        <!-- Notes Modal for Approval -->
+        <div class="modal fade" id="approvalNotesModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="border-radius: 16px">
+              <div class="modal-header booking-header border-0">
+                <h5 class="modal-title">Add Approval Notes</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
               </div>
-            </div>
 
-            <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px; gap: 10px;">
-              <button class="btn px-4" data-bs-dismiss="modal" style="
+              <div class="modal-body" style="padding: 25px 20px;">
+                <div class="form-group">
+                  <label for="approvalNotes" class="form-label mb-2"><strong>Notes:</strong></label>
+                  <textarea id="approvalNotes" class="form-control" rows="4"
+                    placeholder="Enter any notes for this approval..." style="border-radius: 8px;"></textarea>
+                </div>
+              </div>
+
+              <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px; gap: 10px;">
+                <button class="btn px-4" data-bs-dismiss="modal" style="
                 background: #e9ecef;
                 color: #000;
                 font-weight: 600;
                 border-radius: 10px;
               ">
-                Cancel
-              </button>
-              <button class="btn px-4" onclick="submitApprovalWithNotes()" style="
+                  Cancel
+                </button>
+                <button class="btn px-4" onclick="submitApprovalWithNotes()" style="
                 background: #28a745;
                 color: #fff;
                 font-weight: 600;
                 border-radius: 10px;
               ">
-                Approve
-              </button>
+                  Approve
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-  </div>
+    </div>
 
-  <!-- Modal stays SAME -->
-  <%- include("../layouts/adminfooter") %>
-    <script>
-      // Handle search form submission
-      document.getElementById("searchForm").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const searchQuery = document.getElementById("bookingSearch").value.trim();
-        if (searchQuery) {
-          window.location.href = `/admin/bookings?search=${encodeURIComponent(searchQuery)}`;
-        } else {
-          window.location.href = `/admin/bookings`;
-        }
-      });
+    <!-- Modal stays SAME -->
+    <%- include("../layouts/adminfooter") %>
+      <script>
+        // Handle search form submission
+        document.getElementById("searchForm").addEventListener("submit", (e) => {
+          e.preventDefault();
+          const searchQuery = document.getElementById("bookingSearch").value.trim();
+          if (searchQuery) {
+            window.location.href = `/admin/bookings?search=${encodeURIComponent(searchQuery)}`;
+          } else {
+            window.location.href = `/admin/bookings`;
+          }
+        });
 
-      socket.on("userBooked", (trip) => {
-        pushNewTrip(trip);
-      });
+        socket.on("userBooked", (trip) => {
+          pushNewTrip(trip);
+        });
 
-      function pushNewTrip(trip) {
-        const container = document.getElementById("tripCards");
+        function pushNewTrip(trip) {
+          const container = document.getElementById("tripCards");
 
-        const card = document.createElement("div");
-        card.className = "booking-card";
+          const card = document.createElement("div");
+          card.className = "booking-card";
 
-        card.innerHTML = `
+          card.innerHTML = `
       <div class="booking-card-header">
         <span>#</span>
         <span class="badge bg-secondary">${trip.status}</span>
       </div>
 
       <div class="booking-info">
+        <p><strong>Booking Id:</strong> ${trip._id}</p>
         <p><strong>Name:</strong> ${trip.name}</p>
         <p><strong>Mobile:</strong> ${trip.mobile}</p>
         <p><strong>Pickup:</strong> ${trip.pickup}</p>
@@ -246,65 +250,66 @@
       </div>
     `;
 
-        container.prepend(card);
-      }
-      function viewTrip(bookingData) {
-        document.getElementById("mName").innerText = bookingData.name;
-        document.getElementById("mMobile").innerText = bookingData.mobile;
-        document.getElementById("mPickup").innerText = bookingData.pickup;
-        document.getElementById("mDrop").innerText = bookingData.drop;
-        document.getElementById("mTravel").innerText = bookingData.travelType;
-        document.getElementById("mVehicle").innerText = bookingData.vehicleType;
-        document.getElementById("mFare").innerText = bookingData.totalVal;
-        document.getElementById("mStatus").innerText = bookingData.status;
-        document.getElementById("mDate").innerText =
-          new Date(bookingData.createdAt).toLocaleDateString("en-IN");
-        var myModal = new bootstrap.Modal(
-          document.getElementById("bookingDetailsModal")
-        );
-        myModal.show();
-      }
-      function refresh() {
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      }
-
-      async function approveTrip(bookingId) {
-        document.getElementById("approvalNotes").value = "";
-        document.getElementById("approvalNotes").dataset.bookingId = bookingId;
-        
-        var notesModal = new bootstrap.Modal(
-          document.getElementById("approvalNotesModal")
-        );
-        notesModal.show();
-      }
-
-      async function submitApprovalWithNotes() {
-        const bookingId = document.getElementById("approvalNotes").dataset.bookingId;
-        const notes = document.getElementById("approvalNotes").value;
-
-        try {
-          const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
-            method: "put",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ notes: notes })
-          });
-
-          if (!res.ok) {
-            alert("Failed to approve trip");
-            return;
-          }
-          
-          bootstrap.Modal.getInstance(document.getElementById("approvalNotesModal")).hide();
-          alert("Trip approved successfully");
-          refresh();
-        } catch (err) {
-          console.error(err);
-          alert("Something went wrong");
+          container.prepend(card);
         }
-      }
-    </script>
+        function viewTrip(bookingData) {
+          document.getElementById("mBookingId").innerText = bookingData._id;
+          document.getElementById("mName").innerText = bookingData.name;
+          document.getElementById("mMobile").innerText = bookingData.mobile;
+          document.getElementById("mPickup").innerText = bookingData.pickup;
+          document.getElementById("mDrop").innerText = bookingData.drop;
+          document.getElementById("mTravel").innerText = bookingData.travelType;
+          document.getElementById("mVehicle").innerText = bookingData.vehicleType;
+          document.getElementById("mFare").innerText = bookingData.totalVal;
+          document.getElementById("mStatus").innerText = bookingData.status;
+          document.getElementById("mDate").innerText =
+            new Date(bookingData.createdAt).toLocaleDateString("en-IN");
+          var myModal = new bootstrap.Modal(
+            document.getElementById("bookingDetailsModal")
+          );
+          myModal.show();
+        }
+        function refresh() {
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        }
+
+        async function approveTrip(bookingId) {
+          document.getElementById("approvalNotes").value = "";
+          document.getElementById("approvalNotes").dataset.bookingId = bookingId;
+
+          var notesModal = new bootstrap.Modal(
+            document.getElementById("approvalNotesModal")
+          );
+          notesModal.show();
+        }
+
+        async function submitApprovalWithNotes() {
+          const bookingId = document.getElementById("approvalNotes").dataset.bookingId;
+          const notes = document.getElementById("approvalNotes").value;
+
+          try {
+            const res = await fetch(`/admin/bookings/approve/${bookingId}`, {
+              method: "put",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ notes: notes })
+            });
+
+            if (!res.ok) {
+              alert("Failed to approve trip");
+              return;
+            }
+
+            bootstrap.Modal.getInstance(document.getElementById("approvalNotesModal")).hide();
+            alert("Trip approved successfully");
+            refresh();
+          } catch (err) {
+            console.error(err);
+            alert("Something went wrong");
+          }
+        }
+      </script>

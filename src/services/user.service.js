@@ -28,7 +28,7 @@ function convertTo12HourFormat(time24) {
   return `${hours}:${minutes.toString().padStart(2, "0")} ${period}`;
 };
 let socket;
-export const socketInit = (io)=>{
+export const socketInit = (io) => {
   socket = io
 };
 
@@ -77,7 +77,7 @@ class UserServices {
     }
   }
 
-    async termsService() {
+  async termsService() {
     try {
       return { status: true, title: "terms", pageName: "users/terms" };
     } catch (error) {
@@ -87,9 +87,29 @@ class UserServices {
       };
     }
   }
-    async privacyService() {
+  async privacyService() {
     try {
       return { status: true, title: "Privacy Policy", pageName: "users/policy" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+  async driverPrivacyService() {
+    try {
+      return { status: true, title: "Driver Privacy Policy", pageName: "driver/privacy" };
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message ? error.message : "Internal Server Error!",
+      };
+    }
+  }
+  async driverTermsService() {
+    try {
+      return { status: true, title: "Driver Terms and Conditions", pageName: "driver/terms" };
     } catch (error) {
       return {
         status: false,
@@ -100,10 +120,10 @@ class UserServices {
 
   async createContactFormService(req_Body) {
     try {
-       const { name, email, phone, subject, message } = req_Body;
-    if (!name || !email || !message || !phone || !subject) {
-      return res.status(400).json({ msg: "Missing required fields" });
-    }
+      const { name, email, phone, subject, message } = req_Body;
+      if (!name || !email || !message || !phone || !subject) {
+        return res.status(400).json({ msg: "Missing required fields" });
+      }
       const createdData = await ContactForm.create(req_Body);
       return {
         status: true,
@@ -221,7 +241,7 @@ class UserServices {
       // await sendMailer({ to: "asiaatravelcompany@gmail.com", subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
       const data = await BookingModel.create(req_Body);
       const adminDet = await Admin.findOne({});
-      socket.to(String(adminDet._id)).emit("userBooked",data)
+      socket.to(String(adminDet._id)).emit("userBooked", data)
       return {
         status: true,
         message: "Booking Successfully!"

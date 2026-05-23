@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Terms and Conditions - Driver App</title>
+
+  <style>
+   /* =========================================
+   ASIAA TRAVEL - BRIGHT YELLOW THEME
+========================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(circle at top left,#fff3c4,transparent 35%),
+    radial-gradient(circle at bottom right,#ffe082,transparent 35%),
+    linear-gradient(135deg,#fffdf5,#fff8e1,#fffde7);
+  min-height:100vh;
+  padding:40px 20px;
+  color:#2b2b2b;
+}
+
+/* =========================================
+   MAIN CONTAINER
+========================================= */
+
+.policy-container{
+  max-width:1100px;
+  margin:auto;
+  border-radius:30px;
+  overflow:hidden;
+  border:1px solid #ffe082;
+  backdrop-filter:blur(12px);
+  box-shadow:
+    0 12px 35px rgba(255,193,7,0.18),
+    0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.policy-header{
+  position:relative;
+  padding:90px 50px;
+  text-align:center;
+  overflow:hidden;
+  background:
+    linear-gradient(135deg,#ffd54f,#ffc107,#ffca28);
+}
+
+.policy-header::before{
+  content:"";
+  position:absolute;
+  width:420px;
+  height:420px;
+  border-radius:50%;
+  background:#ffffff30;
+  top:-220px;
+  right:-120px;
+}
+
+.policy-header::after{
+  content:"";
+  position:absolute;
+  width:280px;
+  height:280px;
+  border-radius:50%;
+  background:#fff9c433;
+  bottom:-150px;
+  left:-80px;
+}
+
+.policy-header h1{
+  position:relative;
+  z-index:2;
+  font-size:60px;
+  font-weight:700;
+  color:#4e342e;
+  margin-bottom:12px;
+  letter-spacing:1px;
+}
+
+.policy-header p{
+  position:relative;
+  z-index:2;
+  color:#5d4037;
+  font-size:17px;
+  font-weight:500;
+}
+
+/* =========================================
+   CONTENT AREA
+========================================= */
+
+.policy-content{
+  padding:50px;
+}
+
+/* =========================================
+   POLICY SECTIONS
+========================================= */
+
+.policy-section{
+  margin-bottom:30px;
+  padding:30px;
+  border-radius:24px;
+  background:#fffdf7;
+  border:1px solid #ffe082;
+  transition:0.35s ease;
+}
+
+.policy-section:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 28px rgba(255,193,7,0.15);
+  border-color:#ffc107;
+}
+
+.policy-section h2{
+  font-size:25px;
+  margin-bottom:18px;
+  font-weight:700;
+  color:#ff9800;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.policy-section h2::before{
+  content:"";
+  width:12px;
+  height:12px;
+  border-radius:50%;
+  background:#ffc107;
+  box-shadow:0 0 14px #ffc107;
+}
+
+.policy-section p{
+  color:#555;
+  font-size:15.5px;
+  line-height:1.9;
+}
+
+.policy-section ul{
+  margin-top:16px;
+  padding-left:18px;
+}
+
+.policy-section ul li{
+  margin-bottom:14px;
+  color:#444;
+}
+
+/* =========================================
+   HIGHLIGHT BOX
+========================================= */
+
+.highlight-box{
+  margin-top:18px;
+  padding:22px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff9c4,#fff3b0);
+  border:1px solid #ffd54f;
+  color:#5d4037;
+  font-weight:500;
+}
+
+/* =========================================
+   CONTACT BOX
+========================================= */
+
+.contact-box{
+  margin-top:22px;
+  padding:24px;
+  border-radius:20px;
+  border:1px solid #ffe082;
+}
+
+.contact-box strong{
+  color:#ff9800;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer-note{
+  text-align:center;
+  padding:28px;
+  border-top:1px solid #ffe082;
+  color:#666;
+  font-size:14px;
+  background:#fff8e1;
+}
+
+/* =========================================
+   SCROLLBAR
+========================================= */
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:#fff8e1;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#ffc107;
+  border-radius:30px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:768px){
+
+  body{
+    padding:20px 12px;
+  }
+
+  .policy-header{
+    padding:70px 25px;
+  }
+
+  .policy-header h1{
+    font-size:40px;
+  }
+
+  .policy-content{
+    padding:24px;
+  }
+
+  .policy-section{
+    padding:22px;
+  }
+
+  .policy-section h2{
+    font-size:21px;
+  }
+
+  .policy-section p,
+  .policy-section li{
+    font-size:14px;
+  }
+}
+  </style>
+</head>
+<body>
+
+  <div class="policy-container">
+
+    <div class="policy-header">
+      <h1>Terms and Conditions</h1>
+      <p>Last Updated: May 2026</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>1. Introduction</h2>
+      <p>
+        This terms and conditions explains how we collect, use, store, and protect
+        the personal information of drivers using our Driver Application.
+        By using the App, you agree to the collection and use of information
+        in accordance with this policy.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>2. Information We Collect</h2>
+
+      <ul>
+        <li>Full name, phone number, email address</li>
+        <li>Driver’s license details</li>
+        <li>Vehicle registration and insurance documents</li>
+        <li>Government-issued identity proof</li>
+        <li>Trip and location data</li>
+        <li>Payment and transaction details</li>
+        <li>Device and app usage information</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>3. How We Use Your Information</h2>
+
+      <ul>
+        <li>To create and manage driver accounts</li>
+        <li>To verify identity and documents</li>
+        <li>To provide transportation services</li>
+        <li>To process payments and commissions</li>
+        <li>To improve app performance and safety</li>
+        <li>To communicate updates and notifications</li>
+        <li>To prevent fraud and illegal activities</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>5. Sharing of Information</h2>
+
+      <p>
+        We do not sell personal information. However, we may share information:
+      </p>
+
+      <ul>
+        <li>With customers during ride services</li>
+        <li>With payment service providers</li>
+        <li>With government authorities when legally required</li>
+        <li>With third-party verification or security partners</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>6. Data Security</h2>
+
+      <p>
+        We implement reasonable security measures to protect your data from
+        unauthorized access, misuse, disclosure, or alteration.
+        However, no online system is completely secure.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>7. Data Retention</h2>
+
+      <p>
+        We retain personal and trip information for as long as necessary
+        to provide services, comply with legal obligations,
+        resolve disputes, and enforce agreements.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>8. Driver Rights</h2>
+
+      <ul>
+        <li>Access your personal data</li>
+        <li>Request correction of inaccurate information</li>
+        <li>Request deletion of your account</li>
+        <li>Withdraw consent where applicable</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>9. Third-Party Services</h2>
+
+      <p>
+        The App may contain integrations with third-party services such as
+        payment gateways, maps, analytics, or communication tools.
+        We are not responsible for their independent privacy practices.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>10. Children’s Privacy</h2>
+
+      <p>
+        The App is not intended for individuals under the age of 18.
+        We do not knowingly collect personal information from minors.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>11. Policy Updates</h2>
+
+      <p>
+        We may update this Privacy Policy from time to time.
+        Continued use of the App after changes means you accept the updated policy.
+      </p>
+    </div>
+
+    <div class="policy-section">
+      <h2>12. Contact Us</h2>
+
+      <p>
+        If you have any questions regarding this Privacy Policy,
+        you may contact us at:
+      </p>
+
+      <div class="highlight-box">
+        <strong>Email:</strong> support@asiaa-travel.com <br>
+        <strong>Phone:</strong> +91 9514228005 <br>
+        <strong>Company:</strong> Asiaa Travel
+      </div>
+    </div>
+
+    <div class="footer-note">
+      © 2026 Asiaa Travel. All Rights Reserved.
+    </div>
+
+  </div>
+
+</body>
+</html>

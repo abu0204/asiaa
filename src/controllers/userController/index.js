@@ -91,6 +91,32 @@ class UserController {
     }
   }
 
+  async driverPrivacy(req, res) {
+    try {
+      const result = await UserServices.driverPrivacyService();
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
+
+  async driverTerms(req, res) {
+    try {
+      const result = await UserServices.driverTermsService();
+      return renderResponse(req, res, result);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  }
+
   async contactForm(req, res) {
     try {
       const result = await UserServices.createContactFormService(req.body);

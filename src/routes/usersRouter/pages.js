@@ -10,4 +10,8 @@ router.get("/contact", userController.contact);
 router.get("/terms", userController.terms);
 router.get("/privacy", userController.privacy);
 
+router.get("/driver/privacy-policy", userController.driverPrivacy);
+router.get("/driver/terms-and-conditions", userController.driverTerms);
+
+
 export default router;

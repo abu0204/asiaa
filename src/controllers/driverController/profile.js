@@ -346,3 +346,26 @@ export const uploadDocuments = async (req, res) => {
     });
   }
 };
+
+export const accountDelete = async (req, res) => {
+  try {
+    const { driverId } = req;
+    if (!driverId) {
+      return res.status(401).json({
+        status: false,
+        message: "Unauthorized access",
+      });
+    }
+   await DriversModel.findByIdAndUpdate(driverId, { isAccountDeleted: true });
+    return res.status(200).json({
+      status: true,
+      message: "Account deleted successfully",
+    });
+  } catch (error) {
+    console.error("accountDelete error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Internal server error",
+    });
+  }
+};

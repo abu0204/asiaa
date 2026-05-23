@@ -45,7 +45,7 @@ export const loginAdmin = async (req, res) => {
       
       await user.save();
 
-      await sendSMS(phone, generatedOtp, "login");
+      await sendSMS(phone, generatedOtp, "admin_login");
 
       return res.json({
         success: true,

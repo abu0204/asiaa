@@ -8,6 +8,7 @@ router.get("/login", adminController.login);
 router.get("/home", adminAuth, adminController.home);
 router.get("/drivers", adminAuth, adminController.drivers);
 router.get("/bookings", adminAuth, adminController.bookings);
+router.get("/contacts", adminAuth, adminController.contacts);
 router.get("/trips", adminAuth, adminController.trips);
 router.get("/api/dashboard-stats", adminAuth, adminController.getDashboardStats);
 

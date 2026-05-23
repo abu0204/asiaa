@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import Drivers from "../../models/Drivers.js";
 import BookingModel from "../../models/Bookings.js";
 import TripDetails from "../../models/TripDetails.js";
+import ContactModel from "../../models/ContactForm.js";
 import {
   errorResponse,
   renderResponse,
@@ -154,7 +155,35 @@ class AdminPages {
       });
     }
   };
-
+  contacts = async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1;
+      const limit = 10;
+      const skip = (page - 1) * limit;
+      const data = await ContactModel.find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean();
+      const payload = {
+        status: true,
+        title: "Contacts",
+        pageName: "admin/contacts",
+        data: data,
+        pagination: {
+          page,
+          totalPages: Math.ceil(await ContactModel.countDocuments() / limit)
+        }
+      };
+      return renderResponse(req, res, payload);
+    } catch (error) {
+      return errorResponse(req, res, {
+        status: false,
+        message: "Internal Server Error",
+        code: 500,
+      });
+    }
+  };
   trips = async (req, res) => {
     try {
       const page = parseInt(req.query.page) || 1;

@@ -112,6 +112,13 @@ export const loginDriver = async (req, res) => {
         success: false,
         message: "User not registered",
       });
+    };
+
+    if (user.isAccountDeleted) {
+      return res.status(403).json({
+        success: false,
+        message: "Account deleted. Contact support for assistance.",
+      });
     }
 
     if (!user.isVerified) {

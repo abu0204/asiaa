@@ -8,7 +8,8 @@ import {
   balance,
   transactions,
   uploadDocuments,
-  updateProfile
+  updateProfile,
+  accountDelete
 } from "../../controllers/driverController/profile.js";
 const router = express.Router();
 
@@ -19,6 +20,7 @@ router.post("/config-status", driverAuth, configStatus);
 router.get("/balance", driverAuth, balance);
 router.get("/tnx", driverAuth, transactions);
 router.post("/upload-documents", driverAuth, uploadDriverDocuments, uploadDocuments);
+router.post("/account-delete", driverAuth, accountDelete);
 
 
 

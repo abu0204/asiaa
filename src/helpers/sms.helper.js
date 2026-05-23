@@ -45,6 +45,9 @@ export const sendSMS = async (phoneNumber, otp, type) => {
     } else if (type === "login") {
       message = "Dear Driver, Use OTP " + otp + " to securely login to Asiaa travel. This OTP is valid for 5 minutes. Please do not share this code.";
       templateId = "1707177813988953095";
+    } else if (type === "admin_login") {
+      message = "Dear Admin, Use OTP " + otp + " to securely login to Asiaa travel. This OTP is valid for 5 minutes. Please do not share this code.";
+      templateId = "1707177909018484683";
     }
 
     const url =

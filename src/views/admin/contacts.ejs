@@ -1,0 +1,163 @@
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+        <h3 class="mb-0">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Contact Details</h3>
+    </div>
+
+    <div class="trip-cards" id="tripCards">
+    </div>
+</div>
+<%- include("../layouts/adminheaders") %> <%- include("../layouts/sidebar") %>
+        <link rel="stylesheet" href="/css/drivers.css">
+        <div class="container-fluid mt-4 ml-5">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Subject</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% console.log(data) %>
+                                <% if (data.length===0) { %>
+                                    <tr>
+                                        <td colspan="6" class="text-center">No contacts found</td>
+                                    </tr>
+                                    <% } %>
+                                        <% data.forEach((contact, index)=> { %>
+                                            <tr>
+                                                <td>
+                                                    <%= index + 1 %>
+                                                </td>
+                                                <td>
+                                                    <%= contact.name %>
+                                                </td>
+                                                <td>
+                                                    <%= contact.phone %>
+                                                </td>
+                                                <td>
+                                                    <%= contact.email %>
+                                                </td>
+                                                <td>
+                                                    <%= contact.subject %>
+                                                </td>
+                                                <td>
+                                                    <%= contact.message %>
+                                                </td>
+                                                <td>
+                                                    <%= new Date(contact.createdAt).toLocaleString() %>
+                                                </td>
+
+                                            </tr>
+                                            <% }) %>
+                        </tbody>
+                    </table>
+
+                    <% if (pagination.totalPages> 1) { %>
+                        <nav>
+                            <ul class="pagination justify-content-center">
+
+                                <% if (pagination.page> 1) { %>
+                                    <li class="page-item">
+                                        <a class="page-link"
+                                            href="?page=<%= pagination.page - 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Prev</a>
+                                    </li>
+                                    <% } %>
+
+                                        <% for (let i=1; i <=pagination.totalPages; i++) { %>
+                                            <li class="page-item <%= pagination.page === i ? 'active' : '' %>">
+                                                <a class="page-link"
+                                                    href="?page=<%= i %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">
+                                                    <%= i %>
+                                                </a>
+                                            </li>
+                                            <% } %>
+
+                                                <% if (pagination.page < pagination.totalPages) { %>
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="?page=<%= pagination.page + 1 %><%= pagination.searchQuery ? '&search=' + encodeURIComponent(pagination.searchQuery) : '' %>">Next</a>
+                                                    </li>
+                                                    <% } %>
+
+                            </ul>
+                        </nav>
+                        <% } %>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Driver Details Modal -->
+        <div class="modal fade" id="driverDetailsModal" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Driver Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Name:</label>
+                                <p id="detailsName"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Phone:</label>
+                                <p id="detailsPhone"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Verification Status:</label>
+                                <p id="detailsVerified"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Joined Date:</label>
+                                <p id="detailsJoinedDate"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">aadhaar:</label>
+                                <img id="detailsAadhaar" src="" alt="Aadhaar"
+                                    style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Car Image:</label>
+                                <img id="detailsCarImage" src="" alt="Car Image"
+                                    style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">License:</label>
+                                <img id="detailsLicense" src="" alt="License"
+                                    style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Insurance:</label>
+                                <img id="detailsInsurance" src="" alt="Insurance"
+                                    style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="fw-bold">Register Certificate:</label>
+                                <img id="detailsRegisterCertificate" src="" alt="Register Certificate"
+                                    style="max-width: 100%; max-height: 200px; object-fit: contain;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <%- include("../layouts/adminfooter") %>

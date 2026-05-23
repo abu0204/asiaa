@@ -39,6 +39,10 @@ const driverSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isAccountDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

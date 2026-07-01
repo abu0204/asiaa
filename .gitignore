@@ -43,3 +43,5 @@ next-env.d.ts
 .vscode
 
 .env
+
+asiadriver-firebase-adminsdk.json

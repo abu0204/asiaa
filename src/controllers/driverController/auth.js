@@ -12,7 +12,7 @@ import { stat } from "fs";
 
 export const registerDriver = async (req, res) => {
   try {
-    const { name, phone, password, otp = "" } = req.body;
+    const { name, phone, password, fcmToken = "", otp = "" } = req.body;
     if (!phone) {
       return res.status(400).json({ success: false, message: "Phone number required" });
     }
@@ -34,13 +34,17 @@ export const registerDriver = async (req, res) => {
           name,
           phone,
           password: encryptedPass,
+          fcmToken,
           otp: generatedOtp,
           otpExpireAt: Date.now() + 5 * 60 * 1000,
           isVerified: false,
+          fcmTokenUpdatedAt: Date.now(),
         });
       } else {
         user.otp = generatedOtp;
         user.otpExpireAt = Date.now() + 5 * 60 * 1000;
+        user.fcmToken = fcmToken;
+        user.fcmTokenUpdatedAt = Date.now();
         await user.save();
       }
 

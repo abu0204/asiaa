@@ -9,7 +9,7 @@ import { dirname } from "path";
 import { connectDB } from "./config/index.js";
 import dotenv from "dotenv";
 import { socketInit } from "./services/user.service.js";
-import { socketInitialize } from "./helpers/socket.helper.js";
+import { alertDriversForNewBookings, socketInitialize } from "./helpers/socket.helper.js";
 dotenv.config();
 
 const app = express();
@@ -38,7 +38,7 @@ io.on("connection", (socket) => {
     socket.join(String(adminId));
     console.log("Admin joined room:", adminId);
   });
-
+  
   socket.on("disconnect", () => {
     console.log("🔴 User disconnected:", socket.id);
   });

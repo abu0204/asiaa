@@ -43,6 +43,14 @@ const driverSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    fcmToken: {
+      type: String,
+      default: null
+    },
+    fcmTokenUpdatedAt: {
+      type: Date,
+      default: null
+    }
   },
   {
     timestamps: true,

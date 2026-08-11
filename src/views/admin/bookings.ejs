@@ -206,6 +206,92 @@
           }
         });
 
+        const bookingSound = new Audio("/sounds/booking.mp3");
+
+        let soundUnlocked = false;
+
+        async function unlockBookingSound() {
+          if (soundUnlocked) return;
+
+          try {
+            bookingSound.muted = true;
+
+            await bookingSound.play();
+
+            bookingSound.pause();
+            bookingSound.currentTime = 0;
+            bookingSound.muted = false;
+
+            soundUnlocked = true;
+
+            console.log("🔊 Booking sound unlocked");
+
+            document.removeEventListener("click", unlockBookingSound);
+            document.removeEventListener("keydown", unlockBookingSound);
+            document.removeEventListener("touchstart", unlockBookingSound);
+            document.addEventListener("mouseenter", unlockBookingSound);
+            document.addEventListener("pointerdown", unlockBookingSound, {
+              once: true
+            });
+
+            document.addEventListener("keydown", unlockBookingSound, {
+              once: true
+            });
+
+          } catch (error) {
+            console.log("Waiting for user interaction to unlock sound...", error);
+          }
+        }
+
+        document.addEventListener("click", unlockBookingSound);
+        document.addEventListener("keydown", unlockBookingSound);
+        document.addEventListener("touchstart", unlockBookingSound);
+        document.addEventListener("mouseenter", unlockBookingSound);
+        document.addEventListener("pointerdown", unlockBookingSound, {
+          once: true
+        });
+
+        document.addEventListener("keydown", unlockBookingSound, {
+          once: true
+        });
+
+
+
+        socket.on("bookingNotification", (notification) => {
+
+          console.log("🔔 New booking:", Notification.permission);
+          if (
+            "Notification" in window &&
+            Notification.permission === "granted"
+          ) {
+            const bookingNotification = new Notification(notification.title, {
+              body: notification.message,
+              icon: "/assets/logo.png"
+            });
+
+            bookingNotification.onclick = () => {
+              window.focus();
+              window.location.href = "/admin/bookings";
+              bookingNotification.close();
+            };
+          }
+
+
+
+          if (soundUnlocked) {
+            bookingSound.currentTime = 0;
+            bookingSound.play()
+              .then(() => {
+                console.log("🔊 Booking sound played");
+              })
+              .catch((error) => {
+                console.error("Audio playback blocked:", error);
+              });
+          } else {
+            console.log("⚠️ Booking sound is not enabled");
+          }
+        });
+
         socket.on("userBooked", (trip) => {
           pushNewTrip(trip);
         });

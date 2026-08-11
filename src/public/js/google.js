@@ -14,18 +14,18 @@ const allowedStates = [
 const tripConfig = {
   onewayTrip: {
     minimumKilometer: 100,
-    Sedan: { costPerKilometer: 12, driverBata: 400 },
-    primeSeadan: { costPerKilometer: 13, driverBata: 400 },
-    Suv: { costPerKilometer: 17.1, driverBata: 400 },
-    primeSuv: { costPerKilometer: 18, driverBata: 400 },
+    Sedan: { costPerKilometer: 13, driverBata: 400 },
+    primeSeadan: { costPerKilometer: 14, driverBata: 400 },
+    Suv: { costPerKilometer: 18, driverBata: 400 },
+    primeSuv: { costPerKilometer: 19, driverBata: 400 },
   },
   roundTrip: {
     minimumKilometer: 250,
-    Sedan: { costPerKilometer: 11.7, driverBata: 400 },
-    primeSeadan: { costPerKilometer: 12, driverBata: 400 },
-    Suv: { costPerKilometer: 15.3, driverBata: 400 },
-    primeSuv: { costPerKilometer: 16.2, driverBata: 500 },
-    toyotoInnova: { costPerKilometer: 17.1, driverBata: 500 },
+    Sedan: { costPerKilometer: 12, driverBata: 400 },
+    primeSeadan: { costPerKilometer: 13, driverBata: 400 },
+    Suv: { costPerKilometer: 16, driverBata: 400 },
+    primeSuv: { costPerKilometer: 17, driverBata: 500 },
+    toyotoInnova: { costPerKilometer: 18, driverBata: 500 },
   },
 };
 

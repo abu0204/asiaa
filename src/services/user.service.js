@@ -249,10 +249,18 @@ class UserServices {
           console.log("Validation success!");
         }
       }
-      // await sendMailer({ to: "asiaatravelcompany@gmail.com", subject: "Your Ride Has Been Booked", html: bookingMailHtml(req_Body) })
       const data = await BookingModel.create(req_Body);
       const adminDet = await Admin.findOne({});
-      socket.to(String(adminDet._id)).emit("userBooked", data)
+      if (adminDet?._id) {
+        socket.to(String(adminDet._id)).emit("userBooked", data)
+        socket.to(String(adminDet._id)).emit("bookingNotification", {
+          title: "New Booking",
+          message: `New booking received from ${req_Body.name}`,
+          booking: data,
+          sound: true,
+        });
+
+      }
       return {
         status: true,
         message: "Booking Successfully!"

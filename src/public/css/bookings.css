@@ -70,7 +70,8 @@
 }
 @media (min-width: 992px) {
   .bookingcontent-area {
-    margin-left: calc(70px + 2rem);
+    margin-left: 70px;
+    width: calc(100% - 70px);
   }
 }
 

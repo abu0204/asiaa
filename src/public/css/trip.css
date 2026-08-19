@@ -135,7 +135,8 @@ body {
 }
 @media (min-width: 992px) {
   .tripcontent-area {
-    margin-left: 5rem;
+    margin-left: 70px;
+    width: calc(100% - 70px);
   }
 }
 /* ===============================

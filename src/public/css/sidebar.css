@@ -30,6 +30,28 @@
   z-index: 100;
 }
 
+.admin-layout,
+.dashboard,
+.admin-content {
+  min-width: 0;
+}
+
+.admin-layout > main,
+.admin-content {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .sidebar:hover ~ .admin-layout > main,
+  .sidebar:hover ~ .admin-content,
+  .sidebar:hover ~ .dashboard {
+    margin-left: 240px;
+    width: calc(100% - 240px);
+  }
+}
+
 /* Expand on hover */
 .sidebar:hover {
   width: 240px;
@@ -121,6 +143,20 @@
 ================================ */
 @media (max-width: 767px) {
 
+  .search-box {
+    min-width: 0 !important;
+    max-width: 100%;
+  }
+
+  .search-box form {
+    flex-wrap: wrap;
+  }
+
+  .search-box form input {
+    flex: 1 1 150px;
+    min-width: 0;
+  }
+
   /* Navbar container */
   .sidebar {
     position: fixed;
@@ -137,6 +173,8 @@
       var(--sidebar-bg-end)
     );
     box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+    overflow-x: auto;
+    overflow-y: hidden;
   }
 
   /* Disable sidebar behavior */
@@ -159,14 +197,15 @@
   .sidebar .menu {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-    width: 100%;
+    justify-content: flex-start;
+    width: max-content;
+    min-width: 0;
     margin: 0;
     padding: 0;
   }
 
   .sidebar .menu li {
-    flex: 1;
+    flex: 0 0 52px;
     text-align: center;
     margin: 0;
   }
@@ -176,7 +215,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 0;
+    padding: 9px 8px;
     border: none;
     background: none;
     color: var(--text-muted);
@@ -219,6 +258,13 @@
   .content-area {
     margin-left: 0;
     margin-top: 56px;
+    width: 100%;
+  }
+
+  .admin-layout > main,
+  .admin-content,
+  .dashboard {
+    margin-left: 0;
     width: 100%;
   }
 }

@@ -159,6 +159,13 @@
   ================================ */
   @media(max-width:768px){
 
+    .container-fluid.mt-4.ml-5 {
+      margin-left: 0 !important;
+      width: 100%;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
     .top-header{
       flex-direction:column;
       align-items:stretch;
@@ -210,6 +217,15 @@
     background: linear-gradient(135deg,#f5f7fb,#eef2f7);
     overflow-x: hidden;
     color: var(--dark);
+  }
+
+  .container-fluid.mt-4.ml-5 {
+    margin-left: 70px !important;
+    width: calc(100% - 70px);
+  }
+
+  .container-fluid.mt-4.ml-5 .card {
+    overflow-x: auto;
   }
 
   /* ===============================

@@ -57,12 +57,12 @@ export const deductPayment = async (req, res) => {
       });
     }
 
-    if (wallet.balance < amount) {
-      return errorResponse(req, res, {
-        message: "Insufficient balance",
-        code: 400
-      });
-    }
+    // if (wallet.balance < amount) {
+    //   return errorResponse(req, res, {
+    //     message: "Insufficient balance",
+    //     code: 400
+    //   });
+    // }
 
     wallet.balance -= amount;
     await wallet.save();

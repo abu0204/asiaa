@@ -64,4 +64,9 @@ driverSchema.virtual("Documents", {
   localField: "_id",
   foreignField: "driverId",
 });
+driverSchema.virtual("Wallets", {
+  ref: "Wallets",
+  localField: "_id",
+  foreignField: "driverId",
+});
 export default mongoose.model("Drivers", driverSchema);

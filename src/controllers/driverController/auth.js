@@ -13,9 +13,10 @@ import { stat } from "fs";
 export const registerDriver = async (req, res) => {
   try {
     const { name, phone, password, fcmToken = "", otp = "" } = req.body;
-    if (!phone) {
-      return res.status(400).json({ success: false, message: "Phone number required" });
-    }
+
+    if (!phone || !password) {
+      return res.status(400).json({ success: false, message: "Phone number and password required" });
+    };
 
     const user = await Drivers.findOne({ phone });
     if (otp == "" || !otp) {
@@ -105,9 +106,9 @@ export const loginDriver = async (req, res) => {
   try {
     const { phone, password, otp = "" } = req.body;
 
-    if (!phone) {
-      return res.status(400).json({ success: false, message: "Phone number required" });
-    }
+    if (!phone || !password) {
+      return res.status(400).json({ success: false, message: "Phone number and password required" });
+    };
 
     const user = await Drivers.findOne({ phone });
 

@@ -68,6 +68,7 @@ class AdminPages {
       const [drivers, totalDrivers] = await Promise.all([
         Drivers.find(searchFilter)
           .populate("Documents")
+          .populate("Wallets")
           .sort({ createdAt: -1 })
           .skip(skip)
           .limit(limit)

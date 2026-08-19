@@ -41,6 +41,7 @@
                 <th>Phone</th>
                 <th>Verified</th>
                 <th>Joined</th>
+                <th>Wallet Amount</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -48,7 +49,7 @@
               <tbody>
                 <% if (data.length===0) { %>
                   <tr>
-                    <td colspan="6" class="text-center">No drivers found</td>
+                    <td colspan="7" class="text-center">No drivers found</td>
                   </tr>
                   <% } %>
                     <% data.forEach((driver, index)=> { %>
@@ -71,6 +72,13 @@
                         </td>
                         <td>
                           <%= new Date(driver.createdAt).toLocaleDateString() %>
+                        </td>
+                        <td>
+                          <% if (driver.Wallets && driver.Wallets.length > 0) { %>
+                            ₹ <%= driver.Wallets[0].balance.toFixed(2) %>
+                          <% } else { %>
+                            ₹ 0.00
+                          <% } %>
                         </td>
                         <td>
                           <button class="btn btn-sm btn-info add-payment-btn" data-bs-toggle="modal"
@@ -230,6 +238,10 @@
                 <p id="detailsJoinedDate"></p>
               </div>
               <div class="col-md-6 mb-3">
+                <label class="fw-bold">Wallet Amount:</label>
+                <p id="detailsWalletAmount"></p>
+              </div>
+              <div class="col-md-6 mb-3">
                 <label class="fw-bold">aadhaar:</label>
                 <img id="detailsAadhaar" src="" alt="Aadhaar" style="max-width: 100%; max-height: 200px; object-fit: contain;">
               </div>
@@ -324,6 +336,9 @@
           document.getElementById("detailsJoinedDate").textContent = driver.createdAt 
             ? new Date(driver.createdAt).toLocaleDateString() 
             : "N/A";
+            document.getElementById("detailsWalletAmount").textContent = driver.Wallets?.[0]?.balance !== undefined
+            ? `₹ ${driver.Wallets[0].balance.toFixed(2)}`
+            : "₹ 0.00";
           document.getElementById("detailsLicense").src = driver.Documents?.[0]?.license || "";
           document.getElementById("detailsAadhaar").src = driver.Documents?.[0]?.aadhaar || "";
           document.getElementById("detailsCarImage").src = driver.Documents?.[0]?.car_photo || "";

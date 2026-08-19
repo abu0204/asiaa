@@ -136,8 +136,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const suffix = counter.innerText.includes("%")
         ? "%"
         : counter.innerText.includes("+")
-        ? "+"
-        : "";
+          ? "+"
+          : "";
       let count = 0;
 
       const updateCount = () => {
@@ -167,3 +167,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
   observer.observe(document.querySelector(".stats-section"));
 });
+
+const select = document.getElementById('trip-time');
+for (let h = 0; h < 24; h++) {
+  for (let m = 0; m < 60; m += 10) {
+    let hour12 = h % 12 === 0 ? 12 : h % 12;
+    let ampm = h < 12 ? 'AM' : 'PM';
+    let minStr = m === 0 ? '00' : m;
+    let hour12Str = String(hour12).padStart(2, '0');
+    let display = `${hour12Str}:${minStr} ${ampm}`;
+    // let value24 = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    let opt = document.createElement('option');
+    opt.value = display + " " + ampm;
+    opt.textContent = display;
+    select.appendChild(opt);
+  }
+}

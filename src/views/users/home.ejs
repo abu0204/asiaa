@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asiaa Travel</title>
 
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asiaa Travel</title>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/home.css" />
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-    <!-- Toastify -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/home.css" />
 
-    <!-- Favicon & Icons -->
-    <link rel="icon" type="image/png" href="/assets/logo.png" />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
-    />
-  </head>
+  <!-- Toastify -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <body>
-    <%- include('../layouts/header') %>
+  <!-- Favicon & Icons -->
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+</head>
+
+<body>
+  <%- include('../layouts/header') %>
 
     <!-- Hero Section -->
     <section class="hero d-flex align-items-center text-dark position-relative">
@@ -38,10 +30,7 @@
         <div class="row justify-content-center">
           <!-- Form Column -->
           <div class="col-lg-8">
-            <div
-              id="booking-section"
-              class="booking-section bg-white p-4 rounded shadow"
-            >
+            <div id="booking-section" class="booking-section bg-white p-4 rounded shadow">
               <h5 class="mb-2">BOOK A CAR NOW</h5>
               <h2 class="mb-4">You can book a car with our website</h2>
 
@@ -49,12 +38,7 @@
                 <!-- Pickup & Drop -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input
-                      class="form-control"
-                      id="pickup"
-                      type="text"
-                      placeholder="Enter pickup location"
-                    />
+                    <input class="form-control" id="pickup" type="text" placeholder="Enter pickup location" />
                     <!-- <select
                       id="pickup-district"
                       name="pickup-district"
@@ -70,12 +54,7 @@
                     </select> -->
                   </div>
                   <div class="col-md-6">
-                    <input
-                      id="drop"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter drop location"
-                    />
+                    <input id="drop" type="text" class="form-control" placeholder="Enter drop location" />
                     <!-- <select
                       id="drop-district"
                       name="drop-district"
@@ -96,28 +75,17 @@
                 <div class="row mb-3 position-relative">
                   <!-- Date Input -->
                   <div class="col-md-6 mb-3 mb-md-0 position-relative">
-                    <input
-                      id="trip-date"
-                      type="date"
-                      class="form-control gold-input"
-                      required
-                    />
-                    <label for="trip-date" class="floating-label"
-                      >Select Pickup Date</label
-                    >
+                    <input id="trip-date" type="date" class="form-control gold-input" required />
+                    <label for="trip-date" class="floating-label">Select Pickup Date</label>
                   </div>
 
                   <!-- Time Input -->
                   <div class="col-md-6 position-relative">
-                    <input
-                      id="trip-time"
-                      type="time"
-                      class="form-control gold-input"
-                      required
-                    />
-                    <label for="trip-time" class="floating-label"
-                      >Select Pickup Time</label
-                    >
+                    <!-- <input id="trip-time" type="time" class="form-control gold-input" required /> -->
+                    <select id="trip-time" name="trip-time" class="form-control gold-input">
+                      <option value="">Select time</option>
+                    </select>
+                    <label for="trip-time" class="floating-label">Select Pickup Time</label>
                   </div>
                 </div>
 
@@ -141,74 +109,36 @@
                   </div>
                 </div>
 
-                <div
-                  class="row mb-3"
-                  id="return-time-container"
-                  style="display: none; position: relative"
-                >
+                <div class="row mb-3" id="return-time-container" style="display: none; position: relative">
                   <div class="col-md-6 position-relative">
-                    <input
-                      id="return-date"
-                      type="date"
-                      class="gold-input"
-                      required
-                    />
-                    <label for="return-date" class="floating-label"
-                      >Select Return Date</label
-                    >
+                    <input id="return-date" type="date" class="gold-input" required />
+                    <label for="return-date" class="floating-label">Select Return Date</label>
                   </div>
 
                   <div class="col-md-6 position-relative">
-                    <input
-                      id="return-time"
-                      type="time"
-                      class="gold-input"
-                      required
-                    />
-                    <label for="return-time" class="floating-label"
-                      >Select Return Time</label
-                    >
+                    <input id="return-time" type="time" class="gold-input" required />
+                    <label for="return-time" class="floating-label">Select Return Time</label>
                   </div>
                 </div>
 
                 <!-- Name & Mobile -->
                 <div class="row mb-3">
                   <div class="col-md-6 mb-2 mb-md-0">
-                    <input
-                      id="name"
-                      type="text"
-                      class="form-control"
-                      placeholder="Enter Name"
-                    />
+                    <input id="name" type="text" class="form-control" placeholder="Enter Name" />
                   </div>
                   <div class="col-md-6">
-                    <input
-                      id="mobile"
-                      type="tel"
-                      class="form-control"
-                      placeholder="Your Mobile No."
-                    />
+                    <input id="mobile" type="tel" class="form-control" placeholder="Your Mobile No." />
                   </div>
                 </div>
 
                 <!-- Email -->
                 <div class="mb-3">
-                  <input
-                    id="email"
-                    type="email"
-                    class="form-control"
-                    placeholder="Your Email"
-                  />
+                  <input id="email" type="email" class="form-control" placeholder="Your Email" />
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-grid gap-2 mb-2">
-                  <button
-                    id="estimation-btn"
-                    type="button"
-                    class="btn btn-warning"
-                    onclick="getEstimationService()"
-                  >
+                  <button id="estimation-btn" type="button" class="btn btn-warning" onclick="getEstimationService()">
                     Get Estimate
                   </button>
                 </div>
@@ -229,10 +159,8 @@
 
           <!-- Estimate Results Column -->
           <div class="col-lg-4" id="estimation-section">
-            <div
-              id="estimate-results"
-              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center"
-            >
+            <div id="estimate-results"
+              class="bg-white p-4 rounded shadow h-100 d-flex flex-column justify-content-center">
               <h5 class="mb-3">ESTIMATE RESULT</h5>
               <div id="estimate-output" class="fs-5 text-dark">
                 <p>
@@ -290,11 +218,7 @@
                   <span id="total-value">₹0</span>
                 </p>
                 <br />
-                <button
-                  type="submit"
-                  class="btn btn-warning"
-                  onclick="bookTrip()"
-                >
+                <button type="submit" class="btn btn-warning" onclick="bookTrip()">
                   Book Now
                 </button>
               </div>
@@ -304,36 +228,19 @@
       </div>
 
       <!-- Hero Overlay -->
-      <div
-        class="hero-overlay position-absolute inset-0"
-        style="background-color: rgba(0, 0, 0, 0.5)"
-      ></div>
+      <div class="hero-overlay position-absolute inset-0" style="background-color: rgba(0, 0, 0, 0.5)"></div>
     </section>
 
     <!-- SUCCESS MODAL (Asiaa Travel Theme) -->
     <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 16px">
-          <div
-            class="modal-header border-0"
-            style="background: #fff7d2; border-radius: 16px 16px 0 0"
-          >
-            <h5
-              class="modal-title w-100 text-center"
-              style="color: #ffd400; font-weight: 700"
-            >
-              <i
-                class="bi bi-check-circle-fill"
-                style="color: #ffd400; font-size: 1.8rem"
-              ></i
-              ><br />
+          <div class="modal-header border-0" style="background: #fff7d2; border-radius: 16px 16px 0 0">
+            <h5 class="modal-title w-100 text-center" style="color: #ffd400; font-weight: 700">
+              <i class="bi bi-check-circle-fill" style="color: #ffd400; font-size: 1.8rem"></i><br />
               Trip Booked Successfully
             </h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
           <div class="modal-body text-center" style="padding: 25px 20px">
@@ -345,21 +252,13 @@
             </p>
           </div>
 
-          <div
-            class="modal-footer border-0 justify-content-center"
-            style="padding-bottom: 25px"
-          >
-            <button
-              class="btn px-4"
-              data-bs-dismiss="modal"
-              style="
+          <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px">
+            <button class="btn px-4" data-bs-dismiss="modal" style="
                 background: #ffd400;
                 color: #000;
                 font-weight: 600;
                 border-radius: 10px;
-              "
-              onclick="refresh()"
-            >
+              " onclick="refresh()">
               OK
             </button>
           </div>
@@ -457,31 +356,22 @@
 
     <!-- ✅ GOOGLE API SCRIPT MUST BE LAST -->
     <script src="/js/google.js"></script>
-    <!-- <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7v3IzJx3Vq1BocLZBdd5hi1YVSL0svkI&libraries=places&callback=initAutocomplete"
-      async
-      defer
-    ></script> -->
 
-     <script
+    <script
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyJPraL383s2_rkXMpHZQgibld7mrKyPI&libraries=places&callback=initAutocomplete"
-      async
-      defer
-    ></script>
+      async defer></script>
 
-    
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
 
     <!-- Footer -->
     <%- include('../layouts/footer') %>
 
-    <!-- Bootstrap JS -->
+      <!-- Bootstrap JS -->
 
-    <script src="/js/home.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </body>
+      <script src="/js/home.js" defer></script>
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
 </html>

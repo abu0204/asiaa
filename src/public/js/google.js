@@ -132,6 +132,8 @@ function getEstimationService() {
   const travelType = document.getElementById("travel-type").value.trim();
   const vehicleType = document.getElementById("vehicle-type").value.trim();
 
+  const today = new Date();
+  const selectedDate = new Date(tripDate);
   if (pickup === "") {
     showToast("Please choose your pickup location", "error");
     return;
@@ -149,12 +151,34 @@ function getEstimationService() {
     return;
   }
   if (tripDate !== "") {
-    const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const selectedDate = new Date(tripDate);
     selectedDate.setHours(0, 0, 0, 0);
     if (selectedDate < today) {
       showToast("Pickup date should be greater than current date", "error");
+      return;
+    }
+  };
+
+  if (selectedDate.getTime() === today.getTime()) {
+    const now = new Date();
+    console.log({ tripTime })
+    const [time, period] = tripTime.trim().split(" ");
+    console.log({ time, period });
+
+    let [hours, minutes] = time.split(":").map(Number);
+    console.log({ hours, minutes });
+    if (period.toUpperCase() === "PM" && hours !== 12) {
+      hours += 12;
+    }
+    if (period.toUpperCase() === "AM" && hours === 12) {
+      hours = 0;
+    }
+
+    const selectedDateTime = new Date();
+    selectedDateTime.setHours(hours, minutes, 0, 0);
+
+    if (selectedDateTime <= now) {
+      showToast("Pickup time should be greater than current time", "error");
       return;
     }
   }

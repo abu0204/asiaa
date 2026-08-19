@@ -8,7 +8,6 @@ import dotenv from "dotenv";
 import sendMailer from "../helpers/mail.helper.js";
 dotenv.config();
 import { bookingMailHtml } from "../helpers/bookingMailHtml.js"
-import { validateDates } from "../helpers/date.helper.js";
 import Admin from "../models/Admin.js";
 const { OSRM_API } = process.env;
 
@@ -240,13 +239,6 @@ class UserServices {
             status: false,
             message: "Return date and time is required for round trip",
           };
-        }
-
-        const result = validateDates(req_Body.dateTime, req_Body.returnDateTime);
-        if (!result.valid) {
-          console.log(result.message);
-        } else {
-          console.log("Validation success!");
         }
       }
       const data = await BookingModel.create(req_Body);

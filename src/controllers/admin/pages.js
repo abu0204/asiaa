@@ -209,7 +209,7 @@ class AdminPages {
           .populate("driverId")
           .populate({
             path: "bookingId",
-            select: "name mobile pickup drop status"
+            select: "name mobile pickup drop status dateTime"
           })
           .sort({ createdAt: -1 })
           .skip(skip)

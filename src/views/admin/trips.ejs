@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="trip-info">
-                  <p><strong>Date:</strong> <%= new Date(trip.createdAt).toLocaleString() %></p>
+                  <p><strong>Date:</strong> <%= trip.bookingId?.dateTime %></p>
                   <p><strong>Booking ID:</strong> <%= trip.bookingId?._id || trip._id %></p>
                   <p><strong>Pickup:</strong> <%= trip.bookingId?.pickup || "-" %></p>
                   <p><strong>Drop:</strong> <%= trip.bookingId?.drop || "-" %></p>

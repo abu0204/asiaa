@@ -215,6 +215,38 @@ body {
   border: 1px solid #ccc;
 }
 
+#trip-time {
+  height: 45px;
+}
+
+#trip-time option {
+  padding: 8px;
+}
+
+/* Theme scrollbar */
+#trip-time::-webkit-scrollbar {
+  width: 6px;
+}
+
+#trip-time::-webkit-scrollbar-track {
+  background: #222;
+}
+
+#trip-time::-webkit-scrollbar-thumb {
+  background: #ffd400;
+  border-radius: 10px;
+}
+
+#trip-time::-webkit-scrollbar-thumb:hover {
+  background: #e5bd00;
+}
+
+/* Firefox */
+#trip-time {
+  scrollbar-width: thin;
+  scrollbar-color: #ffd400 #222;
+}
+
 .booking-section .form-control:focus,
 .booking-section .form-select:focus {
   outline: none;
@@ -318,6 +350,11 @@ body {
   }
   #estimate-results {
     margin-top: 20px;
+  }
+
+  #trip-time {
+    height: 46px;
+    min-height: 46px;
   }
 }
 

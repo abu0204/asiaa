@@ -168,7 +168,9 @@ document.addEventListener("DOMContentLoaded", function () {
   observer.observe(document.querySelector(".stats-section"));
 });
 
-const select = document.getElementById('trip-time');
+const selectTime = document.getElementById('trip-time');
+const selectReturnTime = document.getElementById('return-time');
+
 for (let h = 0; h < 24; h++) {
   for (let m = 0; m < 60; m += 10) {
     let hour12 = h % 12 === 0 ? 12 : h % 12;
@@ -178,8 +180,9 @@ for (let h = 0; h < 24; h++) {
     let display = `${hour12Str}:${minStr} ${ampm}`;
     // let value24 = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
     let opt = document.createElement('option');
-    opt.value = display + " " + ampm;
+    opt.value = display;
     opt.textContent = display;
-    select.appendChild(opt);
+    selectTime.appendChild(opt);
+    selectReturnTime.appendChild(opt.cloneNode(true)); // Clone for return time select
   }
 }

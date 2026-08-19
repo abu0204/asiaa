@@ -173,10 +173,8 @@ function getEstimationService() {
     if (period.toUpperCase() === "AM" && hours === 12) {
       hours = 0;
     }
-
     const selectedDateTime = new Date();
     selectedDateTime.setHours(hours, minutes, 0, 0);
-
     if (selectedDateTime <= now) {
       showToast("Pickup time should be greater than current time", "error");
       return;
@@ -193,6 +191,56 @@ function getEstimationService() {
   if (travelType === "roundTrip" && returnTime === "") {
     showToast("Please choose your return time", "error");
     return;
+  };
+  if (travelType === "roundTrip" && returnTime !== "") {
+    const parseTime = (timeString) => {
+      const [time, period] = timeString.trim().split(" ");
+      let [hours, minutes] = time.split(":").map(Number);
+      if (period.toUpperCase() === "PM" && hours !== 12) {
+        hours += 12;
+      }
+      if (period.toUpperCase() === "AM" && hours === 12) {
+        hours = 0;
+      }
+      return { hours, minutes };
+    };
+
+    const pickupDateTime = new Date(tripDate);
+    const pickupTime = parseTime(tripTime);
+
+    pickupDateTime.setHours(
+      pickupTime.hours,
+      pickupTime.minutes,
+      0,
+      0
+    );
+
+    const returnDateTime = new Date(returnDate);
+    const returnTimeParsed = parseTime(returnTime);
+
+    returnDateTime.setHours(
+      returnTimeParsed.hours,
+      returnTimeParsed.minutes,
+      0,
+      0
+    );
+
+    if (returnDateTime <= pickupDateTime) {
+      showToast(
+        "Return time should be greater than pickup time",
+        "error"
+      );
+      return;
+    }
+
+    const now = new Date();
+    if (returnDateTime <= now) {
+      showToast(
+        "Return time should be greater than current time",
+        "error"
+      );
+      return;
+    }
   }
   if (vehicleType === "") {
     showToast("Please choose your vehicle type", "error");
@@ -222,13 +270,9 @@ function getEstimationService() {
 
   const totalDays = calculateDays(tripDate, returnDate);
   const durationDays = travelType === "onewayTrip" ? 1 : totalDays;
-  const isPositive = totalDays - 3;
-  // const waitingCharges = isPositive > 0 ? isPositive * 250 : 0;
-  // const isTwoWayInOneDay = travelType !== "onewayTrip" && totalDays == 1;
-  const totalKmFinal =
-    travelType === "onewayTrip"
-      ? Math.max(totalKiloMeter, minKm)
-      : 250 * totalDays;
+  const totalKmFinal = travelType === "onewayTrip"
+    ? Math.max(totalKiloMeter, minKm)
+    : 250 * totalDays;
   const totalCost = parseInt(totalKmFinal) * costPerKilometer;
   const driverBataVal = driverBata * durationDays;
   const tripDetails = {
@@ -243,11 +287,13 @@ function getEstimationService() {
       totalCost,
       travelType,
       durationDays,
-      // waitingCharges,
-      dateAndTime: `${tripDate}, ${convertTo12HourFormat(tripTime)}`,
+      dateAndTime: `${tripDate}, ${tripTime}`,
       actTotalCost: parseInt(totalCost + driverBataVal),
     },
   };
+  console.log({ dateAndTime: tripDetails.data.dateAndTime }, { tripTime });
+
+  console.log({ tripDetails });
   displayEstimation(tripDetails);
   document.getElementById("estimation-section").scrollIntoView({
     // top: 500,
@@ -257,6 +303,7 @@ function getEstimationService() {
 
 function displayEstimation(response) {
   const { status, data } = response;
+  console.log({ status, data });
   if (!status) return;
 
   const returnDate = document.getElementById("return-date").value;
@@ -276,9 +323,7 @@ function displayEstimation(response) {
         "afterend",
         `<p id="return-date-and-time">
         <strong>Return Date & Time:</strong>
-        <span id="return-date-time-value">${returnDate}, ${convertTo12HourFormat(
-          returnTime
-        )}</span>
+        <span id="return-date-time-value">${returnDate}, ${returnTime}</span>
       </p>`
       );
     }

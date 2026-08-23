@@ -31,6 +31,11 @@ socketInit(io);
 socketInitialize(io);
 app.use("/", routers);
 
+app.get("/version", async (req, res) => {
+  return res.json({ version: '1.0.7' });
+});
+
+
 alertDriversForNewBookings()
 io.on("connection", (socket) => {
   console.log("🟢 User connected:", socket.id);

@@ -66,22 +66,31 @@
                         <p><strong>Total Fare:</strong> ₹ <%= trip.totalVal %>
                         </p>
                         <p><strong>Date:</strong>
-                          <%= new Date(trip.createdAt).toLocaleDateString("en-IN") %>
+                          <%= trip.dateTime.split(" ")[0] %>
                         </p>
-                          <p><strong>Time:</strong>
+                        <p><strong>Time:</strong>
                           <%= trip.dateTime.split(" ")[1] + " " + trip.dateTime.split(" ")[2] %>
                         </p>
+                        
+                        <% if(trip.travelType === "roundTrip") { %>
+                            <p><strong>Return Date:</strong>
+                              <%= trip.returnDateTime.split(" ")[0] %>
+                          </p>
+                          <p><strong>Return Time:</strong>
+                            <%= trip.returnDateTime.split(" ")[1] + " " + trip.returnDateTime.split(" ")[2] %>
+                          </p>
+                          <% } %>
                       </div>
-                      <div class="booking-actions">
-                        <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
-                          View
-                        </button>
+                      <div class=" booking-actions">
+                                <button class="btn btn-sm btn-warning" onclick='viewTrip(<%- JSON.stringify(trip) %>)'>
+                                  View
+                                </button>
 
-                        <button class="btn btn-sm btn-secondary" onclick="approveTrip('<%= trip._id %>')"
-                          <%=trip.status==="Approve" ? "disabled" : "" %>>
+                                <button class="btn btn-sm btn-secondary" onclick="approveTrip('<%= trip._id %>')"
+                                  <%=trip.status==="Approve" ? "disabled" : "" %>>
 
-                          <%= trip.status==="Approve" ? "Approved" : "Approve" %>
-                        </button>
+                                  <%= trip.status==="Approve" ? "Approved" : "Approve" %>
+                                </button>
                       </div>
 
                     </div>
@@ -139,8 +148,9 @@
                 <p><strong>Total Fare:</strong> ₹ <span id="mFare"></span></p>
                 <p><strong>Status:</strong> <span id="mStatus"></span></p>
                 <p><strong>Date:</strong> <span id="mDate"></span></p>
-                                <p><strong>Time:</strong> <span id="mTime"></span></p>
-
+                <p><strong>Time:</strong> <span id="mTime"></span></p>
+                <p><strong>Return Date:</strong> <span id="mReturnDate"></span></p>
+                <p><strong>Return Time:</strong> <span id="mReturnTime"></span></p>
               </div>
 
               <div class="modal-footer border-0 justify-content-center" style="padding-bottom: 25px">
@@ -323,7 +333,17 @@
         <p><strong>Vehicle:</strong> ${trip.vehicleType}</p>
         <p><strong>Total Fare:</strong> ₹ ${trip.totalVal}</p>
         <p><strong>Date:</strong>
-          ${new Date(trip.createdAt).toLocaleDateString("en-IN")}
+          ${trip.dateTime.split(" ")[0]}
+        </p>
+         <p><strong>Time:</strong>
+          ${trip.dateTime.split(" ")[1] + " " + trip.dateTime.split(" ")[2]}
+        </p>
+
+        <p><strong>Return Date:</strong>
+          ${trip.returnDateTime.split(" ")[0]}
+        </p>
+        <p><strong>Return Time:</strong>
+          ${trip.returnDateTime.split(" ")[1] + " " + trip.returnDateTime.split(" ")[2]}
         </p>
       </div>
 
@@ -356,6 +376,8 @@
           document.getElementById("mDate").innerText =
             new Date(bookingData.createdAt).toLocaleDateString("en-IN");
           document.getElementById("mTime").innerText = bookingData.dateTime.split(" ")[1] + " " + bookingData.dateTime.split(" ")[2];
+          document.getElementById("mReturnDate").innerText = bookingData.returnDateTime ? bookingData.returnDateTime.split(" ")[0] : "N/A";
+          document.getElementById("mReturnTime").innerText = bookingData.returnDateTime ? bookingData.returnDateTime.split(" ")[1] + " " + bookingData.returnDateTime.split(" ")[2] : "N/A";
           var myModal = new bootstrap.Modal(
             document.getElementById("bookingDetailsModal")
           );

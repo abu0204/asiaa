@@ -97,7 +97,7 @@ export const assignBooking = async (req, res) => {
     await alertDriversForNewBookings();
     return successResponse(req, res, { data: { updatedBooking, updatedTrip } });
   } catch (error) {
-    console.log({ error });
+    console.log({ assignBooking:error });
     return errorResponse(req, res, {
       status: false,
       message: "Internal Server Error",

@@ -91,7 +91,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({ error })
+      console.log({ driverserror: error });
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -148,7 +148,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({ error });
+      console.log({ bookingserror: error });
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -233,7 +233,7 @@ class AdminPages {
       };
       return renderResponse(req, res, payload);
     } catch (error) {
-      console.log({ error });
+      console.log({ tripserror: error });
       return errorResponse(req, res, {
         status: false,
         message: "Internal Server Error",
@@ -375,7 +375,7 @@ class AdminPages {
 
       return res.json(payload);
     } catch (error) {
-      console.log({ error });
+      console.log({ pageserror: error });
       return res.status(500).json({
         status: false,
         message: "Internal Server Error",
